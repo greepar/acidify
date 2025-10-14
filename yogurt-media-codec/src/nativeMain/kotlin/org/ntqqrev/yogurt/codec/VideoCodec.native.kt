@@ -2,8 +2,8 @@
 
 package org.ntqqrev.yogurt.codec
 
-import korlibs.time.seconds
 import kotlinx.cinterop.*
+import kotlin.time.Duration.Companion.seconds
 
 actual fun getVideoInfo(videoData: ByteArray): VideoInfo = memScoped {
     val inputData = allocArray<ByteVar>(videoData.size)

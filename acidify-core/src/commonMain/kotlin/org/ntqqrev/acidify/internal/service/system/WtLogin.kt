@@ -10,6 +10,8 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.login.Tlv
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.Prefix
+import org.ntqqrev.acidify.internal.util.parseTlv
+import org.ntqqrev.acidify.internal.util.readTlv
 import org.ntqqrev.acidify.internal.util.reader
 import org.ntqqrev.acidify.pb.invoke
 
@@ -47,12 +49,12 @@ internal object WtLogin : NoInputService<Boolean>("wtlogin.login") {
 
         val command = reader.readUShort()
         val state = reader.readUByte()
-        val tlv119Reader = client.loginContext.readTlv(reader)
+        val tlv119Reader = reader.readTlv()
 
         if (state.toInt() == 0) {
             val tlv119 = tlv119Reader[0x119u]!!
             val array = TeaProvider.decrypt(tlv119, client.sessionStore.tgtgt)
-            val tlvPack = client.loginContext.readTlv(array.reader())
+            val tlvPack = array.parseTlv()
             client.sessionStore.apply {
                 d2Key = tlvPack[0x305u]!!
                 uid = Tlv.Body543(tlvPack[0x543u]!!)

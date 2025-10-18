@@ -5,6 +5,7 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.login.TlvQRCode
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.Prefix
+import org.ntqqrev.acidify.internal.util.readTlv
 import org.ntqqrev.acidify.internal.util.reader
 import org.ntqqrev.acidify.internal.util.writeBytes
 import org.ntqqrev.acidify.pb.invoke
@@ -38,7 +39,7 @@ internal object FetchQRCode : NoInputService<FetchQRCode.Result>("wtlogin.trans_
         val reader = code2d.reader()
         reader.discard(1)
         val sig = reader.readPrefixedBytes(Prefix.UINT_16 or Prefix.LENGTH_ONLY)
-        val tlv = client.loginContext.readTlv(reader)
+        val tlv = reader.readTlv()
         client.sessionStore.qrSig = sig
         val respD1Body = TlvQRCode.BodyD1Response(tlv.getValue(0xD1u))
         return Result(

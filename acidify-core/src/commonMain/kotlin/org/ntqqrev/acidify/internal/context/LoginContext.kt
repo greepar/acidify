@@ -7,7 +7,10 @@ import kotlinx.io.Buffer
 import org.ntqqrev.acidify.crypto.ecdh.Ecdh
 import org.ntqqrev.acidify.crypto.tea.TeaProvider
 import org.ntqqrev.acidify.internal.LagrangeClient
-import org.ntqqrev.acidify.internal.util.*
+import org.ntqqrev.acidify.internal.util.Prefix
+import org.ntqqrev.acidify.internal.util.barrier
+import org.ntqqrev.acidify.internal.util.reader
+import org.ntqqrev.acidify.internal.util.writeBytes
 import kotlin.random.Random
 
 internal class LoginContext(client: LagrangeClient) : AbstractContext(client) {
@@ -117,18 +120,4 @@ internal class LoginContext(client: LagrangeClient) : AbstractContext(client) {
         writeUShort(0x102u) // unknown const
         writeBytes(ecdhProvider.packPublic(true), Prefix.UINT_16 or Prefix.LENGTH_ONLY)
     }.readByteArray()
-
-    fun readTlv(reader: BinaryReader): Map<UShort, ByteArray> {
-        val tlvCount = reader.readUShort()
-        val result = mutableMapOf<UShort, ByteArray>()
-        repeat(tlvCount.toInt()) {
-            val tag = reader.readUShort()
-            val length = reader.readUShort()
-            val value = reader.readByteArray(length.toInt())
-
-            result[tag] = value
-        }
-
-        return result
-    }
 }

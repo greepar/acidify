@@ -6,6 +6,8 @@ import kotlinx.io.Buffer
 import org.kotlincrypto.hash.sha1.SHA1
 import org.ntqqrev.acidify.crypto.hash.MD5
 
+// ======== Hash Functions ========
+
 internal fun ByteArray.md5(): ByteArray = MD5.hash(this)
 
 internal fun ByteArray.sha1(): ByteArray = SHA1().digest(this)
@@ -49,6 +51,8 @@ internal fun ByteArray.triSha1(): ByteArray {
     return sample.sha1()
 }
 
+// ======== ByteArray Extensions ========
+
 internal fun ByteArray.writeUInt32BE(value: Long, offset: Int) {
     this[offset] = (value ushr 24).toByte()
     this[offset + 1] = (value ushr 16).toByte()
@@ -74,6 +78,24 @@ internal fun Sink.writeBytes(value: ByteArray, prefix: Prefix = (Prefix.NONE)) {
     this.writeLength(value.size.toUInt(), prefix)
     this.writeFully(value)
 }
+
+// ======== Tlv Operations ========
+
+internal fun BinaryReader.readTlv(): Map<UShort, ByteArray> {
+    val tlvCount = readUShort()
+    val result = mutableMapOf<UShort, ByteArray>()
+    repeat(tlvCount.toInt()) {
+        val tag = readUShort()
+        val length = readUShort()
+        val value = readByteArray(length.toInt())
+
+        result[tag] = value
+    }
+
+    return result
+}
+
+internal fun ByteArray.parseTlv() = this.reader().readTlv()
 
 internal fun Sink.barrier(prefix: Prefix, addition: Int = 0, target: ((Sink).() -> Unit)) {
     val written = Buffer()
@@ -117,6 +139,8 @@ private fun Source.readLength(prefix: Prefix): UInt {
         else -> 0u
     }
 }
+
+// ======== Int Operations ========
 
 fun Source.readShortLittleEndian(): Short {
     val value = this.readShort()

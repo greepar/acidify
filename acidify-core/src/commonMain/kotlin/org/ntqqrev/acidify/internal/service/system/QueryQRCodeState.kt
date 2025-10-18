@@ -4,6 +4,7 @@ import kotlinx.io.*
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.Prefix
+import org.ntqqrev.acidify.internal.util.readTlv
 import org.ntqqrev.acidify.internal.util.reader
 import org.ntqqrev.acidify.internal.util.writeBytes
 import org.ntqqrev.acidify.struct.QRCodeState
@@ -31,7 +32,7 @@ internal object QueryQRCodeState : NoInputService<QRCodeState>("wtlogin.trans_em
             client.sessionStore.uin = reader.readUInt().toLong()
             reader.discard(4)
 
-            val tlv = client.loginContext.readTlv(reader)
+            val tlv = reader.readTlv()
             client.sessionStore.tgtgt = tlv[0x1eu]!!
             client.sessionStore.encryptedA1 = tlv[0x18u]!!
             client.sessionStore.noPicSig = tlv[0x19u]!!

@@ -53,12 +53,14 @@ internal class PacketContext(client: LagrangeClient) : AbstractContext(client) {
 
     override suspend fun postOnline() {
         heartbeatJob = client.launch {
-            try {
-                client.callService(Heartbeat)
-            } catch (e: Exception) {
-                logger.w(e) { "心跳包发送失败" }
+            while (isActive) {
+                try {
+                    client.callService(Heartbeat)
+                } catch (e: Exception) {
+                    logger.w(e) { "心跳包发送失败" }
+                }
+                delay(270_000L) // 4.5min
             }
-            delay(270_000L) // 4.5min
         }
     }
 
@@ -71,7 +73,7 @@ internal class PacketContext(client: LagrangeClient) : AbstractContext(client) {
         runBlocking { connect() }
         client.launch {
             var isReconnect = false
-            while (currentCoroutineContext().isActive) {
+            while (isActive) {
                 try {
                     if (isReconnect) {
                         client.launch(CoroutineExceptionHandler { _, t ->

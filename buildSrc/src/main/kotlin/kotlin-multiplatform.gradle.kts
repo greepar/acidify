@@ -19,7 +19,7 @@ kotlin {
 
         // is run locally
         hostOs == "Mac OS X" && arch == "aarch64" -> macosArm64()
-        hostOs == "Linux" && arch == "x86_64" -> linuxX64()
+        hostOs == "Linux" && (arch == "x86_64" || arch == "amd64") -> linuxX64()
         hostOs.startsWith("Windows") -> mingwX64()
     }
 

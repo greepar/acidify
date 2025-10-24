@@ -16,8 +16,11 @@ import org.ntqqrev.acidify.message.MessageScene
 import org.ntqqrev.acidify.pb.invoke
 import org.ntqqrev.acidify.struct.BotGroupNotification
 import org.ntqqrev.acidify.struct.RequestState
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.MsgPush") {
+    @OptIn(ExperimentalTime::class)
     @Suppress("duplicatedCode")
     override suspend fun parse(bot: Bot, payload: ByteArray): List<AcidifyEvent> {
         val commonMsg = PushMsg(payload).get { message }
@@ -33,7 +36,7 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
             PushMsgType.FriendFileMessage,
             PushMsgType.GroupMessage -> {
                 val msg = bot.parseMessage(commonMsg) ?: return listOf()
-                
+
                 // 根据 extraInfo 刷新群成员信息
                 if (msg.scene == MessageScene.GROUP && msg.extraInfo != null) {
                     val member = bot.getGroup(msg.peerUin)?.getMember(msg.senderUin)
@@ -45,7 +48,7 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
                         )
                     )
                 }
-                
+
                 val mutList = mutableListOf<AcidifyEvent>(MessageReceiveEvent(msg))
 
                 msg.segments.filterIsInstance<BotIncomingSegment.LightApp>()
@@ -357,6 +360,12 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
 
                         if (targetUid != null) {
                             val targetUin = bot.getUinByUid(targetUid)
+                            val member = bot.getGroup(groupUin)?.getMember(targetUin)
+                            member?.updateBinding(
+                                member.data.copy(
+                                    mutedUntil = Clock.System.now().epochSeconds
+                                )
+                            )
                             listOf(
                                 GroupMuteEvent(
                                     groupUin = groupUin,

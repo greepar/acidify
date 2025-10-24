@@ -3,6 +3,9 @@ package org.ntqqrev.acidify.entity
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.struct.BotGroupMemberData
 import org.ntqqrev.acidify.struct.GroupMemberRole
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.TimeSource
 
 /**
  * 群成员实体
@@ -65,8 +68,12 @@ class BotGroupMember internal constructor(
     /**
      * 群成员的禁言截止 Unix 时间戳（秒）
      */
+    @OptIn(ExperimentalTime::class)
     val mutedUntil: Long?
-        get() = data.mutedUntil
+        get() {
+            val current = Clock.System.now().epochSeconds
+            return data.mutedUntil?.takeIf { it > current }
+        }
 
     /**
      * 群成员的角色（权限等级）

@@ -578,7 +578,6 @@ internal class MessageBuildingContext(
 
             override fun reply(sequence: Long) {
                 parent.reply(sequence)
-                previewBuilder.append("[回复消息]")
             }
 
             override fun image(
@@ -590,7 +589,7 @@ internal class MessageBuildingContext(
                 summary: String
             ) {
                 parent.image(raw, format, width, height, subType, summary)
-                previewBuilder.append("[图片]")
+                previewBuilder.append(summary)
             }
 
             override fun record(rawSilk: ByteArray, duration: Long) {

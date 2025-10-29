@@ -180,7 +180,7 @@ internal class MessageBuildingContext(
         height: Int,
         subType: ImageSubType,
         summary: String
-    ) = addAsync {
+    ) = addMultipleAsync {
         val imageMd5Bytes = MD5.hash(raw)
         val imageMd5 = imageMd5Bytes.toHexString()
         val imageSha1Bytes = raw.sha1()
@@ -242,13 +242,22 @@ internal class MessageBuildingContext(
             else -> throw IllegalArgumentException("不支持的消息场景: $scene")
         }
 
-        Elem {
-            it[commonElem] = CommonElem {
-                it[serviceType] = 48
-                it[pbElem] = msgInfo.toByteArray()
-                it[this.businessType] = businessType
+        listOf(
+            Elem { e ->
+                when (scene) {
+                    MessageScene.FRIEND -> e[notOnlineImage] = NotOnlineImage(uploadResp.get { compatQMsg })
+                    MessageScene.GROUP -> e[customFace] = CustomFace(uploadResp.get { compatQMsg })
+                    else -> {}
+                }
+            },
+            Elem {
+                it[commonElem] = CommonElem {
+                    it[serviceType] = 48
+                    it[pbElem] = msgInfo.toByteArray()
+                    it[this.businessType] = businessType
+                }
             }
-        }
+        )
     }
 
     override fun record(rawSilk: ByteArray, duration: Long) = addAsync {

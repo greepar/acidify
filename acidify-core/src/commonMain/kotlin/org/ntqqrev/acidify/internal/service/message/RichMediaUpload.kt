@@ -123,22 +123,17 @@ internal abstract class RichMediaUpload<T>(
             it[subFileType] = 0
         }
 
-    protected fun buildPrivateImageExtBizInfo(subType: Int, textSummary: String): PbObject<ExtBizInfo> =
+    protected fun buildImageExtBizInfo(scene: MessageScene, subType: Int, textSummary: String): PbObject<ExtBizInfo> =
         ExtBizInfo {
             it[pic] = PicExtBizInfo {
                 it[bizType] = subType
-                it[bytesPbReserveC2C] =
-                    "0800180020004200500062009201009a0100a2010c080012001800200028003a00".hexToByteArray()
-                it[this.textSummary] = textSummary.ifEmpty { if (subType == 1) "[动画表情]" else "[图片]" }
-            }
-        }
-
-    protected fun buildGroupImageExtBizInfo(subType: Int, textSummary: String): PbObject<ExtBizInfo> =
-        ExtBizInfo {
-            it[pic] = PicExtBizInfo {
-                it[bizType] = subType
-                it[bytesPbReserveTroop] =
-                    "0800180020004200500062009201009a0100a2010c080012001800200028003a00".hexToByteArray()
+                it[when (scene) {
+                    MessageScene.FRIEND -> bytesPbReserveC2C
+                    MessageScene.GROUP -> bytesPbReserveTroop
+                    else -> bytesPbReserveTroop
+                }] = PicExtBizInfo.PbReserve {
+                    it[this.subType] = subType
+                }
                 it[this.textSummary] = textSummary.ifEmpty { if (subType == 1) "[动画表情]" else "[图片]" }
             }
         }
@@ -277,7 +272,7 @@ internal abstract class RichMediaUpload<T>(
     ) {
         override fun buildOidb(client: LagrangeClient, payload: ImageUploadRequest): ByteArray {
             val uploadInfoList = listOf(buildImageUploadInfo(payload))
-            val extBizInfo = buildPrivateImageExtBizInfo(payload.subType, payload.textSummary)
+            val extBizInfo = buildImageExtBizInfo(MessageScene.FRIEND, payload.subType, payload.textSummary)
             return buildBaseUploadReq(client, uploadInfoList, 1, extBizInfo)
         }
 
@@ -295,7 +290,7 @@ internal abstract class RichMediaUpload<T>(
     ) {
         override fun buildOidb(client: LagrangeClient, payload: ImageUploadRequest): ByteArray {
             val uploadInfoList = listOf(buildImageUploadInfo(payload))
-            val extBizInfo = buildGroupImageExtBizInfo(payload.subType, payload.textSummary)
+            val extBizInfo = buildImageExtBizInfo(MessageScene.GROUP, payload.subType, payload.textSummary)
             return buildBaseUploadReq(client, uploadInfoList, 2, extBizInfo, payload.groupUin)
         }
 

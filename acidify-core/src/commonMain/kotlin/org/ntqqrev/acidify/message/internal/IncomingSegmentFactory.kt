@@ -147,8 +147,8 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
                 width = info.get { width },
                 height = info.get { height },
                 subType = when (picBiz.get { bizType }) {
-                    1 -> ImageSubType.STICKER
-                    else -> ImageSubType.NORMAL
+                    0 -> ImageSubType.NORMAL
+                    else -> ImageSubType.STICKER
                 },
                 summary = picBiz.get { textSummary }.ifEmpty { "[图片]" },
             )

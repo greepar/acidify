@@ -182,7 +182,9 @@ suspend fun YogurtMessageBuildingContext.applySegment(segment: OutgoingSegment) 
             val member = group?.getMember(segment.data.userId)
             mention(
                 segment.data.userId,
-                member?.nickname ?: segment.data.userId.toString()
+                member?.card?.takeIf { it.isNotEmpty() }
+                    ?: member?.nickname
+                    ?: segment.data.userId.toString(),
             )
         }
 

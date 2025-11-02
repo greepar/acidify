@@ -3,6 +3,7 @@
 package org.ntqqrev.yogurt
 
 import com.github.ajalt.mordant.rendering.TextColors
+import com.github.ajalt.mordant.rendering.Theme
 import com.github.ajalt.mordant.terminal.Terminal
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.*
@@ -44,7 +45,7 @@ import org.ntqqrev.yogurt.util.*
 object YogurtApp {
     val config = YogurtConfig.loadFromFile()
     val qrCodePath = Path("qrcode.png")
-    val t = Terminal()
+    val t = Terminal(ansiLevel = config.logging.ansiLevel)
 
     fun createServer() = embeddedServer(
         factory = CIO,

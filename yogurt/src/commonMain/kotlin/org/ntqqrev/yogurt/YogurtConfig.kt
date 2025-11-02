@@ -2,6 +2,7 @@
 
 package org.ntqqrev.yogurt
 
+import com.github.ajalt.mordant.rendering.AnsiLevel
 import io.ktor.util.*
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
@@ -25,6 +26,7 @@ class YogurtConfig(
 ) {
     @Serializable
     class LoggingConfig(
+        val ansiLevel: AnsiLevel = AnsiLevel.ANSI256,
         val coreLogLevel: LogLevel = LogLevel.DEBUG,
     )
 

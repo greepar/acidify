@@ -112,6 +112,10 @@ Milky 协议服务的有关配置，参考 [Milky 文档的“通信”部分](h
 
 见下面的“日志配置”部分。
 
+### `logging.ansiLevel`
+
+Yogurt 日志中 ANSI 颜色的输出级别。可选值有 `NONE`, `ANSI16`, `ANSI256` 和 `TRUECOLOR`。如果不设置该配置项，则默认使用 `ANSI256`。如果你的终端不支持 ANSI 颜色，可以将该配置项设置为 `NONE` 来禁用颜色输出，或降级到 `ANSI16`。更详细的说明请参考 [Mordant 文档中的 AnsiLevel](https://ajalt.github.io/mordant/api/mordant/com.github.ajalt.mordant.rendering/-ansi-level/index.html)。
+
 ### `skipSecurityCheck`
 
 是否跳过安全检查。安全检查的内容目前有：

@@ -2,6 +2,7 @@
 
 package org.ntqqrev.yogurt
 
+import com.github.ajalt.mordant.platform.MultiplatformSystem.exitProcess
 import com.github.ajalt.mordant.rendering.TextColors
 import com.github.ajalt.mordant.rendering.Theme
 import com.github.ajalt.mordant.terminal.Terminal
@@ -52,6 +53,16 @@ object YogurtApp {
         port = config.httpConfig.port,
         host = config.httpConfig.host
     ) {
+        if (config.signApiUrl.isEmpty()) {
+            t.println(
+                TextColors.brightRed("""
+                    |错误：你未配置 signApiUrl，这会导致 Yogurt 无法启动。
+                    |请前往设置中配置一个可用的签名 API 地址。
+                """.trimMargin())
+            )
+            exitProcess(1)
+        }
+
         t.println("""
             | Starting ${BuildKonfig.name} v${BuildKonfig.version}
             | .--------------------------------------.

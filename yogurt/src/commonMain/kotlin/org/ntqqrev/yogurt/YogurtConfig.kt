@@ -16,7 +16,7 @@ import org.ntqqrev.acidify.util.log.LogLevel
 
 @Serializable
 class YogurtConfig(
-    val signApiUrl: String = "aHR0cHM6Ly9hcGkubnRxcXJldi5vcmcvc2lnbi8zOTAzOA==".decodeBase64String(),
+    val signApiUrl: String = "",
     val reportSelfMessage: Boolean = true,
     val transformIncomingMFaceToImage: Boolean = false,
     val httpConfig: MilkyHttpConfig = MilkyHttpConfig(),

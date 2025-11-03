@@ -27,7 +27,13 @@ kotlin {
         jvmMain.dependencies {
             implementation(libs.logback.classic)
         }
-        nativeMain.dependencies {
+        mingwMain.dependencies {
+            implementation(libs.ktor.client.winhttp)
+        }
+        appleMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+        linuxMain.dependencies {
             implementation(libs.ktor.client.curl)
         }
     }

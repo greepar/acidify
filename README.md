@@ -16,27 +16,31 @@
 
 ### 基于 `acidify-core` 使用 Kotlin 进行开发
 
-在 Git 中引入该仓库作为 Submodule，然后在项目的 `settings.gradle.kts` 中添加：
+[![Maven Central](https://img.shields.io/maven-central/v/org.ntqqrev/acidify-core?label=Maven%20Central&logo=maven&color=blue)](https://central.sonatype.com/artifact/org.ntqqrev/acidify-core)
 
-```kts
-includeBuild("acidify")
-```
+对于 JVM 项目，在 `build.gradle.kts` 中添加以下依赖：
 
-然后，需要引用时，在项目的 `build.gradle.kts` 中添加：
-
-```kts
+```kotlin
 dependencies {
-    implementation("acidify:acidify-core")
+    implementation("org.ntqqrev:acidify-core:$version")
 }
 ```
 
-也可以用同样的方式引用其他模块。
+对于 Kotlin Multiplatform 项目，在 `build.gradle.kts` 中添加以下依赖：
+
+```kotlin
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("org.ntqqrev:acidify-core:$version")
+        }
+    }
+}
+```
 
 ## 模块一览
 
 - `acidify-core` - PC NTQQ 协议的核心实现
-- `acidify-crypto` - 加密与 Hash 算法的高效实现
-- `acidify-pb` - Protobuf 编解码基础设施
 - `yogurt` - 基于 Acidify 的 Milky 实现
 - `yogurt-jvm` - Yogurt 的 JVM 平台实现 (Workaround for Ktor plugin's incompatibility issue)
 - `yogurt-media-codec` - Yogurt 的多媒体编解码支持模块
@@ -52,18 +56,12 @@ dependencies {
 
 ## Special Thanks
 
-- [Lagrange.Core](https://github.com/LagrangeDev/Lagrange.Core)
-  提供项目的基础架构和绝大多数协议包定义
-- [Konata.Core](https://github.com/KonataDev/Konata.Core)
-  最初的 PC NTQQ 协议实现
-- [lagrange-kotlin](https://github.com/LagrangeDev/lagrange-kotlin)
-  提供 TEA & 登录认证的实现
-- [qrcode-kotlin](https://github.com/g0dkar/qrcode-kotlin/)
-  提供二维码矩阵生成的实现
-- [LagrangeCodec](https://github.com/LagrangeDev/LagrangeCodec)
-  提供多媒体编解码的实现
-- [@Linwenxuan04](https://github.com/Linwenxuan04)
-  编写 `acidify-crypto` 模块
+- [Lagrange.Core](https://github.com/LagrangeDev/Lagrange.Core) 提供项目的基础架构和绝大多数协议包定义
+- [Konata.Core](https://github.com/KonataDev/Konata.Core) 最初的 PC NTQQ 协议实现
+- [lagrange-kotlin](https://github.com/LagrangeDev/lagrange-kotlin) 提供 TEA & 登录认证的实现
+- [qrcode-kotlin](https://github.com/g0dkar/qrcode-kotlin/) 提供二维码矩阵生成的实现
+- [LagrangeCodec](https://github.com/LagrangeDev/LagrangeCodec) 提供多媒体编解码的实现
+- [@Linwenxuan04](https://github.com/Linwenxuan04) 编写 crypto 和 multiprecision 部分
 - ... and all the contributors along the way!
 
 ## Contributors

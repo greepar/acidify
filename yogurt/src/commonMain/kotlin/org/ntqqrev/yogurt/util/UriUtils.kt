@@ -7,19 +7,17 @@ import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
-import kotlinx.io.buffered
-import kotlinx.io.files.Path
-import kotlinx.io.files.SystemFileSystem
-import kotlinx.io.readByteArray
 import kotlin.io.encoding.Base64
 
 val httpClient = HttpClient()
+
+expect fun readByteArrayFromFilePath(path: String): ByteArray
 
 suspend fun resolveUri(uri: String): ByteArray = withContext(Dispatchers.IO) {
     when {
         uri.startsWith("file://") -> {
             val filePath = uri.removePrefix("file://")
-            SystemFileSystem.source(Path(filePath.decodeURLPart())).buffered().use { it.readByteArray() }
+            readByteArrayFromFilePath(filePath.decodeURLPart())
         }
 
         uri.startsWith("http://") || uri.startsWith("https://") -> {

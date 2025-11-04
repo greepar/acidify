@@ -13,7 +13,6 @@ kotlin {
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlinx.coroutines)
             implementation(libs.kotlinx.io)
-            implementation(libs.kotlinx.datetime)
             implementation(libs.bundles.ktor.client)
             implementation(libs.ktor.network)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -21,7 +20,6 @@ kotlin {
             implementation(libs.kotlincrypto.hash.sha1)
             implementation(libs.bundles.xmlutil)
             implementation(libs.stately.concurrent.collections)
-            implementation(libs.mordant)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

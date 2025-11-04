@@ -6,7 +6,6 @@ import ch.qos.logback.core.AppenderBase
 import io.ktor.util.logging.*
 import org.ntqqrev.acidify.logging.LogHandler
 import org.ntqqrev.acidify.logging.LogLevel
-import org.ntqqrev.acidify.logging.SimpleColoredLogHandler
 import org.ntqqrev.acidify.logging.shortenPackageName
 import org.ntqqrev.yogurt.YogurtApp
 import org.ntqqrev.yogurt.YogurtApp.t
@@ -48,7 +47,7 @@ class YogurtConsoleAppender : AppenderBase<ILoggingEvent>() {
         } else {
             eventObject.loggerName to eventObject.formattedMessage
         }
-        SimpleColoredLogHandler.formatColoredLog(
+        formatColoredLog(
             level = when (eventObject.level.toInt()) {
                 Level.TRACE_INT -> LogLevel.VERBOSE
                 Level.DEBUG_INT -> LogLevel.DEBUG

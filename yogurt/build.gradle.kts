@@ -18,6 +18,7 @@ kotlin {
             implementation(project(":acidify-core"))
             implementation(project(":yogurt-media-codec"))
             implementation(project(":yogurt-qrcode"))
+            implementation(libs.kotlinx.datetime)
             implementation(libs.bundles.ktor.client)
             implementation(libs.bundles.ktor.server)
             implementation(libs.ktor.serialization.kotlinx.json)

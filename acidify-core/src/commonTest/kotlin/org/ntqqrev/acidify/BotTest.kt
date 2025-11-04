@@ -2,7 +2,6 @@
 
 package org.ntqqrev.acidify
 
-import com.github.ajalt.mordant.terminal.Terminal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
@@ -17,7 +16,7 @@ import org.ntqqrev.acidify.common.SessionStore
 import org.ntqqrev.acidify.event.MessageReceiveEvent
 import org.ntqqrev.acidify.event.SessionStoreUpdatedEvent
 import org.ntqqrev.acidify.logging.LogLevel
-import org.ntqqrev.acidify.logging.SimpleColoredLogHandler
+import org.ntqqrev.acidify.logging.SimpleLogHandler
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -36,7 +35,7 @@ class BotTest {
         signProvider = defaultSignProvider,
         scope = defaultScope,
         minLogLevel = LogLevel.VERBOSE,
-        logHandler = SimpleColoredLogHandler(Terminal()),
+        logHandler = SimpleLogHandler,
     )
 
     init {

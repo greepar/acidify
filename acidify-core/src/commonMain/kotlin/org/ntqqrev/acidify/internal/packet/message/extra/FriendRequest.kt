@@ -1,9 +1,9 @@
 package org.ntqqrev.acidify.internal.packet.message.extra
 
-import org.ntqqrev.acidify.pb.PbOptional
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.PbString
-import org.ntqqrev.acidify.pb.get
+import org.ntqqrev.acidify.internal.protobuf.PbOptional
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbString
+import org.ntqqrev.acidify.internal.protobuf.get
 
 internal object FriendRequest : PbSchema() {
     val body = PbOptional[Body[1]]

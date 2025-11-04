@@ -4,10 +4,10 @@ import io.ktor.utils.io.core.*
 import kotlinx.io.*
 import kotlinx.io.Buffer
 import org.ntqqrev.acidify.internal.LagrangeClient
+import org.ntqqrev.acidify.internal.protobuf.*
 import org.ntqqrev.acidify.internal.util.Prefix
 import org.ntqqrev.acidify.internal.util.barrier
 import org.ntqqrev.acidify.internal.util.writeString
-import org.ntqqrev.acidify.pb.*
 
 internal class TlvQRCode(val client: LagrangeClient) {
     private val builder = Buffer()

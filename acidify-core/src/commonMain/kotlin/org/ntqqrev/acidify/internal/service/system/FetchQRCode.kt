@@ -3,12 +3,12 @@ package org.ntqqrev.acidify.internal.service.system
 import kotlinx.io.*
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.login.TlvQRCode
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.Prefix
 import org.ntqqrev.acidify.internal.util.readTlv
 import org.ntqqrev.acidify.internal.util.reader
 import org.ntqqrev.acidify.internal.util.writeBytes
-import org.ntqqrev.acidify.pb.invoke
 
 internal object FetchQRCode : NoInputService<FetchQRCode.Result>("wtlogin.trans_emp") {
     override fun build(client: LagrangeClient, payload: Unit): ByteArray {

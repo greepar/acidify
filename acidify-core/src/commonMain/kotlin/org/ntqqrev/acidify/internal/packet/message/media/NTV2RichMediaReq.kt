@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message.media
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object NTV2RichMediaReq : PbSchema() {
     val reqHead = MultiMediaReqHead[1]

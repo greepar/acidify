@@ -3,9 +3,9 @@ package org.ntqqrev.acidify.internal.service.system
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.message.media.FetchHighwayInfoReq
 import org.ntqqrev.acidify.internal.packet.message.media.FetchHighwayInfoResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.toIpString
-import org.ntqqrev.acidify.pb.invoke
 
 internal object FetchHighwayInfo : NoInputService<FetchHighwayInfo.Resp>("HttpConn.0x6ff_501") {
     class Resp(

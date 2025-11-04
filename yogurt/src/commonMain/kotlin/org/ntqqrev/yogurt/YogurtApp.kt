@@ -4,7 +4,6 @@ package org.ntqqrev.yogurt
 
 import com.github.ajalt.mordant.platform.MultiplatformSystem.exitProcess
 import com.github.ajalt.mordant.rendering.TextColors
-import com.github.ajalt.mordant.rendering.Theme
 import com.github.ajalt.mordant.terminal.Terminal
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.*
@@ -30,7 +29,7 @@ import kotlinx.serialization.json.io.decodeFromSource
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.common.AppInfo
 import org.ntqqrev.acidify.common.SessionStore
-import org.ntqqrev.acidify.util.UrlSignProvider
+import org.ntqqrev.acidify.common.UrlSignProvider
 import org.ntqqrev.milky.milkyJsonModule
 import org.ntqqrev.milky.milkyPackageVersion
 import org.ntqqrev.milky.milkyVersion

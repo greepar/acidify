@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.group
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.SetGroupEssenceMessageReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal abstract class SetGroupEssenceMessage(isSet: Boolean) :
     NoOutputOidbService<SetGroupEssenceMessage.Req>(0xeac, if (isSet) 1 else 2) {

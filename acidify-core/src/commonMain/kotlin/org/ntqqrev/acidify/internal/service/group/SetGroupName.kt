@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.group
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.SetGroupNameReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object SetGroupName : NoOutputOidbService<SetGroupName.Req>(0x89a, 15) {
     class Req(

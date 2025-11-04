@@ -10,14 +10,14 @@ import org.ntqqrev.acidify.internal.packet.message.extra.QSmallFaceExtra
 import org.ntqqrev.acidify.internal.packet.message.media.MsgInfo
 import org.ntqqrev.acidify.internal.packet.message.misc.IncomingForwardBody
 import org.ntqqrev.acidify.internal.packet.message.misc.LightAppPayload
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.util.BinaryReader
 import org.ntqqrev.acidify.internal.util.Prefix
 import org.ntqqrev.acidify.internal.util.readUInt32BE
 import org.ntqqrev.acidify.message.BotIncomingSegment
 import org.ntqqrev.acidify.message.ImageSubType
 import org.ntqqrev.acidify.message.MessageScene
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 import kotlin.math.min
 
 internal interface IncomingSegmentFactory<T : BotIncomingSegment> {

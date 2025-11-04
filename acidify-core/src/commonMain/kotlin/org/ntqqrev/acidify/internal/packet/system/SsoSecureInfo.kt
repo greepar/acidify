@@ -1,7 +1,7 @@
 package org.ntqqrev.acidify.internal.packet.system
 
-import org.ntqqrev.acidify.pb.PbBytes
-import org.ntqqrev.acidify.pb.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbBytes
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
 
 internal object SsoSecureInfo : PbSchema() {
     val sign = PbBytes[1]

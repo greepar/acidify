@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.system
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object RegisterInfo : PbSchema() {
     val guid = PbString[1]

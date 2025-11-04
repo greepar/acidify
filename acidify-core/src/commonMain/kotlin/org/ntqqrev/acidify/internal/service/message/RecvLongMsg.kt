@@ -5,9 +5,9 @@ import korlibs.io.compression.uncompress
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.message.CommonMessage
 import org.ntqqrev.acidify.internal.packet.message.action.*
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.Service
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 
 internal object RecvLongMsg :
     Service<RecvLongMsg.Req, List<PbObject<CommonMessage>>>("trpc.group.long_msg_interface.MsgService.SsoRecvLongMsg") {

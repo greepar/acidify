@@ -1,9 +1,9 @@
 package org.ntqqrev.acidify.internal.packet.message
 
-import org.ntqqrev.acidify.pb.PbBytes
-import org.ntqqrev.acidify.pb.PbInt32
-import org.ntqqrev.acidify.pb.PbInt64
-import org.ntqqrev.acidify.pb.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbBytes
+import org.ntqqrev.acidify.internal.protobuf.PbInt32
+import org.ntqqrev.acidify.internal.protobuf.PbInt64
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
 
 internal object TmpPtt : PbSchema() {
     val fileType = PbInt32[1]

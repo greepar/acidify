@@ -1,9 +1,9 @@
 package org.ntqqrev.acidify.internal.packet.message
 
 import org.ntqqrev.acidify.internal.packet.message.elem.*
-import org.ntqqrev.acidify.pb.PbOptional
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.get
+import org.ntqqrev.acidify.internal.protobuf.PbOptional
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.get
 
 internal object Elem : PbSchema() {
     val text = PbOptional[Text[1]]

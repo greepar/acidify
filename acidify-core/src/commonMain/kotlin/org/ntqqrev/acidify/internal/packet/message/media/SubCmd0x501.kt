@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message.media
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object FetchHighwayInfoReq : PbSchema() {
     val reqBody = Body[0x501]

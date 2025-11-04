@@ -4,7 +4,7 @@ import io.ktor.utils.io.core.*
 import kotlinx.io.*
 import kotlinx.io.Buffer
 import org.kotlincrypto.hash.sha1.SHA1
-import org.ntqqrev.acidify.crypto.hash.MD5
+import org.ntqqrev.acidify.internal.crypto.hash.MD5
 
 // ======== Hash Functions ========
 

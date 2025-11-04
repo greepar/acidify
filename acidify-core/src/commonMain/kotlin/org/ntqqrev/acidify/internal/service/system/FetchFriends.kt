@@ -4,8 +4,8 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.FetchFriendsCookie
 import org.ntqqrev.acidify.internal.packet.oidb.IncPull
 import org.ntqqrev.acidify.internal.packet.oidb.IncPullResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 import org.ntqqrev.acidify.struct.BotFriendData
 import org.ntqqrev.acidify.struct.UserInfoGender
 import org.ntqqrev.acidify.struct.UserInfoKey

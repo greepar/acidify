@@ -4,9 +4,9 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.message.CommonMessage
 import org.ntqqrev.acidify.internal.packet.message.action.SsoGetC2cMsgReq
 import org.ntqqrev.acidify.internal.packet.message.action.SsoGetC2cMsgResp
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.Service
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 
 internal object FetchFriendMessages :
     Service<FetchFriendMessages.Req, List<PbObject<CommonMessage>>>("trpc.msg.register_proxy.RegisterProxy.SsoGetC2cMsg") {

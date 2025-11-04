@@ -3,7 +3,7 @@ package org.ntqqrev.acidify.internal.packet.message.action
 import org.ntqqrev.acidify.internal.packet.message.MessageBody
 import org.ntqqrev.acidify.internal.packet.message.SendContentHead
 import org.ntqqrev.acidify.internal.packet.message.SendRoutingHead
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object PbSendMsgReq : PbSchema() {
     val routingHead = SendRoutingHead[1]

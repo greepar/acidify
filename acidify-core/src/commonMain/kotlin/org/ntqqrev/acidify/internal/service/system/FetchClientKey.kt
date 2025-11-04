@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.system
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.FetchClientKeyResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoInputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object FetchClientKey : NoInputOidbService<String>(0x102a, 1) {
     // It's actually empty!

@@ -1,8 +1,8 @@
 package org.ntqqrev.acidify.internal.packet.message.elem
 
-import org.ntqqrev.acidify.pb.PbBytes
-import org.ntqqrev.acidify.pb.PbInt32
-import org.ntqqrev.acidify.pb.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbBytes
+import org.ntqqrev.acidify.internal.protobuf.PbInt32
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
 
 internal object CommonElem : PbSchema() {
     val serviceType = PbInt32[1]

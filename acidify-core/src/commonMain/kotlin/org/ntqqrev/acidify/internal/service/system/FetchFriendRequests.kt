@@ -2,9 +2,9 @@ package org.ntqqrev.acidify.internal.service.system
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.*
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 
 internal abstract class FetchFriendRequests<R>(oidbCommand: Int, oidbService: Int, val isFiltered: Boolean) :
     OidbService<Int, R>(oidbCommand, oidbService) {

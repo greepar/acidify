@@ -1,8 +1,8 @@
 package org.ntqqrev.acidify.internal.packet.message.elem
 
-import org.ntqqrev.acidify.pb.PbBytes
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.PbString
+import org.ntqqrev.acidify.internal.protobuf.PbBytes
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbString
 
 internal object Text : PbSchema() {
     val textMsg = PbString[1]

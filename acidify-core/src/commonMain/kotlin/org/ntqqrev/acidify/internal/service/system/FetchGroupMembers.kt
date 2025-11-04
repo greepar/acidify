@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.system
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.FetchGroupMembersReq
 import org.ntqqrev.acidify.internal.packet.oidb.FetchGroupMembersResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 import org.ntqqrev.acidify.struct.BotGroupMemberData
 import org.ntqqrev.acidify.struct.GroupMemberRole
 

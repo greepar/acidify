@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object FetchGroupsReq : PbSchema() {
     val config = Config[1]

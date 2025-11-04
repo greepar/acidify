@@ -2,10 +2,10 @@ package org.ntqqrev.acidify.message.internal
 
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.internal.packet.message.Elem
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.PbOptional
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
 import org.ntqqrev.acidify.message.BotIncomingMessage
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.PbOptional
-import org.ntqqrev.acidify.pb.PbSchema
 
 internal class MessageParsingContext(
     val message: BotIncomingMessage,

@@ -1,10 +1,9 @@
 package org.ntqqrev.acidify.entity
 
 import org.ntqqrev.acidify.Bot
-import org.ntqqrev.acidify.internal.service.system.FetchGroupMembers
+import org.ntqqrev.acidify.common.CacheUtility
 import org.ntqqrev.acidify.struct.BotGroupData
 import org.ntqqrev.acidify.struct.BotGroupMemberData
-import org.ntqqrev.acidify.util.CacheUtility
 
 /**
  * 群实体

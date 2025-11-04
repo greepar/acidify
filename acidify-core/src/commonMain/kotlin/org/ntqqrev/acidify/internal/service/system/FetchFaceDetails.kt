@@ -3,9 +3,9 @@ package org.ntqqrev.acidify.internal.service.system
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.FetchFaceDetailsReq
 import org.ntqqrev.acidify.internal.packet.oidb.FetchFaceDetailsResp
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoInputOidbService
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 import org.ntqqrev.acidify.struct.BotFaceDetail
 
 internal object FetchFaceDetails : NoInputOidbService<List<BotFaceDetail>>(0x9154, 1) {

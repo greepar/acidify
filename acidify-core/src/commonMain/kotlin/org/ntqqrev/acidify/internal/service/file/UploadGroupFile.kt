@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.file
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb0x6D6Req
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb0x6D6Resp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object UploadGroupFile : OidbService<UploadGroupFile.Req, UploadGroupFile.Resp>(0x6d6, 0, true) {
     class Req(

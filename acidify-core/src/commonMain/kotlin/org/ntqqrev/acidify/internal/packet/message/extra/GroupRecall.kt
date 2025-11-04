@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message.extra
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object GroupRecall : PbSchema() {
     val operatorUid = PbString[1]

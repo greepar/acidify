@@ -3,7 +3,6 @@
 package org.ntqqrev.yogurt
 
 import com.github.ajalt.mordant.rendering.AnsiLevel
-import io.ktor.util.*
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -12,7 +11,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.io.decodeFromSource
 import kotlinx.serialization.json.io.encodeToSink
-import org.ntqqrev.acidify.util.log.LogLevel
+import org.ntqqrev.acidify.logging.LogLevel
 
 @Serializable
 class YogurtConfig(

@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.group
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.SetGroupRequestBody
 import org.ntqqrev.acidify.internal.packet.oidb.SetGroupRequestReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal abstract class SetGroupRequest(isFiltered: Boolean) :
     NoOutputOidbService<SetGroupRequest.Req>(0x10c8, if (!isFiltered) 1 else 2) {

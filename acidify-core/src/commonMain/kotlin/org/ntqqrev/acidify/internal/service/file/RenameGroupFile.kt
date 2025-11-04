@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.file
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb0x6D6Req
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb0x6D6Resp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object RenameGroupFile : OidbService<RenameGroupFile.Req, Unit>(0x6d6, 4, true) {
     class Req(

@@ -2,7 +2,7 @@ package org.ntqqrev.acidify.internal.util
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.system.DeviceInfo
-import org.ntqqrev.acidify.pb.invoke
+import org.ntqqrev.acidify.internal.protobuf.invoke
 
 internal fun LagrangeClient.generateDeviceInfo() = DeviceInfo {
     it[devName] = sessionStore.deviceName

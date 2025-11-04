@@ -1,17 +1,12 @@
 package org.ntqqrev.acidify.internal.service.message
 
 import org.ntqqrev.acidify.internal.LagrangeClient
-import org.ntqqrev.acidify.internal.packet.message.Elem
-import org.ntqqrev.acidify.internal.packet.message.MessageBody
-import org.ntqqrev.acidify.internal.packet.message.RichText
-import org.ntqqrev.acidify.internal.packet.message.SendContentHead
-import org.ntqqrev.acidify.internal.packet.message.SendRoutingHead
+import org.ntqqrev.acidify.internal.packet.message.*
 import org.ntqqrev.acidify.internal.packet.message.action.PbSendMsgReq
 import org.ntqqrev.acidify.internal.packet.message.action.PbSendMsgResp
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.Service
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
-import kotlin.random.Random
 
 internal object SendFriendMessage : Service<SendFriendMessage.Req, SendFriendMessage.Resp>("MessageSvc.PbSendMsg") {
     class Req(

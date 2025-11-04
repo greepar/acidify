@@ -4,10 +4,10 @@ import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.internal.packet.message.CommonMessage
 import org.ntqqrev.acidify.internal.packet.message.PushMsgType
 import org.ntqqrev.acidify.internal.packet.message.extra.PrivateFileExtra
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.message.internal.IncomingSegmentFactory
 import org.ntqqrev.acidify.message.internal.MessageParsingContext
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 
 /**
  * 接收消息

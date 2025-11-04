@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object NotOnlineFile : PbSchema() {
     val fileType = PbInt32[1]

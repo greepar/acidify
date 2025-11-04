@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object FetchUserInfoByUinReq : PbSchema() {
     val uin = PbInt64[1]

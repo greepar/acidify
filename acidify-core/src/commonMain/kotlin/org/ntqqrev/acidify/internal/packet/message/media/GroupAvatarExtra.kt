@@ -1,9 +1,9 @@
 package org.ntqqrev.acidify.internal.packet.message.media
 
-import org.ntqqrev.acidify.pb.PbInt32
-import org.ntqqrev.acidify.pb.PbInt64
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.get
+import org.ntqqrev.acidify.internal.protobuf.PbInt32
+import org.ntqqrev.acidify.internal.protobuf.PbInt64
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.get
 
 internal object GroupAvatarExtra : PbSchema() {
     val type = PbInt32[1]           // 101

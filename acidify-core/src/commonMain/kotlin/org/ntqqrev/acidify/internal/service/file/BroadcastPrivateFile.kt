@@ -5,8 +5,8 @@ import org.ntqqrev.acidify.internal.packet.message.*
 import org.ntqqrev.acidify.internal.packet.message.action.PbSendMsgReq
 import org.ntqqrev.acidify.internal.packet.message.action.PbSendMsgResp
 import org.ntqqrev.acidify.internal.packet.message.extra.PrivateFileExtra
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.Service
-import org.ntqqrev.acidify.pb.invoke
 import kotlin.random.Random
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime

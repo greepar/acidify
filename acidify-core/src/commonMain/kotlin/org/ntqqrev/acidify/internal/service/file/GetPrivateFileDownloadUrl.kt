@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.file
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb0xE37Req
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb0xE37Resp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object GetPrivateFileDownloadUrl : OidbService<GetPrivateFileDownloadUrl.Req, String>(0xe37, 1200, true) {
     class Req(

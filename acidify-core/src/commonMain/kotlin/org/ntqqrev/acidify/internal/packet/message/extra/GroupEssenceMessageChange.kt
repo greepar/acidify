@@ -1,8 +1,8 @@
 package org.ntqqrev.acidify.internal.packet.message.extra
 
-import org.ntqqrev.acidify.pb.PbInt32
-import org.ntqqrev.acidify.pb.PbInt64
-import org.ntqqrev.acidify.pb.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbInt32
+import org.ntqqrev.acidify.internal.protobuf.PbInt64
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
 
 internal object GroupEssenceMessageChange : PbSchema() {
     val groupUin = PbInt64[1]

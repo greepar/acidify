@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.system
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.FetchGroupExtraInfoReq
 import org.ntqqrev.acidify.internal.packet.oidb.FetchGroupExtraInfoResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 import kotlin.random.Random
 
 internal object FetchGroupExtraInfo : OidbService<Long, FetchGroupExtraInfo.Resp>(0x88d, 0) {

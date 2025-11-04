@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object IncPull : PbSchema() {
     val reqCount = PbInt32[2]

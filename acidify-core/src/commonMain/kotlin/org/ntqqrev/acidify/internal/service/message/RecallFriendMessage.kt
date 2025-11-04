@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.message
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.message.action.C2CRecallMsg
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object RecallFriendMessage :
     NoOutputService<RecallFriendMessage.Req>("trpc.msg.msg_svc.MsgService.SsoC2CRecallMsg") {

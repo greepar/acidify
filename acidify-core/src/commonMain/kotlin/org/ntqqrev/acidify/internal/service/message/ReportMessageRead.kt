@@ -4,8 +4,8 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.message.action.SsoReadedReportC2C
 import org.ntqqrev.acidify.internal.packet.message.action.SsoReadedReportGroup
 import org.ntqqrev.acidify.internal.packet.message.action.SsoReadedReportReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object ReportMessageRead :
     NoOutputService<ReportMessageRead.Req>("trpc.msg.msg_svc.MsgService.SsoReadedReport") {

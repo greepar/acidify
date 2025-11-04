@@ -4,9 +4,9 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.FetchGroupNotificationsReq
 import org.ntqqrev.acidify.internal.packet.oidb.FetchGroupNotificationsResp
 import org.ntqqrev.acidify.internal.packet.oidb.GroupNotification
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 
 internal abstract class FetchGroupNotifications(val isFiltered: Boolean) :
     OidbService<FetchGroupNotifications.Req, FetchGroupNotifications.Resp>(

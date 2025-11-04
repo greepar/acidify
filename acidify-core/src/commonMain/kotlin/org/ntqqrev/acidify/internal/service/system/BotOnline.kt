@@ -4,9 +4,9 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.system.OnlineBusinessInfo
 import org.ntqqrev.acidify.internal.packet.system.RegisterInfo
 import org.ntqqrev.acidify.internal.packet.system.RegisterInfoResponse
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.generateDeviceInfo
-import org.ntqqrev.acidify.pb.invoke
 
 internal object BotOnline : NoInputService<String>("trpc.qq_new_tech.status_svc.StatusService.Register") {
     override fun build(client: LagrangeClient, payload: Unit): ByteArray = RegisterInfo {

@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.packet.message.extra
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import kotlinx.io.readUInt
+import org.ntqqrev.acidify.internal.protobuf.*
 import org.ntqqrev.acidify.internal.util.writeBytes
-import org.ntqqrev.acidify.pb.*
 
 internal class GroupGeneral0x2DC {
     val groupUin: Long

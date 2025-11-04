@@ -4,15 +4,15 @@ import io.ktor.util.date.*
 import io.ktor.utils.io.core.*
 import kotlinx.io.*
 import kotlinx.io.Buffer
-import org.ntqqrev.acidify.crypto.tea.TeaProvider
 import org.ntqqrev.acidify.internal.LagrangeClient
+import org.ntqqrev.acidify.internal.crypto.tea.TeaProvider
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbString
+import org.ntqqrev.acidify.internal.protobuf.get
 import org.ntqqrev.acidify.internal.util.Prefix
 import org.ntqqrev.acidify.internal.util.barrier
 import org.ntqqrev.acidify.internal.util.writeBytes
 import org.ntqqrev.acidify.internal.util.writeString
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.PbString
-import org.ntqqrev.acidify.pb.get
 import kotlin.random.Random
 
 internal class Tlv(val client: LagrangeClient) {

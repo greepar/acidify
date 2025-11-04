@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message.extra
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object GeneralGrayTip : PbSchema() {
     val bizType = PbInt32[1]

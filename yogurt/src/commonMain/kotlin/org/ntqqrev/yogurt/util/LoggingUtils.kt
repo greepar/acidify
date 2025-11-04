@@ -10,7 +10,7 @@ import org.ntqqrev.acidify.entity.BotGroup
 import org.ntqqrev.acidify.entity.BotGroupMember
 import org.ntqqrev.acidify.event.*
 import org.ntqqrev.acidify.message.MessageScene
-import org.ntqqrev.acidify.util.log.LogHandler
+import org.ntqqrev.acidify.logging.LogHandler
 import org.ntqqrev.yogurt.YogurtApp
 
 expect val YogurtApp.logHandler: LogHandler

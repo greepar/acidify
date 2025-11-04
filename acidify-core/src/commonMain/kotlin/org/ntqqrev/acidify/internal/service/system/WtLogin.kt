@@ -4,16 +4,16 @@ import io.ktor.utils.io.core.*
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import kotlinx.io.writeUShort
-import org.ntqqrev.acidify.crypto.tea.TeaProvider
 import org.ntqqrev.acidify.exception.WtLoginException
 import org.ntqqrev.acidify.internal.LagrangeClient
+import org.ntqqrev.acidify.internal.crypto.tea.TeaProvider
 import org.ntqqrev.acidify.internal.packet.login.Tlv
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoInputService
 import org.ntqqrev.acidify.internal.util.Prefix
 import org.ntqqrev.acidify.internal.util.parseTlv
 import org.ntqqrev.acidify.internal.util.readTlv
 import org.ntqqrev.acidify.internal.util.reader
-import org.ntqqrev.acidify.pb.invoke
 
 internal object WtLogin : NoInputService<Boolean>("wtlogin.login") {
     override fun build(client: LagrangeClient, payload: Unit): ByteArray {

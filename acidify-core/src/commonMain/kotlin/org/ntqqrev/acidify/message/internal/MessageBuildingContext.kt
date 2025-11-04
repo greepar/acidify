@@ -12,7 +12,7 @@ import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.ntqqrev.acidify.Bot
-import org.ntqqrev.acidify.crypto.hash.MD5
+import org.ntqqrev.acidify.internal.crypto.hash.MD5
 import org.ntqqrev.acidify.internal.packet.message.*
 import org.ntqqrev.acidify.internal.packet.message.elem.*
 import org.ntqqrev.acidify.internal.packet.message.extra.QBigFaceExtra
@@ -20,6 +20,8 @@ import org.ntqqrev.acidify.internal.packet.message.extra.QSmallFaceExtra
 import org.ntqqrev.acidify.internal.packet.message.extra.SourceMsgResvAttr
 import org.ntqqrev.acidify.internal.packet.message.extra.TextResvAttr
 import org.ntqqrev.acidify.internal.packet.message.misc.ForwardLightAppPayload
+import org.ntqqrev.acidify.internal.protobuf.PbObject
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.message.RichMediaUpload
 import org.ntqqrev.acidify.internal.service.message.SendLongMsg
 import org.ntqqrev.acidify.internal.util.sha1
@@ -27,8 +29,6 @@ import org.ntqqrev.acidify.message.BotOutgoingMessageBuilder
 import org.ntqqrev.acidify.message.ImageFormat
 import org.ntqqrev.acidify.message.ImageSubType
 import org.ntqqrev.acidify.message.MessageScene
-import org.ntqqrev.acidify.pb.PbObject
-import org.ntqqrev.acidify.pb.invoke
 import kotlin.math.max
 import kotlin.random.Random
 import kotlin.time.Clock

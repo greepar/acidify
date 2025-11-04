@@ -3,7 +3,7 @@ package org.ntqqrev.acidify.internal.service
 import org.ntqqrev.acidify.exception.OidbException
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.Oidb
-import org.ntqqrev.acidify.pb.invoke
+import org.ntqqrev.acidify.internal.protobuf.invoke
 
 internal abstract class OidbService<T, R>(
     val oidbCommand: Int,

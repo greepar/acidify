@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object ContentHead : PbSchema() {
     val type = PbInt32[1]

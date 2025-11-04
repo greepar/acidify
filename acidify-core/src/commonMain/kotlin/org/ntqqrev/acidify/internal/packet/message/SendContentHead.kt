@@ -1,7 +1,7 @@
 package org.ntqqrev.acidify.internal.packet.message
 
-import org.ntqqrev.acidify.pb.PbInt32
-import org.ntqqrev.acidify.pb.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbInt32
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
 
 internal object SendContentHead : PbSchema() {
     val pkgNum = PbInt32[1]

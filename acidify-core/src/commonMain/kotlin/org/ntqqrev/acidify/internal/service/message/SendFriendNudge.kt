@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.message
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.PokeReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object SendFriendNudge : NoOutputOidbService<SendFriendNudge.Req>(0xed3, 1) {
     class Req(

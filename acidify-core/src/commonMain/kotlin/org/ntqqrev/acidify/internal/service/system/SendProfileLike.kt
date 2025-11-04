@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.system
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.ProfileLikeReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object SendProfileLike : NoOutputOidbService<SendProfileLike.Req>(0x7e5, 104) {
     class Req(

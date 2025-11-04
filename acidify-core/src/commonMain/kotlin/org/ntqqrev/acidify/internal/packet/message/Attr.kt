@@ -1,9 +1,9 @@
 package org.ntqqrev.acidify.internal.packet.message
 
-import org.ntqqrev.acidify.pb.PbBytes
-import org.ntqqrev.acidify.pb.PbInt32
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.PbString
+import org.ntqqrev.acidify.internal.protobuf.PbBytes
+import org.ntqqrev.acidify.internal.protobuf.PbInt32
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbString
 
 internal object Attr : PbSchema() {
     val codePage = PbInt32[1]

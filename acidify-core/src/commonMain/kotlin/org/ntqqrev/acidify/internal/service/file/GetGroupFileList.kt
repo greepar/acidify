@@ -4,8 +4,8 @@ import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.GroupFileListReq
 import org.ntqqrev.acidify.internal.packet.oidb.GroupFileListReqBody
 import org.ntqqrev.acidify.internal.packet.oidb.GroupFileListResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 import org.ntqqrev.acidify.struct.BotGroupFileEntry
 import org.ntqqrev.acidify.struct.BotGroupFolderEntry
 

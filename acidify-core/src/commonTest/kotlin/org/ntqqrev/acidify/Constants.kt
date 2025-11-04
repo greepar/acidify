@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
-import org.ntqqrev.acidify.util.UrlSignProvider
+import org.ntqqrev.acidify.common.UrlSignProvider
 
 val defaultSignProvider = UrlSignProvider(
     "aHR0cHM6Ly9hcGkubnRxcXJldi5vcmcvc2lnbi8zOTAzOA==".decodeBase64String()

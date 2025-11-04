@@ -1,8 +1,8 @@
 package org.ntqqrev.acidify.internal.packet.message
 
-import org.ntqqrev.acidify.pb.PbRepeated
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.get
+import org.ntqqrev.acidify.internal.protobuf.PbRepeated
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.get
 
 internal object RichText : PbSchema() {
     val attr = Attr[1]

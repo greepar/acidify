@@ -5,8 +5,8 @@ import org.ntqqrev.acidify.internal.packet.oidb.FetchUserInfoByUidReq
 import org.ntqqrev.acidify.internal.packet.oidb.FetchUserInfoByUinReq
 import org.ntqqrev.acidify.internal.packet.oidb.FetchUserInfoReqKey
 import org.ntqqrev.acidify.internal.packet.oidb.FetchUserInfoResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.OidbService
-import org.ntqqrev.acidify.pb.invoke
 import org.ntqqrev.acidify.struct.BotUserInfo
 import org.ntqqrev.acidify.struct.UserInfoGender
 import org.ntqqrev.acidify.struct.UserInfoKey

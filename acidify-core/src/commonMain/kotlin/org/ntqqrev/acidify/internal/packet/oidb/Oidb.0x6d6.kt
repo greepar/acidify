@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object Oidb0x6D6Req : PbSchema() {
     val uploadFile = UploadFile[1]

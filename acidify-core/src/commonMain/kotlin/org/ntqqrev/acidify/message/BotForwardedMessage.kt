@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.message
 
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.internal.packet.message.CommonMessage
+import org.ntqqrev.acidify.internal.protobuf.PbObject
 import org.ntqqrev.acidify.message.internal.MessageParsingContext
-import org.ntqqrev.acidify.pb.PbObject
 
 /**
  * 合并转发消息中的单条消息

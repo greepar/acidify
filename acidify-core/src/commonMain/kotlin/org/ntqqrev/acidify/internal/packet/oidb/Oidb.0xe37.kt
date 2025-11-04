@@ -1,7 +1,7 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
 import org.ntqqrev.acidify.internal.packet.message.media.IPv4
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object Oidb0xE37Req : PbSchema() {
     val subCommand = PbInt32[1]

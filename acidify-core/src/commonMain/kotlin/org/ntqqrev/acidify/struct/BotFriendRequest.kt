@@ -3,7 +3,7 @@ package org.ntqqrev.acidify.struct
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.internal.packet.oidb.FilteredFriendRequestItem
 import org.ntqqrev.acidify.internal.packet.oidb.FriendRequestItem
-import org.ntqqrev.acidify.pb.PbObject
+import org.ntqqrev.acidify.internal.protobuf.PbObject
 
 /**
  * 好友请求实体

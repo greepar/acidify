@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message.action
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object C2CRecallMsg : PbSchema() {
     val type = PbInt32[1]

@@ -3,8 +3,8 @@ package org.ntqqrev.acidify.internal.service.message
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.message.action.SsoGetPeerSeqReq
 import org.ntqqrev.acidify.internal.packet.message.action.SsoGetPeerSeqResp
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.Service
-import org.ntqqrev.acidify.pb.invoke
 import kotlin.math.max
 
 internal object GetFriendLatestSequence : Service<String, Long>("trpc.msg.msg_svc.MsgService.SsoGetPeerSeq") {

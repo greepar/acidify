@@ -1,7 +1,7 @@
 package org.ntqqrev.acidify.internal.packet.message.action
 
 import org.ntqqrev.acidify.internal.packet.message.CommonMessage
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object PbMultiMsgTransmit : PbSchema() {
     val messages = PbRepeated[CommonMessage[1]]

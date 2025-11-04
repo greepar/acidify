@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.message.elem
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object CustomFace : PbSchema() {
     val guid = PbBytes[1]

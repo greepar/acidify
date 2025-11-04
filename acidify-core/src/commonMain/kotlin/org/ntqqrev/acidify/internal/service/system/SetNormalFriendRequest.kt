@@ -2,8 +2,8 @@ package org.ntqqrev.acidify.internal.service.system
 
 import org.ntqqrev.acidify.internal.LagrangeClient
 import org.ntqqrev.acidify.internal.packet.oidb.SetFriendRequestReq
+import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.NoOutputOidbService
-import org.ntqqrev.acidify.pb.invoke
 
 internal object SetNormalFriendRequest : NoOutputOidbService<SetNormalFriendRequest.Req>(0xb5d, 44) {
     class Req(

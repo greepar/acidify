@@ -1,7 +1,7 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.PbString
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbString
 
 internal object SetFilteredFriendRequestReq : PbSchema() {
     val selfUid = PbString[1]

@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.packet.oidb
 
-import org.ntqqrev.acidify.pb.*
+import org.ntqqrev.acidify.internal.protobuf.*
 
 internal object FetchFaceDetailsReq : PbSchema() {
     val field1 = PbInt32[1]

@@ -1,12 +1,13 @@
 package org.ntqqrev.yogurt.util
 
+import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.AppenderBase
 import io.ktor.util.logging.*
-import org.ntqqrev.acidify.util.log.LogHandler
-import org.ntqqrev.acidify.util.log.LogLevel
-import org.ntqqrev.acidify.util.log.SimpleColoredLogHandler
-import org.ntqqrev.acidify.util.log.shortenPackageName
+import org.ntqqrev.acidify.logging.LogHandler
+import org.ntqqrev.acidify.logging.LogLevel
+import org.ntqqrev.acidify.logging.SimpleColoredLogHandler
+import org.ntqqrev.acidify.logging.shortenPackageName
 import org.ntqqrev.yogurt.YogurtApp
 import org.ntqqrev.yogurt.YogurtApp.t
 
@@ -49,11 +50,11 @@ class YogurtConsoleAppender : AppenderBase<ILoggingEvent>() {
         }
         SimpleColoredLogHandler.formatColoredLog(
             level = when (eventObject.level.toInt()) {
-                ch.qos.logback.classic.Level.TRACE_INT -> LogLevel.VERBOSE
-                ch.qos.logback.classic.Level.DEBUG_INT -> LogLevel.DEBUG
-                ch.qos.logback.classic.Level.INFO_INT -> LogLevel.INFO
-                ch.qos.logback.classic.Level.WARN_INT -> LogLevel.WARN
-                ch.qos.logback.classic.Level.ERROR_INT -> LogLevel.ERROR
+                Level.TRACE_INT -> LogLevel.VERBOSE
+                Level.DEBUG_INT -> LogLevel.DEBUG
+                Level.INFO_INT -> LogLevel.INFO
+                Level.WARN_INT -> LogLevel.WARN
+                Level.ERROR_INT -> LogLevel.ERROR
                 else -> LogLevel.INFO
             },
             tag = actualTag,

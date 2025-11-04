@@ -1,8 +1,8 @@
 package org.ntqqrev.acidify.internal.packet.system
 
-import org.ntqqrev.acidify.pb.PbOptional
-import org.ntqqrev.acidify.pb.PbSchema
-import org.ntqqrev.acidify.pb.PbString
+import org.ntqqrev.acidify.internal.protobuf.PbOptional
+import org.ntqqrev.acidify.internal.protobuf.PbSchema
+import org.ntqqrev.acidify.internal.protobuf.PbString
 
 internal object DeviceInfo : PbSchema() {
     val devName = PbString[1]

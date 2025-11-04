@@ -2,7 +2,7 @@ package org.ntqqrev.acidify.struct
 
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.internal.packet.oidb.GroupNotification
-import org.ntqqrev.acidify.pb.PbObject
+import org.ntqqrev.acidify.internal.protobuf.PbObject
 
 /**
  * 群通知实体

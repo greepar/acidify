@@ -170,30 +170,6 @@ object MD5 {
      * @return 16-byte MD5 digest
      */
     fun hash(text: String): ByteArray = hash(text.encodeToByteArray())
-
-    /**
-     * Convert digest to hexadecimal string
-     * @param digest MD5 digest bytes
-     * @return Hex string representation
-     */
-    fun toHex(digest: ByteArray): String =
-        digest.joinToString("") {
-            it.toInt().and(0xff).toString(16).padStart(2, '0')
-        }
-
-    /**
-     * Compute MD5 hash and return as hex string
-     * @param data Input byte array
-     * @return MD5 hash as hex string
-     */
-    fun hashHex(data: ByteArray): String = toHex(hash(data))
-
-    /**
-     * Compute MD5 hash and return as hex string
-     * @param text Input string
-     * @return MD5 hash as hex string
-     */
-    fun hashHex(text: String): String = toHex(hash(text))
 }
 
 /**
@@ -240,12 +216,4 @@ object HMACMD5 {
         val outerData = keyOpad + innerDigest
         return MD5.hash(outerData)
     }
-
-    /**
-     * Compute HMAC-MD5 and return as hex string
-     * @param key Secret key
-     * @param data Data to authenticate
-     * @return HMAC-MD5 as hex string
-     */
-    fun hmacHex(key: ByteArray, data: ByteArray): String = MD5.toHex(hmac(key, data))
 }

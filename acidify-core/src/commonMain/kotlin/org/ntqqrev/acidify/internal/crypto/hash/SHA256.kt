@@ -155,30 +155,6 @@ object SHA256 {
      * @return 32-byte SHA-256 digest
      */
     fun hash(text: String): ByteArray = hash(text.encodeToByteArray())
-
-    /**
-     * Convert digest to hexadecimal string
-     * @param digest SHA-256 digest bytes
-     * @return Hex string representation
-     */
-    fun toHex(digest: ByteArray): String =
-        digest.joinToString("") {
-            it.toInt().and(0xff).toString(16).padStart(2, '0')
-        }
-
-    /**
-     * Compute SHA-256 hash and return as hex string
-     * @param data Input byte array
-     * @return SHA-256 hash as hex string
-     */
-    fun hashHex(data: ByteArray): String = toHex(hash(data))
-
-    /**
-     * Compute SHA-256 hash and return as hex string
-     * @param text Input string
-     * @return SHA-256 hash as hex string
-     */
-    fun hashHex(text: String): String = toHex(hash(text))
 }
 
 /**
@@ -225,12 +201,4 @@ object HMACSHA256 {
         val outerData = keyOpad + innerDigest
         return SHA256.hash(outerData)
     }
-
-    /**
-     * Compute HMAC-SHA256 and return as hex string
-     * @param key Secret key
-     * @param data Data to authenticate
-     * @return HMAC-SHA256 as hex string
-     */
-    fun hmacHex(key: ByteArray, data: ByteArray): String = SHA256.toHex(hmac(key, data))
 }

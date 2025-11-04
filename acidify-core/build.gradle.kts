@@ -17,7 +17,6 @@ kotlin {
             implementation(libs.ktor.network)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.korlibs.compression)
-            implementation(libs.kotlincrypto.hash.sha1)
             implementation(libs.bundles.xmlutil)
             implementation(libs.stately.concurrent.collections)
         }

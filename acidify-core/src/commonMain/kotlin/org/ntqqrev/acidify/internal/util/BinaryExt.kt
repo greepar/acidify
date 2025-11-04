@@ -3,14 +3,14 @@ package org.ntqqrev.acidify.internal.util
 import io.ktor.utils.io.core.*
 import kotlinx.io.*
 import kotlinx.io.Buffer
-import org.kotlincrypto.hash.sha1.SHA1
 import org.ntqqrev.acidify.internal.crypto.hash.MD5
+import org.ntqqrev.acidify.internal.crypto.hash.SHA1
 
 // ======== Hash Functions ========
 
 internal fun ByteArray.md5(): ByteArray = MD5.hash(this)
 
-internal fun ByteArray.sha1(): ByteArray = SHA1().digest(this)
+internal fun ByteArray.sha1(): ByteArray = SHA1.hash(this)
 
 internal fun ByteArray.triSha1(): ByteArray {
     val sha1SampleSize = 30 * 1024 * 1024

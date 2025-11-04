@@ -224,42 +224,6 @@ fun aesCbcEncryptWithIv(
     return Pair(ciphertext, iv)
 }
 
-// Hex string conversion utilities
-fun bytesToHex(bytes: ByteArray): String {
-    val hexChars = "0123456789abcdef"
-    val result = StringBuilder(bytes.size * 2)
-
-    for (byte in bytes) {
-        val value = byte.toInt() and 0xFF
-        result.append(hexChars[value shr 4])
-        result.append(hexChars[value and 0x0f])
-    }
-    return result.toString()
-}
-
-fun hexToBytes(hex: String): ByteArray {
-    if (hex.length % 2 != 0) {
-        throw IllegalArgumentException("Hex string must have even length")
-    }
-
-    val result = ByteArray(hex.length / 2)
-
-    for (i in hex.indices step 2) {
-        fun getNibble(c: Char): Int {
-            return when (c) {
-                in '0'..'9' -> c - '0'
-                in 'a'..'f' -> c - 'a' + 10
-                in 'A'..'F' -> c - 'A' + 10
-                else -> throw IllegalArgumentException("Invalid hex character")
-            }
-        }
-
-        val byte = (getNibble(hex[i]) shl 4) or getNibble(hex[i + 1])
-        result[i / 2] = byte.toByte()
-    }
-    return result
-}
-
 // Base64 encoding/decoding utilities
 fun bytesToBase64(bytes: ByteArray): String {
     val base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"

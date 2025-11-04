@@ -13,11 +13,11 @@ import org.ntqqrev.yogurt.util.invoke
 
 val SendPrivateMessage = ApiEndpoint.SendPrivateMessage {
     val bot = application.dependencies.resolve<Bot>()
-    
+
     // 检查好友是否存在
     bot.getFriend(it.userId)
         ?: throw MilkyApiException(-404, "Friend not found")
-    
+
     val result = bot.sendFriendMessage(it.userId) {
         with(
             YogurtMessageBuildingContext(
@@ -32,7 +32,7 @@ val SendPrivateMessage = ApiEndpoint.SendPrivateMessage {
             }
         }
     }
-    
+
     SendPrivateMessageOutput(
         messageSeq = result.sequence,
         time = result.sendTime

@@ -6,6 +6,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.message.*
+import org.ntqqrev.acidify.message.ImageFormat
 import org.ntqqrev.milky.GroupEssenceMessage
 import org.ntqqrev.milky.IncomingMessage
 import org.ntqqrev.milky.IncomingSegment
@@ -237,7 +238,7 @@ suspend fun YogurtMessageBuildingContext.applySegment(segment: OutgoingSegment) 
             val videoInfo = getVideoInfo(videoData)
             logger.d { "视频宽高 ${videoInfo.width}x${videoInfo.height}，时长 ${videoInfo.duration.inWholeSeconds} 秒" }
             val thumbData = if (segment.data.thumbUri != null) {
-                resolveUri(segment.data.thumbUri)
+                resolveUri(segment.data.thumbUri!!)
             } else {
                 getVideoFirstFrameJpg(videoData)
             }

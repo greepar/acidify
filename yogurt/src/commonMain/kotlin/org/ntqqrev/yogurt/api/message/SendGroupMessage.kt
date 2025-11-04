@@ -13,7 +13,7 @@ import org.ntqqrev.yogurt.util.invoke
 
 val SendGroupMessage = ApiEndpoint.SendGroupMessage {
     val bot = application.dependencies.resolve<Bot>()
-    
+
     // 检查群聊是否存在
     bot.getGroup(it.groupId)
         ?: throw MilkyApiException(-404, "Group not found")
@@ -32,7 +32,7 @@ val SendGroupMessage = ApiEndpoint.SendGroupMessage {
             }
         }
     }
-    
+
     SendGroupMessageOutput(
         messageSeq = result.sequence,
         time = result.sendTime

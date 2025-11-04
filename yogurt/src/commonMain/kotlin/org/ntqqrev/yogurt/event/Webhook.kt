@@ -1,6 +1,6 @@
 package org.ntqqrev.yogurt.event
 
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*

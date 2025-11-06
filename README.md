@@ -38,6 +38,9 @@ kotlin {
 }
 ```
 
+> [!tip]
+> 使用时，你需要在项目中添加一个**支持 SSL 的** Ktor Client 引擎依赖。特别需要注意的是，`CIO` 引擎在 Native 平台下不支持 SSL，因此在 Native 下使用时，需要指定 CIO 之外的引擎，参见 [yogurt 的 build.gradle.kts](yogurt/build.gradle.kts)。
+
 ## 模块一览
 
 - `acidify-core` - PC NTQQ 协议的核心实现

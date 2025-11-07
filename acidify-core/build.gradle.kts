@@ -65,6 +65,9 @@ mavenPublishing {
 }
 
 dokka {
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("../../docs/public/kdoc"))
+    }
     dokkaSourceSets.commonMain {
         sourceLink {
             localDirectory.set(projectDir.resolve("src"))
@@ -73,6 +76,7 @@ dokka {
         }
     }
     pluginsConfiguration.html {
+        homepageLink = "https://acidify.ntqqrev.org"
         footerMessage = "(c) LagrangeDev"
     }
 }

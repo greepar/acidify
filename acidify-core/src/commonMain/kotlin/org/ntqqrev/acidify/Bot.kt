@@ -5,6 +5,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.*
@@ -13,6 +14,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import org.ntqqrev.acidify.common.*
 import org.ntqqrev.acidify.entity.BotFriend
 import org.ntqqrev.acidify.entity.BotGroup
@@ -181,6 +184,17 @@ class Bot(
      */
     fun createLogger(fromTag: String): Logger {
         return Logger(this, fromTag)
+    }
+
+    private suspend fun HttpRequestBuilder.withCookies(domain: String) {
+        header(
+            HttpHeaders.Cookie,
+            getCookies(domain).entries.joinToString("; ") { (k, v) -> "$k=$v" }
+        )
+    }
+
+    private suspend fun HttpRequestBuilder.withBkn() {
+        parameter("bkn", getCsrfToken())
     }
 
     /**
@@ -903,15 +917,18 @@ class Bot(
      * @return 群公告列表
      */
     suspend fun getGroupAnnouncements(groupUin: Long): List<BotGroupAnnouncement> {
-        val bkn = getCsrfToken()
-        val url = "https://web.qun.qq.com/cgi-bin/announce/get_t_list" +
-                "?bkn=$bkn&qid=$groupUin&ft=23&ni=1&n=1&i=1&log_read=1&platform=1&s=-1&n=20"
-
-        val cookie = getCookies("qun.qq.com").entries.joinToString("; ") { (k, v) -> "$k=$v" }
-        val response = httpClient.get(url) {
-            headers {
-                append(HttpHeaders.Cookie, cookie)
-            }
+        val response = httpClient.get("https://web.qun.qq.com/cgi-bin/announce/get_t_list") {
+            withBkn()
+            parameter("qid", groupUin)
+            parameter("ft", 23)
+            parameter("ni", 1)
+            parameter("n", 1)
+            parameter("i", 1)
+            parameter("log_read", 1)
+            parameter("platform", 1)
+            parameter("s", -1)
+            parameter("n", 20)
+            withCookies("qun.qq.com")
         }
 
         if (!response.status.isSuccess()) {
@@ -981,15 +998,13 @@ class Bot(
         groupUin: Long,
         announcementId: String
     ) {
-        val bkn = getCsrfToken()
-        val url = "https://web.qun.qq.com/cgi-bin/announce/del_feed" +
-                "?fid=$announcementId&qid=$groupUin&bkn=$bkn&ft=23&op=1"
-
-        val cookie = getCookies("qun.qq.com").entries.joinToString("; ") { (k, v) -> "$k=$v" }
-        val response = httpClient.get(url) {
-            headers {
-                append(HttpHeaders.Cookie, cookie)
-            }
+        val response = httpClient.get("https://web.qun.qq.com/cgi-bin/announce/del_feed") {
+            withBkn()
+            parameter("fid", announcementId)
+            parameter("qid", groupUin)
+            parameter("ft", 23)
+            parameter("op", 1)
+            withCookies("qun.qq.com")
         }
 
         if (!response.status.isSuccess()) {
@@ -1009,16 +1024,14 @@ class Bot(
         pageIndex: Int,
         pageSize: Int
     ): BotEssenceMessageResult {
-        val bkn = getCsrfToken()
-        val url = "https://qun.qq.com/cgi-bin/group_digest/digest_list" +
-                "?random=7800&X-CROSS-ORIGIN=fetch&group_code=$groupUin" +
-                "&page_start=$pageIndex&page_limit=$pageSize&bkn=$bkn"
-
-        val cookie = getCookies("qun.qq.com").entries.joinToString("; ") { (k, v) -> "$k=$v" }
-        val response = httpClient.get(url) {
-            headers {
-                append(HttpHeaders.Cookie, cookie)
-            }
+        val response = httpClient.get("https://qun.qq.com/cgi-bin/group_digest/digest_list") {
+            withBkn()
+            parameter("random", 7800)
+            parameter("X-CROSS-ORIGIN", "fetch")
+            parameter("group_code", groupUin)
+            parameter("page_start", pageIndex)
+            parameter("page_limit", pageSize)
+            withCookies("qun.qq.com")
         }
 
         if (!response.status.isSuccess()) {

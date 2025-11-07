@@ -1,3 +1,7 @@
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     id("buildsrc.convention.kotlin-multiplatform")
     alias(libs.plugins.kotlin.serialization)
@@ -64,6 +68,11 @@ mavenPublishing {
     }
 }
 
+val currentYearProvider = providers.provider {
+    ZonedDateTime.now(ZoneId.of("Asia/Shanghai"))
+        .format(DateTimeFormatter.ofPattern("yyyy"))
+}
+
 dokka {
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("../../docs/public/kdoc"))
@@ -82,6 +91,6 @@ dokka {
     }
     pluginsConfiguration.html {
         homepageLink = "https://acidify.ntqqrev.org"
-        footerMessage = "(c) LagrangeDev"
+        footerMessage = "© ${currentYearProvider.get()} LagrangeDev. Licensed under GNU GPLv3."
     }
 }

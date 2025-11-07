@@ -1,4 +1,4 @@
-import { LastUpdated, Layout, Navbar } from 'nextra-theme-docs';
+import { Footer, LastUpdated, Layout, Navbar } from 'nextra-theme-docs';
 import { getPageMap } from 'nextra/page-map';
 import 'nextra-theme-docs/style.css';
 import './styles.css';
@@ -60,6 +60,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       }}
     >
       {children}
+      <Footer>
+        © {new Date().getFullYear()} LagrangeDev. Licensed under GNU GPLv3.
+      </Footer>
     </Layout>
     </body>
     </html>

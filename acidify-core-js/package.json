@@ -5,7 +5,8 @@
   "main": "dist/acidify-acidify-core.js",
   "typings": "dist/acidify-acidify-core.d.ts",
   "scripts": {
-    "build": "tsup && node scripts/copy-dts.mjs"
+    "build": "tsup && node scripts/copy-dts.mjs",
+    "prepublishOnly": "npm run build"
   },
   "files": ["dist"],
   "keywords": [],

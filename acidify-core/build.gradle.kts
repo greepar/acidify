@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -124,6 +123,9 @@ dokka {
     dokkaSourceSets.configureEach {
         externalDocumentationLinks.register("kotlinx-coroutines") {
             url("https://kotlinlang.org/api/kotlinx.coroutines/")
+        }
+        externalDocumentationLinks.register("ktor") {
+            url("https://api.ktor.io/")
         }
     }
     pluginsConfiguration.html {

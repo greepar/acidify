@@ -46,17 +46,26 @@ kotlin {
 Bot 可以通过 `Bot.create` 方法来创建：
 
 ```kotlin
-suspend fun create(
-    appInfo: AppInfo, 
-    sessionStore: SessionStore, 
-    signProvider: SignProvider, 
-    scope: CoroutineScope, 
-    minLogLevel: LogLevel, 
-    logHandler: LogHandler
-): Bot
+// 从文件中加载 SessionStore，如果文件不存在则创建一个空的 SessionStore
+val sessionStore = if (File("session-store.json").exists()) {
+    val json = File("session-store.json").readText()
+    SessionStore.fromJson(json)
+} else {
+    SessionStore.empty()
+}
+
+val signProvider = UrlSignProvider("...")
+val scope = CoroutineScope(SupervisorJob())
 
 // 创建 Bot 实例
-val bot = Bot.create(/* parameters */)
+val bot = Bot.create(
+    appInfo = signProvider.getAppInfo(),
+    sessionStore = SessionStore.empty(),
+    signProvider = signProvider,
+    scope = scope,
+    minLogLevel = LogLevel.DEBUG,
+    logHandler = SimpleLogHandler,
+)
 ```
 
 其中各参数的含义如下：
@@ -153,7 +162,7 @@ bot.sendFriendMessage(friend.uin) {
         format = ImageFormat.PNG,
         width = 300,
         height = 300,
-        subType = ImageSubType.STICKER // 表示作为表情包发送,
+        subType = ImageSubType.STICKER, // 表示作为表情包发送
         summary = "[Cat]" // 可以自定义图片外显文本
     )
 }
@@ -244,8 +253,8 @@ bot.eventFlow
     .collect { event ->
         println("Session updated, new uin: ${event.sessionStore.uin}")
         val sessionJson = event.sessionStore.toJson()
-        File("session.json").writeText(sessionJson)
-        println("Session saved to session.json")
+        File("session-store.json").writeText(sessionJson)
+        println("Session saved to session-store.json")
     }
 ```
 

@@ -31,6 +31,7 @@ npm install @acidify/core
 以下是一个完整的 TypeScript 使用示例：
 
 ```typescript
+// 从文件中加载 SessionStore，如果文件不存在则创建一个空的 SessionStore
 let sessionStore: SessionStore;
 if (existsSync('session-store.json')) {
   const data = await readFile('session-store.json', 'utf-8');
@@ -41,8 +42,10 @@ if (existsSync('session-store.json')) {
 
 const scope = new CoroutineScope(true);
 const signProvider = new UrlSignProvider(scope, '...');
+
+// 创建 Bot 实例
 const bot = await Bot.create(
-  AppInfo.Bundled.Linux,
+  await signProvider.getAppInfo(),
   sessionStore,
   signProvider,
   scope,
@@ -60,7 +63,7 @@ await bot.sendGroupMessage(111111111n, async (b) => {
 });
 
 await bot.offline();
-scope.cancel(); // stop all coroutines
+scope.cancel(); // 停止所有的协程，结束程序
 ```
 
 更多的使用说明请参考[在 Kotlin 中使用](./kotlin.md)。

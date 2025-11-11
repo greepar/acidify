@@ -164,13 +164,7 @@ object YogurtApp {
             configureSessionStoreAutoSave()
             configureEventLogging()
 
-            launch {
-                if (bot.sessionStore.a2.isEmpty()) {
-                    bot.qrCodeLogin()
-                } else {
-                    bot.tryLogin()
-                }
-            }
+            launch { bot.login() }
         }
     }
 }

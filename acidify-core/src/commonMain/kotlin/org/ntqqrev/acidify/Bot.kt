@@ -226,7 +226,7 @@ class Bot private constructor(
 
     /**
      * 尝试使用现有的 Session 信息上线。
-     * 请优先调用 [tryLogin]，该方法会在现有 Session 失效时自动调用 [qrCodeLogin]。
+     * 请优先调用 [login]，该方法会在现有 Session 失效时自动调用 [qrCodeLogin]。
      * 若确定 Session 有效且不希望进行二维码登录，可调用此方法。
      */
     suspend fun online() {
@@ -271,23 +271,28 @@ class Bot private constructor(
     }
 
     /**
-     * 先尝试使用现有的 Session 信息登录，若失败则调用 [qrCodeLogin] 重新登录。
-     * 如果是第一次登录，请务必调用 [qrCodeLogin]。
+     * 如果 Session 为空则调用 [qrCodeLogin] 进行登录。
+     * 如果 Session 不为空则尝试使用现有的 Session 信息登录，若失败则调用 [qrCodeLogin] 重新登录。
      */
-    suspend fun tryLogin() {
-        try {
-            try {
-                online()
-            } catch (e: Exception) {
-                logger.w(e) { "使用现有 Session 登录失败，尝试刷新 DeviceGuid 后重新登录" }
-                sessionStore.refreshDeviceGuid()
-                online()
-            }
-        } catch (e: Exception) {
-            logger.w(e) { "使用现有 Session 登录失败，尝试二维码登录" }
-            sessionStore.clear()
-            // sharedEventFlow.emit(SessionStoreUpdatedEvent(sessionStore))
+    suspend fun login() {
+        if (sessionStore.a2.isEmpty()) {
+            logger.i { "Session 为空，尝试二维码登录" }
             qrCodeLogin()
+        } else {
+            try {
+                try {
+                    online()
+                } catch (e: Exception) {
+                    logger.w(e) { "使用现有 Session 登录失败，尝试刷新 DeviceGuid 后重新登录" }
+                    sessionStore.refreshDeviceGuid()
+                    online()
+                }
+            } catch (e: Exception) {
+                logger.w(e) { "使用现有 Session 登录失败，尝试二维码登录" }
+                sessionStore.clear()
+                // sharedEventFlow.emit(SessionStoreUpdatedEvent(sessionStore))
+                qrCodeLogin()
+            }
         }
     }
 

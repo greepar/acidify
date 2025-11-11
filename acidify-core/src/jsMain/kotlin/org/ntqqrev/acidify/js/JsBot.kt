@@ -48,7 +48,7 @@ class JsBot internal constructor(private val bot: Bot) : CoroutineScope by bot {
 
     fun offline() = promise { bot.offline() }
 
-    fun tryLogin() = promise { bot.tryLogin() }
+    fun login() = promise { bot.login() }
 
     fun fetchUserInfoByUin(uin: Long): Promise<BotUserInfo> = promise { bot.fetchUserInfoByUin(uin) }
 

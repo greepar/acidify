@@ -5,7 +5,6 @@ package org.ntqqrev.acidify
 import io.ktor.util.decodeBase64String
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
@@ -66,13 +65,7 @@ class BotTest {
                 }
             }
         }
-        runBlocking {
-            if (session.a2.isEmpty()) {
-                bot.qrCodeLogin()
-            } else {
-                bot.tryLogin()
-            }
-        }
+        runBlocking { bot.login() }
     }
 
     @Test

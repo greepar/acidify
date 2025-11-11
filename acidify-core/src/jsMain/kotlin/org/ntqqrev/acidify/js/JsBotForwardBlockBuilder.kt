@@ -6,6 +6,7 @@ import kotlin.js.Promise
 
 @JsExport
 @JsName("BotForwardBlockBuilder")
+@AcidifyJsWrapper
 class JsBotForwardBlockBuilder internal constructor(
     val underlying: BotForwardBlockBuilder
 ) {

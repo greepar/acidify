@@ -7,6 +7,7 @@ import kotlin.js.Promise
 
 @JsExport
 @JsName("UrlSignProvider")
+@AcidifyJsWrapper
 class JsUrlSignProvider(
     val scope: JsCoroutineScope,
     url: String,

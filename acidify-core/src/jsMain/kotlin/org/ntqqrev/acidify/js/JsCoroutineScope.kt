@@ -4,6 +4,7 @@ import kotlinx.coroutines.*
 
 @JsExport
 @JsName("CoroutineScope")
+@AcidifyJsWrapper
 class JsCoroutineScope(
     val isSupervised: Boolean = false
 ) {

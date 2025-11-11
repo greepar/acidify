@@ -8,6 +8,7 @@ import kotlin.js.Promise
 
 @JsExport
 @JsName("BotOutgoingMessageBuilder")
+@AcidifyJsWrapper
 class JsBotOutgoingMessageBuilder internal constructor(
     private val underlying: BotOutgoingMessageBuilder
 ) {

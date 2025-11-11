@@ -20,6 +20,7 @@ import kotlin.js.Promise
 
 @JsExport
 @JsName("Bot")
+@AcidifyJsWrapper
 class JsBot internal constructor(private val bot: Bot) : CoroutineScope by bot {
     private val jobMap = mutableMapOf<dynamic, Job>()
 

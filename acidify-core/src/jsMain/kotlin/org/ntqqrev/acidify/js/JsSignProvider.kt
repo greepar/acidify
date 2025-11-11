@@ -5,6 +5,7 @@ import kotlin.js.Promise
 
 @JsExport
 @JsName("SignProvider")
+@AcidifyJsWrapper
 interface JsSignProvider {
     fun sign(cmd: String, seq: Int, src: ByteArray): Promise<SignResult>
 }

@@ -20,4 +20,6 @@ class JsUrlSignProvider(
     ): Promise<SignResult> = scope.value.promise {
         urlSignProvider.sign(cmd, seq, src)
     }
+
+    fun getAppInfo() = scope.value.promise { urlSignProvider.getAppInfo() }
 }

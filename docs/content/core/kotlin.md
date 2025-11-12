@@ -43,7 +43,7 @@ kotlin {
 
 ## 初始化 Bot
 
-Bot 可以通过 `Bot.create` 方法来创建：
+Bot 可以通过 [`Bot.create`](/kdoc/acidify-core/org.ntqqrev.acidify/-bot/-companion/create.html) 方法来创建：
 
 ```kotlin
 // 从文件中加载 SessionStore，如果文件不存在则创建一个空的 SessionStore
@@ -70,18 +70,18 @@ val bot = Bot.create(
 
 其中各参数的含义如下：
 - `appInfo`：Bot 所要模拟的 QQ 客户端的相关信息，包含客户端版本、操作系统、AppID 等信息，可以通过以下方式提供：
-  - `AppInfo.Bundled` 对象提供了内置的 `AppInfo` 实现；
-  - `UrlSignProvider.getAppInfo()` 方法可以尝试从提供的 URL 获取 `AppInfo`；
-  - `AppInfo.fromJson(String)` 方法可以从 JSON 字符串中解析 `AppInfo`。
+  - [`AppInfo.Bundled`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-app-info/-bundled/index.html) 对象提供了内置的 [`AppInfo`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-app-info/index.html) 实现；
+  - `UrlSignProvider.getAppInfo()` 方法可以尝试从提供的 URL 获取 [`AppInfo`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-app-info/index.html)；
+  - `AppInfo.fromJson(String)` 方法可以从 JSON 字符串中解析 [`AppInfo`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-app-info/index.html)。
 - `sessionStore`：用于存储和加载会话数据的存储对象。可以通过以下方式提供：
-  - `SessionStore.empty()` 方法创建一个空的 `SessionStore`；
-  - `SessionStore.fromJson(String)` 方法可以从 JSON 字符串中解析 `SessionStore`。同样，也可以通过 `toJson()` 方法将 `SessionStore` 序列化为 JSON 字符串以便存储。
-- `signProvider`：QQ 要求对部分数据包进行签名，Acidify 并不内置签名算法的实现，而是通过 `SignProvider` 接口来要求使用者提供签名实现。`acidify-core` 提供了 `UrlSignProvider` 类，可以通过 URL 获取签名。
-- `scope`：用于 Bot 运行的 `CoroutineScope`。
+  - `SessionStore.empty()` 方法创建一个空的 [`SessionStore`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-session-store/index.html)；
+  - `SessionStore.fromJson(String)` 方法可以从 JSON 字符串中解析 [`SessionStore`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-session-store/index.html)。同样，也可以通过 `toJson()` 方法将 [`SessionStore`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-session-store/index.html) 序列化为 JSON 字符串以便存储。
+- `signProvider`：QQ 要求对部分数据包进行签名，Acidify 并不内置签名算法的实现，而是通过 [`SignProvider`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-sign-provider/index.html) 接口来要求使用者提供签名实现。`acidify-core` 提供了 [`UrlSignProvider`](/kdoc/acidify-core/org.ntqqrev.acidify.common/-url-sign-provider/index.html) 类，可以通过 URL 获取签名。
+- `scope`：用于 Bot 运行的 [`CoroutineScope`](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/)。
 - `minLogLevel`：日志的最低输出级别，低于该级别的日志将不会被输出。
 - `logHandler`：日志处理器，用于处理输出的日志信息。你可以自行实现该接口。`acidify-core` 提供了两种简单的内置日志处理器：
-  - `NopLogHandler`：不输出任何日志。
-  - `SimpleLogHandler`：将日志输出到控制台。
+  - [`NopLogHandler`](/kdoc/acidify-core/org.ntqqrev.acidify.logging/-nop-log-handler/index.html)：不输出任何日志。
+  - [`SimpleLogHandler`](/kdoc/acidify-core/org.ntqqrev.acidify.logging/-simple-log-handler/index.html)：将日志输出到控制台。
 
 > [!tip]
 >
@@ -91,7 +91,7 @@ val bot = Bot.create(
 
 ### 登录
 
-Bot 的所有功能需要在登录后才能使用。调用 `bot.login()` 以登录。
+Bot 的所有功能需要在登录后才能使用。调用 [`Bot.login()`](/kdoc/acidify-core/org.ntqqrev.acidify/-bot/login.html) 以登录。
 
 该方法会判断 Session，如果 Session 为空则调用 `qrCodeLogin` 进行登录；如果 Session 不为空则尝试使用现有的 Session 信息登录，若失败则再调用 `qrCodeLogin` 重新登录。
 
@@ -192,15 +192,15 @@ bot.sendGroupMessage(group.uin) {
 >
 > `acidify-core` 中提供的消息发送功能较为底层，需要调用者自行提供许多元信息，例如被 @ 的成员名片、图片的宽高等。如果你希望使用更高层次的消息发送功能，请考虑使用 Yogurt 并配合应用端框架使用。
 
-发送消息的 API 会返回一个 `BotOutgoingMessageResult` 对象，包含了消息的序列号和实际发送的时间。
+发送消息的 API 会返回一个 [`BotOutgoingMessageResult`](/kdoc/acidify-core/org.ntqqrev.acidify.message/-bot-outgoing-message-result/index.html) 对象，包含了消息的序列号和实际发送的时间。
 
 ## 处理事件
 
-Bot 提供了一个 `eventFlow` 属性，它是一个 `SharedFlow<AcidifyEvent>`，用于监听 Bot 产生的各种事件。你可以通过调用该 Flow 的 `collect` 方法来处理事件。
+Bot 提供了一个 `eventFlow` 属性，它是一个 <code><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-shared-flow/">SharedFlow</a>&lt;<a href="/kdoc/acidify-core/org.ntqqrev.acidify.event/-acidify-event/index.html">AcidifyEvent</a>&gt;</code>，用于监听 Bot 产生的各种事件。你可以通过调用该 Flow 的 `collect` 方法来处理事件。
 
 > [!note]
 >
-> `Flow.collect()` 是一个 `suspend fun`，调用它会导致当前协程挂起并持续运行。因此，建议你在一个单独的协程中调用它（使用 `CoroutineScope.launch` 等方式），以免阻塞主协程。以下的代码示例均假设你已经启动了一个独立的协程来处理事件。
+> [`collect`](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/collect.html) 是一个 `suspend fun`，调用它会导致当前协程挂起并持续运行。因此，建议你在一个单独的协程中调用它（使用 [`CoroutineScope.launch`](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/launch.html) 等方式），以免阻塞主协程。以下的代码示例均假设你已经启动了一个独立的协程来处理事件。
 
 > [!warning]
 >
@@ -208,7 +208,7 @@ Bot 提供了一个 `eventFlow` 属性，它是一个 `SharedFlow<AcidifyEvent>`
 
 ### 接收消息
 
-一个重要的事件类型是 `MessageReceiveEvent`，它表示 Bot 收到了一条消息。以下是一个示例，展示了如何监听并处理收到的消息：
+一个重要的事件类型是 [`MessageReceiveEvent`](/kdoc/acidify-core/org.ntqqrev.acidify.event/-message-receive-event/index.html)，它表示 Bot 收到了一条消息。以下是一个示例，展示了如何监听并处理收到的消息：
 
 ```kotlin
 bot.eventFlow
@@ -232,14 +232,14 @@ bot.eventFlow
     }
 ```
 
-从中可以看到一条消息 (`BotIncomingMessage`) 包含了多个消息段 (`BotIncomingSegment`)，每个消息段表示消息的一部分内容，例如文本、图片等。你可以根据消息段的类型来处理不同的内容。 
+从中可以看到一条消息 ([`BotIncomingMessage`](/kdoc/acidify-core/org.ntqqrev.acidify.message/-bot-incoming-message/index.html)) 包含了多个消息段 ([`BotIncomingSegment`](/kdoc/acidify-core/org.ntqqrev.acidify.message/-bot-incoming-segment/index.html))，每个消息段表示消息的一部分内容，例如文本、图片等。你可以根据消息段的类型来处理不同的内容。 
 
 ### 监听登录过程
 
 上面提到了初次调用 `login` 进行登录时，会进行二维码登录。二维码登录包含三个阶段：
-- 二维码的获取，对应 `QRCodeGeneratedEvent`；
-- 二维码的状态查询，对应 `QRCodeStatusQueryEvent`；
-- 登录成功，Session 更新，对应 `SessionStoreUpdatedEvent`。
+- 二维码的获取，对应 [`QRCodeGeneratedEvent`](/kdoc/acidify-core/org.ntqqrev.acidify.event/-q-r-code-generated-event/index.html)；
+- 二维码的状态查询，对应 [`QRCodeStateQueryEvent`](/kdoc/acidify-core/org.ntqqrev.acidify.event/-q-r-code-state-query-event/index.html)；
+- 登录成功，Session 更新，对应 [`SessionStoreUpdatedEvent`](/kdoc/acidify-core/org.ntqqrev.acidify.event/-session-store-updated-event/index.html)。
 
 Bot 的 `qrCodeLogin` 方法会在登录过程中依次触发上述事件。你可以监听这些事件来获取登录状态的更新，并且保存信息以便下次登录使用。以下是一个示例：
 

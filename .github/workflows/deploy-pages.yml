@@ -42,7 +42,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd docs
+          cd packages/docs
           pnpm install
 
       - name: Setup Pages
@@ -74,7 +74,7 @@ jobs:
 
       - name: Build with Next.js
         run: |
-          cd docs
+          cd packages/docs
           pnpm run build
         env:
           PAGES_BASE_PATH: ${{ steps.setup_pages.outputs.base_path }}

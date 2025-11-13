@@ -58,7 +58,7 @@ internal fun applyPadding(buffer: ByteArray, dataLen: Int, scheme: PaddingScheme
             }
         }
 
-        else -> {}
+        // else -> {}
     }
 
     return dataLen + paddingLen
@@ -110,7 +110,7 @@ internal fun removePadding(buffer: ByteArray, dataLen: Int, scheme: PaddingSchem
             throw IllegalArgumentException("Invalid ISO7816 padding")
         }
 
-        else -> dataLen
+        // else -> dataLen
     }
 }
 

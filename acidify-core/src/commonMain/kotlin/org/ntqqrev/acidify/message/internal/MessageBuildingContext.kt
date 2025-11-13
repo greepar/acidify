@@ -240,7 +240,7 @@ internal class MessageBuildingContext(
         val businessType = when (scene) {
             MessageScene.FRIEND -> 10
             MessageScene.GROUP -> 20
-            else -> throw IllegalArgumentException("不支持的消息场景: $scene")
+            MessageScene.TEMP -> throw IllegalArgumentException("不支持的消息场景: $scene")
         }
 
         listOf(
@@ -248,7 +248,7 @@ internal class MessageBuildingContext(
                 when (scene) {
                     MessageScene.FRIEND -> e[notOnlineImage] = NotOnlineImage(uploadResp.get { compatQMsg })
                     MessageScene.GROUP -> e[customFace] = CustomFace(uploadResp.get { compatQMsg })
-                    else -> {}
+                    MessageScene.TEMP -> {}
                 }
             },
             Elem {
@@ -310,7 +310,7 @@ internal class MessageBuildingContext(
         val businessType = when (scene) {
             MessageScene.FRIEND -> 12
             MessageScene.GROUP -> 22
-            else -> throw IllegalArgumentException("不支持的消息场景: $scene")
+            MessageScene.TEMP -> throw IllegalArgumentException("不支持的消息场景: $scene")
         }
 
         Elem {
@@ -407,7 +407,7 @@ internal class MessageBuildingContext(
         val businessType = when (scene) {
             MessageScene.FRIEND -> 11
             MessageScene.GROUP -> 21
-            else -> throw IllegalArgumentException("不支持的消息场景: $scene")
+            MessageScene.TEMP -> throw IllegalArgumentException("不支持的消息场景: $scene")
         }
 
         Elem {

@@ -2,80 +2,9 @@
 
 package org.ntqqrev.acidify.internal.multiprecision
 
-import kotlinx.atomicfu.atomic
-import kotlinx.atomicfu.locks.SynchronizedObject
-import kotlinx.atomicfu.locks.synchronized
 import kotlin.jvm.JvmStatic
 import kotlin.math.max
 import kotlin.math.min
-
-/**
- * Memory pool for temporary allocations
- */
-internal object MemoryPool {
-    private class Block {
-        val data = ULongArray(POOL_BLOCK_SIZE)
-        val inUse = atomic(false)
-    }
-
-    private val blocks = Array(POOL_MAX_BLOCKS) { Block() }
-    private val lock = SynchronizedObject()
-
-    fun allocate(words: Int): ULongArray? {
-        if (words > POOL_BLOCK_SIZE) {
-            return null  // Fall back to regular allocation
-        }
-
-        synchronized(lock) {
-            for (block in blocks) {
-                if (!block.inUse.value) {
-                    block.inUse.value = true
-                    block.data.fill(0UL)
-                    return block.data
-                }
-            }
-        }
-        return null
-    }
-
-    fun deallocate(ptr: ULongArray) {
-        for (block in blocks) {
-            if (block.data == ptr) {
-                block.inUse.value = false
-                return
-            }
-        }
-    }
-}
-
-/**
- * RAII wrapper for pool allocations
- */
-internal class PoolAllocation(words: Int) {
-    private val ptr: ULongArray
-    private val size: Int = words
-    private val fromPool: Boolean
-
-    init {
-        val poolPtr = MemoryPool.allocate(words)
-        if (poolPtr != null) {
-            ptr = poolPtr
-            fromPool = true
-        } else {
-            ptr = ULongArray(words)
-            fromPool = false
-        }
-    }
-
-    fun data(): ULongArray = ptr
-    fun size(): Int = size
-
-    protected fun finalize() {
-        if (fromPool) {
-            MemoryPool.deallocate(ptr)
-        }
-    }
-}
 
 /**
  * Main BigInteger class

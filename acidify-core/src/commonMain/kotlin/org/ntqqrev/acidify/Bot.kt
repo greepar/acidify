@@ -99,6 +99,12 @@ class Bot private constructor(
         entityFactory = ::BotGroup
     )
 
+    private val httpClient = HttpClient {
+        install(ContentNegotiation) {
+            json(Json { ignoreUnknownKeys = true })
+        }
+    }
+
     private val uin2uidMap = mutableMapOf<Long, String>()
     private val uid2uinMap = mutableMapOf<String, Long>()
     private val idMapQueryMutex = Mutex()
@@ -147,15 +153,6 @@ class Bot private constructor(
      */
     var isLoggedIn: Boolean = false
         internal set
-
-    /**
-     * HTTP 客户端实例，可用于发起自定义的 HTTP 请求。
-     */
-    val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true })
-        }
-    }
 
     /**
      * 创建一个 [Logger] 实例，通常用于库内部日志记录，并将产生的日志发送到提供的 [LogHandler]。

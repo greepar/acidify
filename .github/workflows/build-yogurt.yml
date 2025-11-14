@@ -6,7 +6,8 @@ on:
     paths-ignore:
       - '.devin/**'
       - 'kotlin-js-store/**'
-      - 'packages/**'
+      - 'packages/core/**'
+      - 'packages/docs/**'
       - '**.md'
   workflow_dispatch:
 

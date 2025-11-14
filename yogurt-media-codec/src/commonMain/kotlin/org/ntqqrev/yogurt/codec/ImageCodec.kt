@@ -107,8 +107,8 @@ object ImageDecoder {
 
     private fun parseGif(b: ByteArray): ImageInfo? {
         if (b.size < 10) return null
-        val width = readShortLittleEndian(b, 6).toInt() and 0xFFFF
-        val height = readShortLittleEndian(b, 8).toInt() and 0xFFFF
+        val width = readShortLittleEndian(b, 6) and 0xFFFF
+        val height = readShortLittleEndian(b, 8) and 0xFFFF
         return ImageInfo(ImageFormat.GIF, width, height)
     }
 
@@ -245,18 +245,18 @@ object ImageDecoder {
 
         // read entries count (2 bytes) at ifdOffset
         if (ifdOffset + 2 > b.size) return null
-        val numEntries = if (littleEndian) readShortLittleEndian(b, ifdOffset).toInt() and 0xFFFF
-        else readShortBigEndian(b, ifdOffset).toInt() and 0xFFFF
+        val numEntries = if (littleEndian) readShortLittleEndian(b, ifdOffset) and 0xFFFF
+        else readShortBigEndian(b, ifdOffset) and 0xFFFF
         var entryOffset = ifdOffset + 2
         var width: Int? = null
         var height: Int? = null
 
         for (i in 0 until numEntries) {
             if (entryOffset + 12 > b.size) break
-            val tag = if (littleEndian) readShortLittleEndian(b, entryOffset).toInt() and 0xFFFF
-            else readShortBigEndian(b, entryOffset).toInt() and 0xFFFF
-            val type = if (littleEndian) readShortLittleEndian(b, entryOffset + 2).toInt() and 0xFFFF
-            else readShortBigEndian(b, entryOffset + 2).toInt() and 0xFFFF
+            val tag = if (littleEndian) readShortLittleEndian(b, entryOffset) and 0xFFFF
+            else readShortBigEndian(b, entryOffset) and 0xFFFF
+            val type = if (littleEndian) readShortLittleEndian(b, entryOffset + 2) and 0xFFFF
+            else readShortBigEndian(b, entryOffset + 2) and 0xFFFF
             val count = if (littleEndian) readIntLittleEndian(b, entryOffset + 4)
             else readIntBigEndian(b, entryOffset + 4)
             val valueOffset = if (littleEndian) readIntLittleEndian(b, entryOffset + 8)
@@ -291,8 +291,8 @@ object ImageDecoder {
             if (pos < 0 || pos + size > b.size) return null
             return when {
                 size == 1 -> b[pos].toInt() and 0xFF
-                size == 2 -> if (littleEndian) readShortLittleEndian(b, pos).toInt() and 0xFFFF
-                else readShortBigEndian(b, pos).toInt() and 0xFFFF
+                size == 2 -> if (littleEndian) readShortLittleEndian(b, pos) and 0xFFFF
+                else readShortBigEndian(b, pos) and 0xFFFF
                 size == 4 -> if (littleEndian) readIntLittleEndian(b, pos)
                 else readIntBigEndian(b, pos)
                 else -> null

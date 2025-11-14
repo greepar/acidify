@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const { platform, arch } = process;
 
-const vendorRoot = path.join(__dirname, "..", `yogurt-${platform}-${arch}`);
+const vendorRoot = path.join(__dirname, "node_modules", "@acidify", `yogurt-${platform}-${arch}`);
 const yogurtBinaryName = process.platform === "win32" ? "yogurt.exe" : "yogurt.kexe";
 const binaryPath = path.join(vendorRoot, yogurtBinaryName);
 

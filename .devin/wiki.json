@@ -7,296 +7,179 @@
   "pages": [
     {
       "title": "概览",
-      "purpose": "介绍 acidify-core PC NTQQ 协议实现和 yogurt Milky 客户端应用，解释它们是什么、它们之间的关系以及整体目的。使用简体中文生成文档。",
+      "purpose": "介绍 acidify-core 作为 PC NTQQ 协议实现以及基于其上的 yogurt Milky 应用，说明两者关系、生态定位与受支持的平台。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "快速开始",
-      "purpose": "引导用户完成 yogurt 的安装、配置和首次运行。使用简体中文生成文档。",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "安装",
-      "purpose": "说明 yogurt 的不同安装方式（npm 全局安装、GitHub Releases、从源码构建）及其在不同平台上的使用。使用简体中文生成文档。",
-      "parent": "快速开始",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "配置",
-      "purpose": "文档化 YogurtConfig 结构、所有配置项（signApiUrl、httpConfig、webhookConfig、logging），以及如何配置应用程序。使用简体中文生成文档。",
-      "parent": "快速开始",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "认证",
-      "purpose": "解释二维码登录流程、会话持久化、以及在线与离线的生命周期管理。使用简体中文生成文档。",
-      "parent": "快速开始",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "架构",
-      "purpose": "提供 acidify/yogurt 系统的架构概览，包括层级、模块、数据流和构建系统。使用简体中文生成文档。",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "系统分层",
-      "purpose": "描述三层架构：acidify-core（协议层）、yogurt（应用层）以及外部服务。使用简体中文生成文档。",
-      "parent": "架构",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "模块结构",
-      "purpose": "记录项目的模块结构：acidify-core、yogurt、yogurt-jvm、yogurt-media-codec、yogurt-qrcode 以及它们之间的依赖关系。使用简体中文生成文档。",
-      "parent": "架构",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "数据流管线",
-      "purpose": "解释系统中的双向消息流：入站（protobuf → AcidifyEvent → Milky）与出站（Milky → Builder → protobuf）。使用简体中文生成文档。",
-      "parent": "架构",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "构建与分发系统",
-      "purpose": "文档化 Kotlin Multiplatform 构建配置、CI/CD 流程、目标平台，以及分发渠道（Maven Central、npm、GitHub Releases）。使用简体中文生成文档。",
-      "parent": "架构",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
       ]
     },
     {
       "title": "Acidify Core",
-      "purpose": "对 acidify-core 模块的组件与功能进行完整文档说明。使用简体中文生成文档。",
+      "purpose": "总体说明 acidify-core 模块的角色、暴露接口以及对上层模块和外部生态的支撑方式。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
       ]
     },
     {
-      "title": "Bot 类",
-      "purpose": "记录 Bot 类 API：登录方法、消息收发、实体管理（好友、群组、成员）及公开接口。使用简体中文生成文档。",
-      "parent": "Acidify Core",
+      "title": "多平台与发布流水线",
+      "purpose": "解释 acidify-core 的 Kotlin Multiplatform、JS IR/Node、TypeScript 定义、Maven Central 发布与 Dokka 文档配置。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Acidify Core"
+    },
+    {
+      "title": "Bot 生命周期与会话管理",
+      "purpose": "描述 Bot 如何封装 AppInfo/SessionStore/SignProvider，处理二维码登录、在线离线控制及好友/群缓存。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Acidify Core"
+    },
+    {
+      "title": "LagrangeClient 与协议上下文",
+      "purpose": "梳理 LagrangeClient 及 Packet/Login/Ticket/Highway 等上下文如何维护长连接、心跳与 Highway 上传。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Acidify Core"
+    },
+    {
+      "title": "服务层与业务指令",
+      "purpose": "记录 internal.service 中系统、消息、群组、文件等指令如何通过统一 callService 流程组包、调用并解析响应。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Acidify Core"
+    },
+    {
+      "title": "消息模型与构建工具",
+      "purpose": "介绍 BotIncomingMessage、IncomingSegmentFactory、MessageBuildingContext 等对多段消息解析与构建的支持。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Acidify Core"
+    },
+    {
+      "title": "事件、日志与缓存",
+      "purpose": "总结 sharedEventFlow/sharedLogFlow、CacheUtility 预热、faceDetailMap 与 UID 映射等运行时状态与调试手段。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Acidify Core"
+    },
+    {
+      "title": "Yogurt 模块",
+      "purpose": "概述 yogurt 作为基于 acidify-core 的 Milky 实现，包含其 KMP 目标、依赖与整体运行方式。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
       ]
     },
     {
-      "title": "协议层",
-      "purpose": "解释内部协议实现层，包括 LagrangeClient、上下文以及服务模式。使用简体中文生成文档。",
-      "parent": "Acidify Core",
+      "title": "配置系统与安全开关",
+      "purpose": "说明 YogurtConfig 结构、默认值、配置文件生成/重写流程以及签名 API 与安全检查选项。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Yogurt 模块"
+    },
+    {
+      "title": "服务启动与依赖注入",
+      "purpose": "记录 YogurtApp 启动流程，包括签名校验、安全提示、SessionStore 加载、Bot 构建与 Ktor 插件配置。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Yogurt 模块"
+    },
+    {
+      "title": "Milky API 层",
+      "purpose": "介绍 /api 路由、serve 包装器、鉴权与系统/消息/好友/群/文件等端点的日志与错误处理。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Yogurt 模块"
+    },
+    {
+      "title": "消息与实体转换",
+      "purpose": "描述 transformMessage、YogurtMessageBuildingContext、transformEssenceMessage 等如何在 Acidify 与 Milky 实体间做双向转换。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Yogurt 模块"
+    },
+    {
+      "title": "事件发布通道",
+      "purpose": "说明 WebSocket、SSE、Webhook 等事件输出如何订阅 bot.eventFlow 并执行鉴权与推送。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+        }
+      ],
+      "parent": "Yogurt 模块"
+    },
+    {
+      "title": "支撑子模块",
+      "purpose": "列出并解释 yogurt-media-codec、yogurt-qrcode、yogurt-jvm 等辅助模块在生态中的职责。",
+      "page_notes": [
+        {
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
       ]
     },
     {
-      "title": "LagrangeClient 与服务模式",
-      "purpose": "记录 LagrangeClient 的协调逻辑以及所有协议操作使用的 Service<T,R> 服务模式。使用简体中文生成文档。",
-      "parent": "Acidify Core",
+      "title": "yogurt-media-codec",
+      "purpose": "说明其绑定 LagrangeCodec、区分 JVM 与 Native 加载方式，并要求特定运行时库目录结构。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
-      ]
+      ],
+      "parent": "支撑子模块"
     },
     {
-      "title": "网络通信",
-      "purpose": "详细说明 PacketContext 的 TCP 连接管理、数据包序列化与反序列化、请求-响应跟踪、心跳机制以及重连逻辑。使用简体中文生成文档。",
-      "parent": "Acidify Core",
+      "title": "yogurt-qrcode",
+      "purpose": "记录该模块精简自 qrcode-kotlin，仅保留二维码矩阵生成核心以及适用的许可。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
-      ]
+      ],
+      "parent": "支撑子模块"
     },
     {
-      "title": "认证与密钥管理",
-      "purpose": "解释 TicketContext 如何管理 SKey、PSKey、CSRF Token 以及基于时间缓存的生命周期。使用简体中文生成文档。",
-      "parent": "Acidify Core",
+      "title": "yogurt-jvm 与运行包装",
+      "purpose": "介绍 yogurt-jvm 提供的 JVM 入口、UTF-8 输出与对 Ktor 插件兼容性的包装策略。",
       "page_notes": [
         {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
+          "content": "使用简体中文生成文档。对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
         }
-      ]
-    },
-    {
-      "title": "入站消息解析",
-      "purpose": "描述如何使用 IncomingSegmentFactory 模式与 MessageParsingContext 将原始 protobuf 消息解析为 BotIncomingMessage 对象。使用简体中文生成文档。",
-      "parent": "Acidify Core",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "出站消息构建",
-      "purpose": "记录 MessageBuildingContext DSL 的消息构建方式，包括文本、提及、媒体元素、回复和转发。使用简体中文生成文档。",
-      "parent": "Acidify Core",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "事件系统",
-      "purpose": "解释事件流架构：bot.eventFlow、MsgPushSignal 解析、信号分发，以及从推送消息生成的 15+ 种事件类型。使用简体中文生成文档。",
-      "parent": "Acidify Core",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "实体管理与缓存",
-      "purpose": "记录 CacheUtility 系统对好友/群组/成员的管理、UIN↔UID 的双向映射、缓存失效机制及带有 forceUpdate 的惰性加载方式。使用简体中文生成文档。",
-      "parent": "Acidify Core",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "媒体处理",
-      "purpose": "覆盖所有媒体相关处理，包括上传协议、编解码处理、以及 yogurt-media-codec 模块。使用简体中文生成文档。",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "上传流程与协议",
-      "purpose": "解释媒体上传的两阶段流程：OIDB 注册（RichMediaUpload 服务）与 Highway 直接上传到 CDN。使用简体中文生成文档。",
-      "parent": "媒体处理",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "yogurt-media-codec 模块",
-      "purpose": "记录跨平台媒体编解码模块：audioToPcm、SILK 编解码、getImageInfo、getVideoInfo、getVideoFirstFrameJpg，以及平台特定实现（JNA 与 Cinterop）。使用简体中文生成文档。",
-      "parent": "媒体处理",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "Yogurt 应用",
-      "purpose": "记录封装 acidify-core 并提供 HTTP/WebSocket API 的 yogurt Ktor 应用。使用简体中文生成文档。",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "应用生命周期",
-      "purpose": "解释 YogurtApp 初始化流程：createServer()、插件安装、bot 创建、ApplicationStarted 钩子、二维码展示、会话自动保存与优雅关闭。使用简体中文生成文档。",
-      "parent": "Yogurt 应用",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "HTTP API 层",
-      "purpose": "记录 50+ 个 HTTP API 端点、MilkyApiHandler 模式、Bearer Token 认证、登录状态保护及 MilkyApiException 错误处理。使用简体中文生成文档。",
-      "parent": "Yogurt 应用",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "事件分发",
-      "purpose": "解释通过 WebSocket、SSE 与 Webhook 的实时事件推送；事件过滤与转换；以及基于 bot.eventFlow 的扇出式架构。使用简体中文生成文档。",
-      "parent": "Yogurt 应用",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "转换层",
-      "purpose": "记录 Acidify 与 Milky 格式的双向转换：transformMessage、transformSegment、transformAcidifyEvent、toMilkyEntity 以及 URI 解析。使用简体中文生成文档。",
-      "parent": "Yogurt 应用",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "Milky 协议参考",
-      "purpose": "提供 yogurt 所暴露的 Milky 协议的完整 API 参考。使用简体中文生成文档。",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
-    },
-    {
-      "title": "API 端点",
-      "purpose": "按类别（系统、好友、群组、消息、文件、管理）列出所有 HTTP API 端点，并提供请求/响应结构与示例。使用简体中文生成文档。",
-      "parent": "Milky 协议参考",
-      "page_notes": [
-        {
-          "content": "对于本页面的每个小标题，在其前面生成一个简单的数字序号，如 `1.`, `1.1`, `1.2` 等，方便 DeepWiki 生成页面锚点"
-        }
-      ]
+      ],
+      "parent": "支撑子模块"
     }
   ]
 }

@@ -47,6 +47,10 @@
 - [@Linwenxuan04](https://github.com/Linwenxuan04) 编写 crypto 和 multiprecision 部分
 - ... and all the contributors along the way!
 
+## See Also
+
+- [Cecilia](https://github.com/Wesley-Young/Cecilia) - 基于 Acidify + Compose 的即时聊天软件。
+
 ## Contributors
 
 ### Directly to this repository

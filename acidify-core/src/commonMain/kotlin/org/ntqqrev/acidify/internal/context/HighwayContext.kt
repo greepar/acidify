@@ -161,6 +161,11 @@ internal class HighwayContext(client: LagrangeClient) : AbstractContext(client) 
         }.toByteArray()
     }
 
+    suspend fun uploadAvatar(imageData: ByteArray) {
+        val md5 = imageData.md5()
+        upload(90, imageData, md5, ByteArray(0))
+    }
+
     suspend fun uploadGroupAvatar(groupUin: Long, imageData: ByteArray) {
         val md5 = imageData.md5()
         val extra = GroupAvatarExtra {

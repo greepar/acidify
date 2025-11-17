@@ -118,6 +118,8 @@ class JsBot internal constructor(private val bot: Bot) : CoroutineScope by bot {
         bot.setGroupPin(groupUin, isPinned)
     }
 
+    fun setAvatar(imageData: ByteArray) = promise { bot.setAvatar(imageData) }
+
     fun getSKey(): Promise<String> = promise { bot.getSKey() }
 
     fun getPSKey(domain: String): Promise<String> = promise { bot.getPSKey(domain) }

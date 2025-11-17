@@ -480,6 +480,12 @@ class Bot private constructor(
         client.callService(SetGroupPin, SetGroupPin.Req(groupUin, isPinned))
 
     /**
+     * 设置账号头像
+     * @param imageData 头像原始字节数据
+     */
+    suspend fun setAvatar(imageData: ByteArray) = client.highwayContext.uploadAvatar(imageData)
+
+    /**
      * 获取 s_key，用于组成 Cookie。
      */
     suspend fun getSKey() = client.ticketContext.getSKey()

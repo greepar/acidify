@@ -1318,7 +1318,6 @@ class Bot private constructor(
     }
 
     /**
-     * TODO: THIS API IS BROKEN
      * 上传私聊文件
      * @param friendUin 好友 QQ 号
      * @param fileName 文件名
@@ -1333,7 +1332,7 @@ class Bot private constructor(
         val friendUid = getUidByUin(friendUin)
         val fileMd5 = fileData.md5()
         val fileSha1 = fileData.sha1()
-        val md510M = fileData.copyOfRange(0, minOf(10 * 1024 * 1024, fileData.size)).md5()
+        val md510M = fileData.copyOfRange(0, minOf(10002432, fileData.size)).md5()
         val fileTriSha1 = fileData.triSha1()
 
         val uploadResp = client.callService(
@@ -1371,7 +1370,7 @@ class Bot private constructor(
                 friendUin = friendUin,
                 friendUid = friendUid,
                 fileId = uploadResp.fileId,
-                fileMd5 = fileMd5,
+                fileMd510M = md510M,
                 fileName = fileName,
                 fileSize = fileData.size.toLong(),
                 crcMedia = uploadResp.fileCrcMedia

@@ -17,7 +17,7 @@ internal object BroadcastPrivateFile :
         val friendUin: Long,
         val friendUid: String,
         val fileId: String,
-        val fileMd5: ByteArray,
+        val fileMd510M: ByteArray,
         val fileName: String,
         val fileSize: Long,
         val crcMedia: String
@@ -47,7 +47,7 @@ internal object BroadcastPrivateFile :
                 it[msgContent] = PrivateFileExtra {
                     it[notOnlineFile] = NotOnlineFile {
                         it[fileUuid] = payload.fileId
-                        it[fileMd5] = payload.fileMd5
+                        it[fileMd5] = payload.fileMd510M
                         it[fileName] = payload.fileName
                         it[fileSize] = payload.fileSize
                         it[subCmd] = 1

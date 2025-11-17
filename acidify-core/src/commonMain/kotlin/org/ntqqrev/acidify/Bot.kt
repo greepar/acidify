@@ -200,11 +200,12 @@ class Bot private constructor(
      * - [QRCodeGeneratedEvent]：当二维码生成时触发，包含二维码链接和 PNG 图片数据
      * - [QRCodeStateQueryEvent]：每次查询二维码状态时触发，包含当前二维码状态（例如未扫码、已扫码未确认、已确认等）
      * @param queryInterval 查询间隔（单位 ms），不能小于 `1000`
+     * @param preloadContacts 是否在登录成功后预加载好友和群信息以初始化内存缓存
      * @throws org.ntqqrev.acidify.exception.WtLoginException 当二维码扫描成功，但后续登录失败时抛出
      * @throws IllegalStateException 当二维码过期或用户取消登录时抛出
      * @see QRCodeState
      */
-    suspend fun qrCodeLogin(queryInterval: Long = 3000L) {
+    suspend fun qrCodeLogin(queryInterval: Long = 3000L, preloadContacts: Boolean = false) {
         require(queryInterval >= 1000L) { "查询间隔不能小于 1000 毫秒" }
         val qrCode = client.callService(FetchQRCode)
         logger.i { "二维码 URL：${qrCode.qrCodeUrl}" }
@@ -227,15 +228,16 @@ class Bot private constructor(
         client.callService(WtLogin)
         logger.d { "成功获取 $uin 的登录凭据" }
         sharedEventFlow.emit(SessionStoreUpdatedEvent(sessionStore))
-        online()
+        online(preloadContacts)
     }
 
     /**
      * 尝试使用现有的 Session 信息上线。
      * 请优先调用 [login]，该方法会在现有 Session 失效时自动调用 [qrCodeLogin]。
      * 若确定 Session 有效且不希望进行二维码登录，可调用此方法。
+     * @param preloadContacts 是否预加载好友和群信息以初始化内存缓存
      */
-    suspend fun online() {
+    suspend fun online(preloadContacts: Boolean = false) {
         val result = client.callService(BotOnline)
         if (result != "register success") {
             throw BotOnlineException(result)
@@ -263,12 +265,14 @@ class Bot private constructor(
             client.callService(FetchFaceDetails).associateBy { it.qSid }
         ).also { logger.d { "加载了 ${faceDetailMapMut.size} 条表情信息" } }
 
-        // Preload friends, groups and group members to initialize in-memory cache
-        val friendCount = getFriends().size
-        val groups = getGroups()
-        val groupCount = groups.size
-        val groupMemberCount = groups.sumOf { it.getMembers().size }
-        logger.d { "加载了 $friendCount 个好友, $groupCount 个群和 $groupMemberCount 个群成员" }
+        if (preloadContacts) {
+            // Preload friends, groups and group members to initialize in-memory cache
+            val friendCount = getFriends().size
+            val groups = getGroups()
+            val groupCount = groups.size
+            val groupMemberCount = groups.sumOf { it.getMembers().size }
+            logger.d { "加载了 $friendCount 个好友, $groupCount 个群和 $groupMemberCount 个群成员" }
+        }
     }
 
     /**
@@ -286,25 +290,27 @@ class Bot private constructor(
     /**
      * 如果 Session 为空则调用 [qrCodeLogin] 进行登录。
      * 如果 Session 不为空则尝试使用现有的 Session 信息登录，若失败则调用 [qrCodeLogin] 重新登录。
+     * @param queryInterval 查询间隔（单位 ms），不能小于 `1000`
+     * @param preloadContacts 是否预加载好友和群信息以初始化内存缓存
      */
-    suspend fun login() {
+    suspend fun login(queryInterval: Long = 3000L, preloadContacts: Boolean = false) {
         if (sessionStore.a2.isEmpty()) {
             logger.i { "Session 为空，尝试二维码登录" }
-            qrCodeLogin()
+            qrCodeLogin(queryInterval, preloadContacts)
         } else {
             try {
                 try {
-                    online()
+                    online(preloadContacts)
                 } catch (e: Exception) {
                     logger.w(e) { "使用现有 Session 登录失败，尝试刷新 DeviceGuid 后重新登录" }
                     sessionStore.refreshDeviceGuid()
-                    online()
+                    online(preloadContacts)
                 }
             } catch (e: Exception) {
                 logger.w(e) { "使用现有 Session 登录失败，尝试二维码登录" }
                 sessionStore.clear()
                 // sharedEventFlow.emit(SessionStoreUpdatedEvent(sessionStore))
-                qrCodeLogin()
+                qrCodeLogin(queryInterval, preloadContacts)
             }
         }
     }

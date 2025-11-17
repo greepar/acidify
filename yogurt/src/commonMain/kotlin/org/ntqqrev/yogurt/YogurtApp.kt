@@ -164,7 +164,7 @@ object YogurtApp {
             configureSessionStoreAutoSave()
             configureEventLogging()
 
-            launch { bot.login(preloadContacts = true) }
+            launch { bot.login(preloadContacts = config.preloadContacts) }
         }
     }
 }

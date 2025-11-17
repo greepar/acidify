@@ -17,6 +17,7 @@ import org.ntqqrev.acidify.logging.LogLevel
 class YogurtConfig(
     val signApiUrl: String = "",
     val reportSelfMessage: Boolean = true,
+    val preloadContacts: Boolean = false,
     val transformIncomingMFaceToImage: Boolean = false,
     val httpConfig: MilkyHttpConfig = MilkyHttpConfig(),
     val webhookConfig: MilkyWebhookConfig = MilkyWebhookConfig(),

@@ -17,17 +17,13 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import org.ntqqrev.acidify.common.AppInfo
-import org.ntqqrev.acidify.common.SessionStore
-import org.ntqqrev.acidify.common.SignProvider
-import org.ntqqrev.acidify.common.SsoResponse
-import org.ntqqrev.acidify.common.UnsafeAcidifyApi
+import org.ntqqrev.acidify.common.*
 import org.ntqqrev.acidify.entity.BotFriend
 import org.ntqqrev.acidify.entity.BotGroup
 import org.ntqqrev.acidify.event.AcidifyEvent
+import org.ntqqrev.acidify.event.QRCodeGeneratedEvent
 import org.ntqqrev.acidify.event.QRCodeStateQueryEvent
 import org.ntqqrev.acidify.event.SessionStoreUpdatedEvent
-import org.ntqqrev.acidify.event.QRCodeGeneratedEvent
 import org.ntqqrev.acidify.event.internal.KickSignal
 import org.ntqqrev.acidify.event.internal.MsgPushSignal
 import org.ntqqrev.acidify.exception.BotOnlineException
@@ -40,6 +36,7 @@ import org.ntqqrev.acidify.internal.packet.message.media.IndexNode
 import org.ntqqrev.acidify.internal.packet.misc.GroupAnnounceResponse
 import org.ntqqrev.acidify.internal.packet.misc.GroupAnnounceSendResponse
 import org.ntqqrev.acidify.internal.packet.misc.GroupEssenceResponse
+import org.ntqqrev.acidify.internal.packet.misc.UserInfoKey
 import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.file.*
 import org.ntqqrev.acidify.internal.service.group.*
@@ -484,6 +481,30 @@ class Bot private constructor(
      * @param imageData 头像原始字节数据
      */
     suspend fun setAvatar(imageData: ByteArray) = client.highwayContext.uploadAvatar(imageData)
+
+    /**
+     * 设置账号昵称
+     */
+    suspend fun setNickname(nickname: String) =
+        client.callService(
+            SetUserProfile, SetUserProfile.Req(
+                stringProps = mapOf(
+                    UserInfoKey.NICKNAME to nickname
+                )
+            )
+        )
+
+    /**
+     * 设置账号个性签名
+     */
+    suspend fun setBio(bio: String) =
+        client.callService(
+            SetUserProfile, SetUserProfile.Req(
+                stringProps = mapOf(
+                    UserInfoKey.BIO to bio
+                )
+            )
+        )
 
     /**
      * 获取 s_key，用于组成 Cookie。

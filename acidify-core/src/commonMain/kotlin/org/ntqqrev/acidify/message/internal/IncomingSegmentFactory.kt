@@ -110,14 +110,14 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
             if (ctx.remainingCount >= 2) {
                 ctx.skip(
                     if (ctx.tryPeekType { generalFlags } != null) {
-                        when (ctx.message.scene) {
+                        when (ctx.scene) {
                             MessageScene.FRIEND -> 2
                             // generalFlags + elemFlags2
                             MessageScene.GROUP -> min(4, ctx.remainingCount)
                             // generalFlags + elemFlags2 + reply + text
                             else -> 0
                         }
-                    } else when (ctx.message.scene) {
+                    } else when (ctx.scene) {
                         MessageScene.GROUP -> 2
                         // reply + text
                         else -> 0
@@ -125,7 +125,7 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
                 )
             }
             return BotIncomingSegment.Reply(
-                sequence = when (ctx.message.scene) {
+                sequence = when (ctx.scene) {
                     MessageScene.GROUP -> reply.get { origSeqs }.firstOrNull() ?: 0L
                     else -> SourceMsg.PbReserve(reply.get { pbReserve }).get { friendSequence }
                 }
@@ -191,7 +191,7 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
 
     object File : IncomingSegmentFactory<BotIncomingSegment.File> {
         override fun tryParse(ctx: MessageParsingContext): BotIncomingSegment.File? {
-            if (ctx.message.scene != MessageScene.GROUP) return null
+            if (ctx.scene != MessageScene.GROUP) return null
             val trans = ctx.tryPeekType { transElemInfo } ?: return null
             if (trans.get { elemType } != 24) return null
             ctx.consume()

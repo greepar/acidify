@@ -3,7 +3,7 @@ package org.ntqqrev.acidify.message
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.internal.packet.message.CommonMessage
 import org.ntqqrev.acidify.internal.protobuf.PbObject
-import org.ntqqrev.acidify.message.internal.MessageParsingContext
+import org.ntqqrev.acidify.message.BotIncomingMessage.Companion.buildSegments
 import kotlin.js.JsExport
 
 /**
@@ -19,15 +19,13 @@ class BotForwardedMessage(
     val avatarUrl: String,
     val timestamp: Long,
 ) {
-    internal val segmentsMut = mutableListOf<BotIncomingSegment>()
-    val segments: List<BotIncomingSegment>
-        get() = segmentsMut
+    lateinit var segments: List<BotIncomingSegment>
+        internal set
 
     companion object {
         internal fun Bot.parseForwardedMessage(raw: PbObject<CommonMessage>): BotForwardedMessage? {
             val routingHead = raw.get { routingHead }
             val contentHead = raw.get { contentHead }
-            val elems = raw.get { messageBody }.get { richText }.get { elems }
             val senderName = routingHead.get { commonC2C }.get { name }.takeIf { it.isNotEmpty() }
                 ?: routingHead.get { group }.get { groupCard }.takeIf { it.isNotEmpty() }
                 ?: "QQ用户"
@@ -37,36 +35,15 @@ class BotForwardedMessage(
                 avatarUrl = avatarUrl,
                 timestamp = contentHead.get { time }
             )
-
-            // 创建一个临时的 BotIncomingMessage 用于解析消息段
-            val tempMessage = BotIncomingMessage(
-                scene = MessageScene.FRIEND,
-                peerUin = 0L,
-                peerUid = "",
-                sequence = contentHead.get { sequence },
-                timestamp = contentHead.get { time },
-                senderUin = routingHead.get { fromUin },
-                senderUid = routingHead.get { fromUid },
-                clientSequence = 0L,
-                random = 0,
-                messageUid = contentHead.get { msgUid },
+            val segments = buildSegments(
+                elems = raw.get { messageBody }.get { richText }.get { this.elems },
+                scene = MessageScene.FRIEND
             )
-
-            val ctx = MessageParsingContext(tempMessage, elems, this)
-            while (ctx.hasNext()) {
-                var matched = false
-                for (factory in BotIncomingMessage.factories) {
-                    val segment = factory.tryParse(ctx) ?: continue
-                    message.segmentsMut += segment
-                    matched = true
-                    break
-                }
-                if (!matched) {
-                    ctx.skip()
-                }
+            if (segments.isEmpty()) {
+                return null
             }
-
-            return message.takeIf { it.segments.isNotEmpty() }
+            message.segments = segments
+            return message
         }
     }
 }

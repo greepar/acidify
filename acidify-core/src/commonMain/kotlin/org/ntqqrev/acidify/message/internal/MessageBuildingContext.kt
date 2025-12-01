@@ -25,10 +25,7 @@ import org.ntqqrev.acidify.internal.protobuf.invoke
 import org.ntqqrev.acidify.internal.service.message.RichMediaUpload
 import org.ntqqrev.acidify.internal.service.message.SendLongMsg
 import org.ntqqrev.acidify.internal.util.sha1
-import org.ntqqrev.acidify.message.BotOutgoingMessageBuilder
-import org.ntqqrev.acidify.message.ImageFormat
-import org.ntqqrev.acidify.message.ImageSubType
-import org.ntqqrev.acidify.message.MessageScene
+import org.ntqqrev.acidify.message.*
 import kotlin.math.max
 import kotlin.random.Random
 import kotlin.time.Clock
@@ -419,7 +416,7 @@ internal class MessageBuildingContext(
         }
     }
 
-    override fun forward(block: suspend org.ntqqrev.acidify.message.BotForwardBlockBuilder.() -> Unit) = addAsync {
+    override fun forward(block: suspend BotForwardBlockBuilder.() -> Unit) = addAsync {
         val forwardCtx = Forward(this)
         forwardCtx.block()
         val fakeMessages = forwardCtx.build()
@@ -492,7 +489,7 @@ internal class MessageBuildingContext(
 
     internal class Forward(
         val ctx: MessageBuildingContext
-    ) : org.ntqqrev.acidify.message.BotForwardBlockBuilder {
+    ) : BotForwardBlockBuilder {
         private val commonMsgList = mutableListOf<Deferred<FakeMessage>>()
         val nestedForwardTrace = mutableMapOf<String, List<PbObject<CommonMessage>>>()
 
@@ -626,7 +623,7 @@ internal class MessageBuildingContext(
                 previewBuilder.append("[视频]")
             }
 
-            override fun forward(block: suspend org.ntqqrev.acidify.message.BotForwardBlockBuilder.() -> Unit) {
+            override fun forward(block: suspend BotForwardBlockBuilder.() -> Unit) {
                 parent.forward(block)
                 previewBuilder.append("[聊天记录]")
             }

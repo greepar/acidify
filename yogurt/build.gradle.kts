@@ -58,12 +58,16 @@ val buildTimeProvider = providers.provider {
         .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"))
 }
 
+val runNumberProvider = providers.provider {
+    System.getenv("GITHUB_RUN_NUMBER") ?: "local"
+}
+
 buildkonfig {
     packageName = "org.ntqqrev.yogurt"
 
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "name", "Yogurt")
-        buildConfigField(FieldSpec.Type.STRING, "version", project.version.toString())
+        buildConfigField(FieldSpec.Type.STRING, "version", "${project.version}-dev.${runNumberProvider.get()}")
         buildConfigField(FieldSpec.Type.STRING, "commitHash", gitHashProvider.get())
         buildConfigField(FieldSpec.Type.STRING, "buildTime", buildTimeProvider.get())
     }

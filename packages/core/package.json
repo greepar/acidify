@@ -1,11 +1,12 @@
 {
   "name": "@acidify/core",
+  "type": "module",
   "version": "__VERSION__",
   "description": "Kotlin NTQQ protocol implementation, ported to JS",
   "main": "dist/acidify-acidify-core.js",
   "typings": "dist/acidify-acidify-core.d.ts",
   "scripts": {
-    "build": "tsup && node scripts/copy-dts.mjs",
+    "build": "tsdown && node scripts/copy-dts.mjs",
     "prepublishOnly": "npm run build"
   },
   "files": [
@@ -27,7 +28,7 @@
     "ws": "^8.18.3"
   },
   "devDependencies": {
-    "tsup": "^8.5.1",
+    "tsdown": "^0.18.0",
     "typescript": "^5.9.3"
   }
 }

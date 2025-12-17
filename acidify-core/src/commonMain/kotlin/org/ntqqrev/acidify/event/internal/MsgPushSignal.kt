@@ -187,6 +187,8 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
             PushMsgType.GroupAdminChange -> {
                 val content = GroupAdminChange(msgContent)
                 val groupUin = content.get { groupUin }
+                val group = bot.getGroup(groupUin) ?: return listOf()
+                group.getMembers() // ensure members are loaded, thus owner info is available
                 val body = content.get { body } ?: return listOf()
                 val (targetUid, isSet) = if (body.get { set } != null) {
                     body.get { set }!!.get { targetUid } to true
@@ -201,7 +203,9 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
                         groupUin = groupUin,
                         userUin = targetUin,
                         userUid = targetUid,
-                        isSet = isSet
+                        operatorUin = group.owner.uin,
+                        operatorUid = group.owner.uid,
+                        isSet = isSet,
                     )
                 )
             }
@@ -454,14 +458,15 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
                         val content = wrapper.get { essenceMessageChange } ?: return listOf()
                         val groupUin = content.get { groupUin }
                         val msgSeq = content.get { msgSequence }.toLong()
-                        // val operatorUin = content.get { operatorUin }
+                        val operatorUin = content.get { operatorUin }
                         val isSet = content.get { setFlag } == GroupEssenceMessageChange.SetFlag.ADD.value
 
                         listOf(
                             GroupEssenceMessageChangeEvent(
                                 groupUin = groupUin,
                                 messageSeq = msgSeq,
-                                isSet = isSet
+                                operatorUin = operatorUin,
+                                isSet = isSet,
                             )
                         )
                     }

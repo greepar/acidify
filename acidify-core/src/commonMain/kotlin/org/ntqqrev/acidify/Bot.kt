@@ -824,6 +824,19 @@ class Bot private constructor(
     )
 
     /**
+     * 删除好友
+     * @param friendUin 好友 QQ 号
+     * @param block 是否将对方加入黑名单
+     */
+    suspend fun deleteFriend(
+        friendUin: Long,
+        block: Boolean = false
+    ) = client.callService(
+        DeleteFriend,
+        DeleteFriend.Req(getUidByUin(friendUin), block)
+    )
+
+    /**
      * 获取好友请求列表
      * @param isFiltered 是否只获取被过滤的请求（风险账号发起）
      * @param limit 获取的最大请求数量

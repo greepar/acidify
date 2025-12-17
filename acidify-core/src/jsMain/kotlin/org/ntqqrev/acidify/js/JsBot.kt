@@ -226,6 +226,10 @@ class JsBot internal constructor(private val bot: Bot) : CoroutineScope by bot {
         bot.sendProfileLike(friendUin, count)
     }
 
+    fun deleteFriend(friendUin: Long, block: Boolean = false) = promise {
+        bot.deleteFriend(friendUin, block)
+    }
+
     fun getFriendRequests(isFiltered: Boolean = false, limit: Int = 20): Promise<Array<BotFriendRequest>> = promise {
         bot.getFriendRequests(isFiltered, limit).toTypedArray()
     }

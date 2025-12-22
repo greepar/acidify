@@ -578,6 +578,8 @@ class Bot private constructor(
     /**
      * 发送群消息
      * @param groupUin 群号
+     * @param clientSequence 客户端消息序列号，默认随机生成，可用于 IM 开发
+     * @param random 消息随机数，默认随机生成，可用于 IM 开发
      * @param build 消息构建器
      */
     suspend fun sendGroupMessage(

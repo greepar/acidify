@@ -9,15 +9,18 @@ import kotlinx.serialization.json.encodeToJsonElement
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.exception.OidbException
 import org.ntqqrev.acidify.exception.ServiceException
+import org.ntqqrev.milky.ApiEndpoint
 import org.ntqqrev.milky.ApiGeneralResponse
 import org.ntqqrev.milky.milkyJsonModule
-import org.ntqqrev.yogurt.api.file.*
-import org.ntqqrev.yogurt.api.friend.*
-import org.ntqqrev.yogurt.api.group.*
-import org.ntqqrev.yogurt.api.message.*
-import org.ntqqrev.yogurt.api.system.*
+import org.ntqqrev.yogurt.api.handler.*
 import kotlin.time.DurationUnit
 import kotlin.time.measureTime
+
+inline fun <reified T : Any, reified R : Any> ApiEndpoint<T, R>.define(
+    crossinline handler: suspend Route.(T) -> R
+) = object : MilkyApiHandler<T, R>(this) {
+    override suspend fun Route.call(payload: T): R = handler(payload)
+}
 
 private inline fun <reified T : Any, reified R : Any> Route.serve(
     handler: MilkyApiHandler<T, R>

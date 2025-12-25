@@ -6,15 +6,17 @@ Yogurt 是基于 Acidify 的 [Milky](https://milky.ntqqrev.org/) 实现，支持
 
 ## 启动
 
-Yogurt 支持的平台有 Kotlin/JVM 和 Kotlin/Native。
+Yogurt 支持的平台有 Kotlin/Native 和 Kotlin/JVM 两种。
 
-### 通过 Releases 下载并启动 (Kotlin/Native)
+### 通过包管理器安装并启动 (Kotlin/Native)
 
-在 [Releases](https://github.com/LagrangeDev/acidify/releases) 中下载对应平台的可执行文件，解压到工作目录后运行：
+[![npm](https://img.shields.io/npm/v/%40acidify%2Fyogurt)](https://www.npmjs.com/package/@acidify/yogurt)
+
+Yogurt 的预编译二进制包发布在 npm 的 `@acidify/yogurt` 包中。先安装 [Node.js](https://nodejs.org/zh-cn/download)（通常会包含一个 `npm`），然后运行以下命令安装并启动 Yogurt：
 
 ```
-./yogurt.kexe   (for Linux and macOS)
-yogurt.exe      (for Windows)
+npm install -g @acidify/yogurt
+yogurt
 ```
 
 支持的平台如下：
@@ -25,22 +27,9 @@ yogurt.exe      (for Windows)
 | Linux   | x64, arm64 |
 | macOS   | x64, arm64 |
 
-### 通过包管理器安装并启动 (Kotlin/Native)
-
-[![npm](https://img.shields.io/npm/v/%40acidify%2Fyogurt)](https://www.npmjs.com/package/@acidify/yogurt)
-
-Yogurt 的预编译二进制包也发布在 npm 的 `@acidify/yogurt` 包中。如果你的系统上安装有 `npm` 等 Node.js 包管理器，也可以通过以下命令安装并运行 Yogurt：
-
-```
-npm install -g @acidify/yogurt
-yogurt
-```
-
-同样，通过 `npm` 安装的 Yogurt 也是基于 Kotlin/Native 构建的，支持的平台如上所示。
-
 ### 通过 Java 运行时启动 (Kotlin/JVM)
 
-配置 Java 21+ 运行时，然后在 [Releases](https://github.com/LagrangeDev/acidify/releases) 中下载 JAR 文件，运行：
+配置 Java 21+ 运行时，然后在 [Actions](https://github.com/LagrangeDev/acidify/actions/workflows/build-yogurt.yml) 中下载 JAR 文件，运行：
 
 ```
 java -jar yogurt-jvm-all.jar
@@ -53,3 +42,7 @@ java -jar yogurt-jvm-all.jar
 | Windows | x86, x64   |
 | Linux   | x64, arm64 |
 | macOS   | x64, arm64 |
+
+> [!note]
+> 
+> 下载 Actions 的构建产物必须登录 GitHub，并且构建产物有保存期限，请及时下载。对于一般的使用需求，推荐使用 npm 包的方式安装和运行 Yogurt。

@@ -41,8 +41,8 @@ internal data class IncomingForwardBody(
 
     companion object {
         @OptIn(ExperimentalXmlUtilApi::class)
-        val xmlModule = XML {
-            defaultPolicy {
+        val xmlModule = XML.recommended {
+            policy {
                 unknownChildHandler = { _, _, _, _, _ -> emptyList() }
             }
         }

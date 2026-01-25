@@ -3,7 +3,7 @@
   "version": "__VERSION__",
   "description": "Milky implementation based on Acidify",
   "bin": {
-    "yogurt": "./index.js"
+    "yogurt": "index.mjs"
   },
   "keywords": [
     "qq",

@@ -1,8 +1,11 @@
 package org.ntqqrev.acidify.message
 
+import org.ntqqrev.acidify.common.AcidifyDsl
+
 /**
  * 构建发送消息
  */
+@AcidifyDsl
 interface BotOutgoingMessageBuilder {
     /**
      * 添加文本消息段
@@ -83,5 +86,4 @@ interface BotOutgoingMessageBuilder {
     fun forward(block: suspend BotForwardBlockBuilder.() -> Unit)
 
     operator fun String.unaryPlus() = text(this)
-
 }

@@ -269,7 +269,7 @@ suspend fun YogurtMessageBuildingContext.applySegment(segment: OutgoingSegment) 
             forward {
                 segment.data.messages.forEach { forwardedMsg ->
                     node(forwardedMsg.userId, forwardedMsg.senderName) {
-                        val nodeContext = switchTo(this@node)
+                        val nodeContext = this@applySegment.switchTo(this@node)
                         forwardedMsg.segments.forEach { seg ->
                             nodeContext.applySegment(seg)
                         }

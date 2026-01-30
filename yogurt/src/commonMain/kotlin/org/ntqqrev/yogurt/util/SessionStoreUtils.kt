@@ -10,8 +10,7 @@ import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.writeString
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.event.SessionStoreUpdatedEvent
-
-val sessionStorePath = Path("session-store.json")
+import org.ntqqrev.yogurt.sessionStorePath
 
 fun Application.configureSessionStoreAutoSave() = launch {
     val bot = dependencies.resolve<Bot>()

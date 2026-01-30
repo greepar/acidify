@@ -42,7 +42,6 @@ import org.ntqqrev.yogurt.util.*
 
 object YogurtApp {
     val config = YogurtConfig.loadFromFile()
-    val qrCodePath = Path("qrcode.png")
     val t = Terminal(ansiLevel = config.logging.ansiLevel)
 
     fun createServer() = embeddedServer(

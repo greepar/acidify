@@ -4,7 +4,6 @@ package org.ntqqrev.yogurt
 
 import com.github.ajalt.mordant.rendering.AnsiLevel
 import kotlinx.io.buffered
-import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -45,7 +44,6 @@ class YogurtConfig(
     )
 
     companion object {
-        val path = Path("config.json")
         val jsonModule = Json {
             prettyPrint = true
             encodeDefaults = true
@@ -55,19 +53,19 @@ class YogurtConfig(
         }
 
         fun loadFromFile(): YogurtConfig {
-            if (!SystemFileSystem.exists(path)) {
+            if (!SystemFileSystem.exists(configPath)) {
                 val defaultConfig = YogurtConfig()
-                SystemFileSystem.sink(path).buffered().use {
+                SystemFileSystem.sink(configPath).buffered().use {
                     jsonModule.encodeToSink(defaultConfig, it)
                 }
-                println("配置文件已生成于 ${SystemFileSystem.resolve(path)}")
+                println("配置文件已生成于 ${SystemFileSystem.resolve(configPath)}")
                 println("请根据需要进行修改，修改完成后按 Enter 键继续...")
                 readln()
             }
-            return SystemFileSystem.source(path).buffered().use {
+            return SystemFileSystem.source(configPath).buffered().use {
                 jsonModule.decodeFromSource<YogurtConfig>(it)
             }.also {
-                SystemFileSystem.sink(path).buffered().use { sink ->
+                SystemFileSystem.sink(configPath).buffered().use { sink ->
                     jsonModule.encodeToSink(it, sink)
                     // rewrite it to format, and add new fields if any
                 }

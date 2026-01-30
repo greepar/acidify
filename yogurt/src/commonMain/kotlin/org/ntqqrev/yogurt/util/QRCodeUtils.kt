@@ -10,7 +10,7 @@ import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.event.QRCodeGeneratedEvent
 import org.ntqqrev.qrmatrix.ErrorCorrectionLevel
 import org.ntqqrev.qrmatrix.generateMatrix
-import org.ntqqrev.yogurt.YogurtApp.qrCodePath
+import org.ntqqrev.yogurt.qrCodePath
 
 object Palette {
     const val WHITE_WHITE = '\u2588'

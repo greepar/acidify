@@ -48,7 +48,7 @@
 - [lagrange-kotlin](https://github.com/LagrangeDev/lagrange-kotlin) 提供 TEA & 登录认证的实现
 - [qrcode-kotlin](https://github.com/g0dkar/qrcode-kotlin/) 提供二维码矩阵生成的实现
 - [LagrangeCodec](https://github.com/LagrangeDev/LagrangeCodec) 提供多媒体编解码的实现
-- [@Linwenxuan04](https://github.com/Linwenxuan04) 编写 crypto 和 multiprecision 部分
+- [@Linwenxuan04](https://github.com/Linwenxuan04) 编写 crypto 和 math（原 multiprecision） 部分
 - ... and all the contributors along the way!
 
 ## Contributors

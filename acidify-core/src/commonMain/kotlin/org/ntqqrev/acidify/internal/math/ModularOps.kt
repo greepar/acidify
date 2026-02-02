@@ -1,4 +1,4 @@
-package org.ntqqrev.acidify.internal.multiprecision
+package org.ntqqrev.acidify.internal.math
 
 /**
  * Montgomery form representation for fast modular arithmetic

@@ -1,8 +1,8 @@
 package org.ntqqrev.acidify.internal.crypto.ecdh
 
 import org.ntqqrev.acidify.internal.crypto.hash.MD5
-import org.ntqqrev.acidify.internal.multiprecision.BigInt
-import org.ntqqrev.acidify.internal.multiprecision.ModularOps
+import org.ntqqrev.acidify.internal.math.BigInt
+import org.ntqqrev.acidify.internal.math.ModularOps
 import kotlin.random.Random
 
 /**

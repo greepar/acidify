@@ -1,7 +1,7 @@
 package org.ntqqrev.acidify.internal.crypto.ecdh
 
-import org.ntqqrev.acidify.internal.multiprecision.BigInt
-import org.ntqqrev.acidify.internal.multiprecision.ModularOps
+import org.ntqqrev.acidify.internal.math.BigInt
+import org.ntqqrev.acidify.internal.math.ModularOps
 
 /**
  * Elliptic curve parameters for y^2 = x^3 + ax + b (mod p)

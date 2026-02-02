@@ -1,6 +1,6 @@
 package org.ntqqrev.acidify.internal.crypto.ecdh
 
-import org.ntqqrev.acidify.internal.multiprecision.BigInt
+import org.ntqqrev.acidify.internal.math.BigInt
 
 /**
  * Elliptic curve point in affine coordinates

@@ -1,4 +1,4 @@
-package org.ntqqrev.acidify.internal.multiprecision
+package org.ntqqrev.acidify.internal.math
 
 // Word type selection for optimal performance
 internal typealias Word = ULong

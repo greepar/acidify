@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
-package org.ntqqrev.acidify.internal.multiprecision
+package org.ntqqrev.acidify.internal.math
 
 import kotlin.math.max
 import kotlin.math.min

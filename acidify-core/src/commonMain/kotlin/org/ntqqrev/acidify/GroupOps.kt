@@ -200,7 +200,7 @@ suspend fun Bot.getGroupAnnouncements(groupUin: Long): List<BotGroupAnnouncement
  * 发送群公告
  * @param groupUin 群号
  * @param content 公告内容
- * @param imageUrl 公告图片 URL（可选，暂不支持）
+ * @param imageData 公告图片数据（字节数组，可选，暂不支持）
  * @param showEditCard 是否显示编辑名片提示
  * @param showTipWindow 是否显示提示窗口
  * @param confirmRequired 是否需要确认
@@ -210,13 +210,13 @@ suspend fun Bot.getGroupAnnouncements(groupUin: Long): List<BotGroupAnnouncement
 suspend fun Bot.sendGroupAnnouncement(
     groupUin: Long,
     content: String,
-    imageUrl: String? = null,
+    imageData: ByteArray? = null,
     showEditCard: Boolean = false,
     showTipWindow: Boolean = true,
     confirmRequired: Boolean = true,
     isPinned: Boolean = false,
 ): String {
-    if (imageUrl != null) {
+    if (imageData != null) {
         TODO("暂不支持带图片的群公告")
     }
 

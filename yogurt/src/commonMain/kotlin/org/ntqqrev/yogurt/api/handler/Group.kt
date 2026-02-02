@@ -101,7 +101,7 @@ val SendGroupAnnouncement = ApiEndpoint.SendGroupAnnouncement.define {
     val bot = application.dependencies.resolve<Bot>()
     bot.getGroup(it.groupId)
         ?: throw MilkyApiException(-404, "Group not found")
-    bot.sendGroupAnnouncement(it.groupId, it.content, it.imageUri)
+    bot.sendGroupAnnouncement(it.groupId, it.content, null)
     SendGroupAnnouncementOutput()
 }
 

@@ -141,7 +141,7 @@ internal class HighwayContext(client: LagrangeClient) : AbstractContext(client) 
                     NTHighwayIPv4(
                         domain = NTHighwayDomain(
                             isEnable = true,
-                            iP = ipv4.outIP.toIpString(reverseEndian = true),
+                            iP = ipv4.outIP.toIpString(),
                         ),
                         port = ipv4.outPort,
                     )

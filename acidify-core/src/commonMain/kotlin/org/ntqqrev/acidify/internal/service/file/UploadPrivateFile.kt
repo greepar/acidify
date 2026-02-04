@@ -57,7 +57,7 @@ internal object UploadPrivateFile : OidbService<UploadPrivateFile.Req, UploadPri
             fileId = resp.uuid,
             uploadKey = resp.mediaPlatformUploadKey,
             ipAndPorts = resp.rtpMediaPlatformUploadAddress.map {
-                it.inIP.toIpString(reverseEndian = true) to it.inPort
+                it.inIP.toIpString() to it.inPort
             },
             fileCrcMedia = resp.fileIdCrc
         )

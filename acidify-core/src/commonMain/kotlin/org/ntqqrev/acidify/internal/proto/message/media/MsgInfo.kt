@@ -27,6 +27,7 @@ internal class IndexNode(
     @ProtoNumber(4) val uploadTime: Int = 0,
     @ProtoNumber(5) val ttl: Int = 0,
     @ProtoNumber(6) val subType: Int = 0,
+    @ProtoNumber(7) val appId: Int = 0,
 )
 
 @Serializable

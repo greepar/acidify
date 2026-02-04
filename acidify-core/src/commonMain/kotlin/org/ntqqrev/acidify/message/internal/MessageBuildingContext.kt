@@ -30,7 +30,6 @@ import org.ntqqrev.acidify.internal.util.pbEncode
 import org.ntqqrev.acidify.internal.util.sha1
 import org.ntqqrev.acidify.message.BotOutgoingSegment
 import org.ntqqrev.acidify.message.MessageScene
-import kotlin.math.max
 import kotlin.random.Random
 import kotlin.time.Clock
 
@@ -216,7 +215,7 @@ internal class MessageBuildingContext(
             )
         } ?: logger.d { "uKey 为空，服务器可能已存在该图片，跳过上传" }
 
-        val msgInfo = uploadResp.msgInfo
+        val msgInfoBuf = uploadResp.msgInfoBuf
         val businessType = when (scene) {
             MessageScene.FRIEND -> 10
             MessageScene.GROUP -> 20
@@ -238,7 +237,7 @@ internal class MessageBuildingContext(
             Elem(
                 commonElem = CommonElem(
                     serviceType = 48,
-                    pbElem = msgInfo.pbEncode(),
+                    pbElem = msgInfoBuf,
                     businessType = businessType,
                 )
             )
@@ -290,7 +289,7 @@ internal class MessageBuildingContext(
             )
         } ?: logger.d { "uKey 为空，服务器可能已存在该语音，跳过上传" }
 
-        val msgInfo = uploadResp.msgInfo
+        val msgInfoBuf = uploadResp.msgInfoBuf
         val businessType = when (scene) {
             MessageScene.FRIEND -> 12
             MessageScene.GROUP -> 22
@@ -300,7 +299,7 @@ internal class MessageBuildingContext(
         Elem(
             commonElem = CommonElem(
                 serviceType = 48,
-                pbElem = msgInfo.pbEncode(),
+                pbElem = msgInfoBuf,
                 businessType = businessType,
             )
         )
@@ -380,7 +379,7 @@ internal class MessageBuildingContext(
             )
         } ?: logger.d { "视频缩略图 uKey 为空，服务器可能已存在该缩略图，跳过上传" }
 
-        val msgInfo = uploadResp.msgInfo
+        val msgInfoBuf = uploadResp.msgInfoBuf
         val businessType = when (scene) {
             MessageScene.FRIEND -> 11
             MessageScene.GROUP -> 21
@@ -390,7 +389,7 @@ internal class MessageBuildingContext(
         Elem(
             commonElem = CommonElem(
                 serviceType = 48,
-                pbElem = msgInfo.pbEncode(),
+                pbElem = msgInfoBuf,
                 businessType = businessType,
             )
         )

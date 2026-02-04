@@ -128,7 +128,8 @@ internal class HighwayContext(client: LagrangeClient) : AbstractContext(client) 
         sha1: ByteArray,
         subFileInfoIdx: Int? = null
     ): ByteArray {
-        val msgInfoBodyList: List<MsgInfoBody> = uploadResp.msgInfo.msgInfoBody
+        val msgInfo = uploadResp.msgInfoBuf.pbDecode<MsgInfo>()
+        val msgInfoBodyList: List<MsgInfoBody> = msgInfo.msgInfoBody
         val index = msgInfoBodyList[0].index
         val subFileInfo = subFileInfoIdx?.let { uploadResp.subFileInfos.getOrNull(it) }
         val ipv4s = subFileInfo?.iPv4s ?: uploadResp.iPv4s

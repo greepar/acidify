@@ -73,7 +73,7 @@ internal class UploadResp(
     @ProtoNumber(3) val iPv4s: List<IPv4> = emptyList(),
     @ProtoNumber(4) val iPv6s: List<IPv6> = emptyList(),
     @ProtoNumber(5) val msgSeq: Long = 0L,
-    @ProtoNumber(6) val msgInfo: MsgInfo = MsgInfo(),
+    @ProtoNumber(6) val msgInfoBuf: ByteArray = byteArrayOf(),
     @ProtoNumber(7) val ext: List<RichMediaStorageTransInfo> = emptyList(),
     @ProtoNumber(8) val compatQMsg: ByteArray = byteArrayOf(),
     @ProtoNumber(10) val subFileInfos: List<SubFileInfo> = emptyList(),

@@ -4,6 +4,8 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -398,9 +400,16 @@ suspend fun Bot.getGroupNotifications(
         if (isFiltered) FetchGroupNotifications.Filtered else FetchGroupNotifications.Normal,
         FetchGroupNotifications.Req(startSequence ?: 0, count)
     )
-    val notifications = resp.notifications.mapNotNull {
-        parseNotification(it, isFiltered)
-    }
+    val notifications = resp.notifications
+        .map {
+            async {
+                runCatching {
+                    parseNotification(it, isFiltered)
+                }
+            }
+        }
+        .awaitAll()
+        .mapNotNull { it.getOrNull() }
     return notifications to resp.nextSequence.takeIf { it != 0L }
 }
 

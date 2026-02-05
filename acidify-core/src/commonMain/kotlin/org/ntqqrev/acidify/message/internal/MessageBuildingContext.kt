@@ -25,7 +25,6 @@ import org.ntqqrev.acidify.internal.proto.message.extra.SourceMsgResvAttr
 import org.ntqqrev.acidify.internal.proto.message.extra.TextResvAttr
 import org.ntqqrev.acidify.internal.service.message.RichMediaUpload
 import org.ntqqrev.acidify.internal.service.message.SendLongMsg
-import org.ntqqrev.acidify.internal.util.pbDecode
 import org.ntqqrev.acidify.internal.util.pbEncode
 import org.ntqqrev.acidify.internal.util.sha1
 import org.ntqqrev.acidify.message.BotOutgoingSegment
@@ -222,26 +221,36 @@ internal class MessageBuildingContext(
             MessageScene.TEMP -> throw IllegalArgumentException("不支持的消息场景: $scene")
         }
 
-        listOf(
+        buildList {
+            /*
+            TODO: Make CustomFace fields complete
             when (scene) {
-                MessageScene.FRIEND -> Elem(
-                    notOnlineImage = uploadResp.compatQMsg.pbDecode<NotOnlineImage>()
+                MessageScene.FRIEND -> add(
+                    Elem(
+                        notOnlineImage = uploadResp.compatQMsg.pbDecode<NotOnlineImage>()
+                    )
                 )
 
-                MessageScene.GROUP -> Elem(
-                    customFace = uploadResp.compatQMsg.pbDecode<CustomFace>()
+                MessageScene.GROUP -> add(
+                    Elem(
+                        customFace = uploadResp.compatQMsg.pbDecode<CustomFace>()
+                    )
                 )
 
-                MessageScene.TEMP -> Elem()
-            },
-            Elem(
-                commonElem = CommonElem(
-                    serviceType = 48,
-                    pbElem = msgInfoBuf,
-                    businessType = businessType,
+                MessageScene.TEMP -> {}
+            }
+            */
+
+            add(
+                Elem(
+                    commonElem = CommonElem(
+                        serviceType = 48,
+                        pbElem = msgInfoBuf,
+                        businessType = businessType,
+                    )
                 )
             )
-        )
+        }
     }
 
     fun BotOutgoingSegment.Record.build() = addAsync {

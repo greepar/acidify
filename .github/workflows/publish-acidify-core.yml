@@ -12,11 +12,16 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 21
+
+      - name: Generate JS Production Build
+        run: ./gradlew :acidify-core:jsNodeProductionLibraryDistribution
+
       - name: Publish to MavenCentral
         run: ./gradlew :acidify-core:publishAndReleaseToMavenCentral
         env:
@@ -26,13 +31,13 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ''
-      - name: Generate JS Production Build
-        run: ./gradlew :acidify-core:jsNodeProductionLibraryDistribution
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           package_json_file: packages/core/package.json
           run_install: false
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -40,12 +45,15 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: packages/core/pnpm-lock.yaml
           registry-url: https://registry.npmjs.org
+
       - name: Ensure npm is up to date
         run: pnpm install -g npm@latest
+
       - name: Install npm dependencies
         run: |
           cd packages/core
           pnpm install
+
       - name: Sync npm package version
         run: |
           python3 <<'PY'
@@ -66,6 +74,7 @@ jobs:
           package_json.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
           print(f"Set npm package version to {version}")
           PY
+
       - name: Publish @acidify/core to npm
         run: |
           cd packages/core

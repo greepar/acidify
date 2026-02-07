@@ -1,11 +1,12 @@
 package org.ntqqrev.acidify.internal.util
 
-import dev.karmakrafts.kompress.Deflater
-import dev.karmakrafts.kompress.Inflater
+import dev.karmakrafts.kompress.deflating
+import dev.karmakrafts.kompress.inflating
+import kotlinx.io.*
 
-private const val GZIP_ID1: Int = 0x1f
-private const val GZIP_ID2: Int = 0x8b
-private const val GZIP_CM_DEFLATE: Int = 0x08
+private const val GZIP_ID1: Byte = 0x1f
+private const val GZIP_ID2: Byte = 0x8b.toByte()
+private const val GZIP_CM_DEFLATE: Byte = 0x08
 
 // FLG bits
 private const val FTEXT = 1 shl 0
@@ -14,95 +15,70 @@ private const val FEXTRA = 1 shl 2
 private const val FNAME = 1 shl 3
 private const val FCOMMENT = 1 shl 4
 
-/**
- * gzip compress: header + raw deflate + trailer(crc32, isize)
- */
-fun gzipCompress(input: ByteArray): ByteArray {
+internal fun gzipCompress(input: ByteArray): ByteArray {
     val crc = Crc32()
     crc.update(input)
     val crcValue = crc.value()
 
-    val deflated = Deflater.deflate(input)
+    val deflated = Buffer().apply { writeBytes(input) }.deflating()
+    val out = Buffer().apply {
+        writeByte(GZIP_ID1)
+        writeByte(GZIP_ID2)
+        writeByte(GZIP_CM_DEFLATE)
+        writeByte(0) // FLG = 0 (no extra fields)
+        writeIntLe(0) // MTIME = 0
+        writeByte(0) // XFL = 0
+        writeByte(0xff.toByte()) // OS = 255 (unknown)
+        transferFrom(deflated)
+        writeIntLe(crcValue)
+        writeIntLe(input.size) // ISIZE mod 2^32; Int is fine
+    }
 
-    val out = ByteArrayOutput(10 + deflated.size + 8)
-
-    // ---- Header (10 bytes, minimal) ----
-    out.writeU8(GZIP_ID1)
-    out.writeU8(GZIP_ID2)
-    out.writeU8(GZIP_CM_DEFLATE)
-    out.writeU8(0)          // FLG = 0 (no extra fields)
-    out.writeLE32(0)        // MTIME = 0
-    out.writeU8(0)          // XFL = 0
-    out.writeU8(255)        // OS = 255 (unknown)
-
-    // ---- Body ----
-    out.writeBytes(deflated)
-
-    // ---- Trailer ----
-    out.writeLE32(crcValue)
-    out.writeLE32(input.size) // ISIZE mod 2^32; Int is fine for ByteArray size
-
-    return out.toByteArray()
+    return out.readByteArray()
 }
 
-/**
- * gzip uncompress: parse header, raw inflate body, verify trailer
- *
- * Only supports a single gzip member.
- * (If you need concatenated members, you can loop: while (pos < n && looksLikeGzipAt(pos)) ...)
- */
-fun gzipUncompress(gz: ByteArray): ByteArray {
-    val r = ByteArrayReader(gz)
+internal fun gzipUncompress(gz: ByteArray): ByteArray {
+    val gzBuf = Buffer().apply { writeBytes(gz) }
+    val id1 = gzBuf.readByte()
+    val id2 = gzBuf.readByte()
 
-    // ---- Header ----
-    val id1 = r.readU8()
-    val id2 = r.readU8()
     if (id1 != GZIP_ID1 || id2 != GZIP_ID2) {
         throw IllegalArgumentException("Not a gzip stream (bad magic)")
     }
 
-    val cm = r.readU8()
+    val cm = gzBuf.readByte()
     if (cm != GZIP_CM_DEFLATE) {
         throw IllegalArgumentException("Unsupported compression method: $cm")
     }
 
-    val flg = r.readU8()
-    r.skip(4) // MTIME
-    r.skip(1) // XFL
-    r.skip(1) // OS
+    val flg = gzBuf.readByte().toInt()
+    gzBuf.skip(6) // MTIME(4) + XFL(1) + OS(1)
 
     // Optional fields
     if ((flg and FEXTRA) != 0) {
-        val xlen = r.readLE16()
-        r.skip(xlen)
+        val xlen = gzBuf.readShortLe()
+        gzBuf.skip(xlen.toLong())
     }
     if ((flg and FNAME) != 0) {
-        r.readZeroTerminated()
+        gzBuf.skipUntilZero()
     }
     if ((flg and FCOMMENT) != 0) {
-        r.readZeroTerminated()
+        gzBuf.skipUntilZero()
     }
     if ((flg and FHCRC) != 0) {
         // header CRC16 present (we don't validate; just consume)
-        r.skip(2)
+        gzBuf.skip(2)
     }
 
-    // ---- Body + Trailer ----
-    // Trailer is last 8 bytes: CRC32 + ISIZE (both LE)
-    // We need the deflate payload: from current position to (end - 8).
-    val payloadStart = r.position
-    val payloadEndExclusive = gz.size - 8
-    if (payloadEndExclusive < payloadStart) {
-        throw IllegalArgumentException("Truncated gzip stream (no trailer)")
+    val compressed = Buffer()
+    gzBuf.readTo(compressed, byteCount = gzBuf.size - 8)
+    val uncompressed = compressed.inflating().buffered().use { source ->
+        source.readByteArray()
     }
-
-    val deflatePayload = gz.copyOfRange(payloadStart, payloadEndExclusive)
-    val uncompressed = Inflater.inflate(deflatePayload)
 
     // Read trailer
-    r.position = payloadEndExclusive
-    val expectedCrc = r.readLE32()
-    val expectedISize = r.readLE32()
+    val expectedCrc = gzBuf.readIntLe()
+    val expectedISize = gzBuf.readIntLe()
 
     // Verify CRC32
     val crc = Crc32()
@@ -110,7 +86,9 @@ fun gzipUncompress(gz: ByteArray): ByteArray {
     val actualCrc = crc.value()
     if (actualCrc != expectedCrc) {
         throw IllegalArgumentException(
-            "GZip CRC32 mismatch: expected=0x${expectedCrc.toUInt().toString(16)}, actual=0x${actualCrc.toUInt().toString(16)}"
+            "GZip CRC32 mismatch: expected=0x${expectedCrc.toUInt().toString(16)}, actual=0x${
+                actualCrc.toUInt().toString(16)
+            }"
         )
     }
 
@@ -124,86 +102,13 @@ fun gzipUncompress(gz: ByteArray): ByteArray {
     return uncompressed
 }
 
-/* ----------------------------- Helpers ----------------------------- */
-
-private class ByteArrayOutput(initialCapacity: Int = 32) {
-    private var buf: ByteArray = ByteArray(initialCapacity)
-    private var size: Int = 0
-
-    fun writeU8(v: Int) {
-        ensure(1)
-        buf[size++] = (v and 0xFF).toByte()
-    }
-
-    fun writeBytes(bytes: ByteArray) {
-        ensure(bytes.size)
-        bytes.copyInto(buf, destinationOffset = size)
-        size += bytes.size
-    }
-
-    fun writeLE16(v: Int) {
-        writeU8(v)
-        writeU8(v ushr 8)
-    }
-
-    fun writeLE32(v: Int) {
-        writeU8(v)
-        writeU8(v ushr 8)
-        writeU8(v ushr 16)
-        writeU8(v ushr 24)
-    }
-
-    fun toByteArray(): ByteArray = buf.copyOf(size)
-
-    private fun ensure(extra: Int) {
-        val needed = size + extra
-        if (needed <= buf.size) return
-        var newCap = buf.size.coerceAtLeast(1)
-        while (newCap < needed) newCap = newCap * 2
-        buf = buf.copyOf(newCap)
+private fun Source.skipUntilZero() {
+    while (!this.exhausted()) {
+        val b = this.readByte()
+        if (b == 0.toByte()) return
     }
 }
 
-private class ByteArrayReader(private val buf: ByteArray) {
-    var position: Int = 0
-
-    fun readU8(): Int {
-        if (position >= buf.size) throw IllegalArgumentException("Unexpected EOF")
-        return buf[position++].toInt() and 0xFF
-    }
-
-    fun readLE16(): Int {
-        val b0 = readU8()
-        val b1 = readU8()
-        return b0 or (b1 shl 8)
-    }
-
-    fun readLE32(): Int {
-        val b0 = readU8()
-        val b1 = readU8()
-        val b2 = readU8()
-        val b3 = readU8()
-        return b0 or (b1 shl 8) or (b2 shl 16) or (b3 shl 24)
-    }
-
-    fun skip(n: Int) {
-        val newPos = position + n
-        if (newPos < 0 || newPos > buf.size) throw IllegalArgumentException("Unexpected EOF")
-        position = newPos
-    }
-
-    fun readZeroTerminated() {
-        while (true) {
-            val b = readU8()
-            if (b == 0) return
-        }
-    }
-}
-
-/**
- * CRC32 (IEEE 802.3) implementation.
- * Polynomial: 0xEDB88320 (reflected). Initial: 0xFFFFFFFF. Final xor: 0xFFFFFFFF.
- */
 private class Crc32 {
     private var crc: Int = -1
 

@@ -105,13 +105,13 @@ suspend fun Application.createScriptEnvironment() = QuickJs.create(jobDispatcher
             function $$internalEmitHandle(event) {
                 const eventName = event.event_type;
                 if ($$internalEventMapHandle.has(eventName)) {
-                    for (const listener of $$internalEventMapHandle.get(eventName)) {
+                    Promise.all($$internalEventMapHandle.get(eventName).map(async (listener) => {
                         try {
-                            listener(event);
+                            await listener(event);
                         } catch (error) {
                             console.error(`Error in event listener for ${eventName}:`, error);
                         }
-                    }
+                    }));
                 }
             }
         """.trimIndent()

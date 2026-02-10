@@ -8,6 +8,7 @@ import org.ntqqrev.acidify.common.SessionStore
 import org.ntqqrev.acidify.common.SignProvider
 import org.ntqqrev.acidify.common.SsoResponse
 import org.ntqqrev.acidify.exception.ServiceException
+import org.ntqqrev.acidify.internal.context.FlashTransferContext
 import org.ntqqrev.acidify.internal.context.HighwayContext
 import org.ntqqrev.acidify.internal.context.LoginContext
 import org.ntqqrev.acidify.internal.context.PacketContext
@@ -26,6 +27,7 @@ internal class LagrangeClient(
     val packetContext = PacketContext(this)
     val ticketContext = TicketContext(this)
     val highwayContext = HighwayContext(this)
+    val flashTransferContext = FlashTransferContext(this)
     val pushChannel = Channel<SsoResponse>(capacity = 15, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val sendPacketDefaultTimeout = 10_000L
     val contextCollection = listOf(

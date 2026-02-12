@@ -59,9 +59,16 @@ Yogurt 使用的协议类型。可选值有：
 - `fetched`：启动时从签名服务获取最新版本。只有在使用 `Windows`、`Mac`、`Linux` 协议时可用。
 - 指定具体的协议版本号，例如 `39038`、`9.1.60`。目前仅有如下几种内置的协议版本可用：
   - `Linux` 的 `39038` 版本
-  - `AndroidPhone` 的 `9.1.60` 版本
-  - `AndroidPad` 的 `9.2.20` 版本
+  - `AndroidPhone` 和 `AndroidPad` 的：
+    - `9.1.60` 版本
+    - `9.1.70` 版本
+    - `9.2.0` 版本
+    - `9.2.20` 版本
 - `custom`：启动时从工作目录下的 `app-info.json` 文件获取版本信息。
+
+> [!tip]
+> 
+> 如果你认为某个协议版本缺失，或者希望添加对某个新版本的支持，可以提交 Pull Request 或 Issue 以添加。
 
 ### `androidCredentials`
 

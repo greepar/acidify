@@ -94,7 +94,7 @@ val currentYearProvider = providers.provider {
 
 dokka {
     dokkaPublications.html {
-        outputDirectory.set(layout.buildDirectory.dir("../../packages/docs/public/kdoc"))
+        outputDirectory.set(layout.buildDirectory.dir("../../acidify-docs/public/kdoc"))
     }
     dokkaSourceSets.commonMain {
         sourceLink {

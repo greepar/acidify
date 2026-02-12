@@ -6,8 +6,8 @@ on:
     paths-ignore:
       - '.devin/**'
       - 'kotlin-js-store/**'
-      - 'packages/core/**'
-      - 'packages/docs/**'
+      - 'acidify-core-js/**'
+      - 'acidify-docs/**'
       - '**.md'
   workflow_dispatch:
 
@@ -154,7 +154,7 @@ jobs:
               raise RuntimeError("GITHUB_RUN_NUMBER is not set")
           npm_version = f"{base_version}-dev.{build_number}"
 
-          packages_dir = root / "packages"
+          packages_dir = root / "yogurt-npm-packages"
           artifacts_root = root / "native-artifacts"
 
           platform_configs = [
@@ -240,12 +240,12 @@ jobs:
         run: |
           set -euo pipefail
           packages=(
-            "packages/yogurt-win32-x64"
-            "packages/yogurt-linux-x64"
-            "packages/yogurt-linux-arm64"
-            "packages/yogurt-darwin-x64"
-            "packages/yogurt-darwin-arm64"
-            "packages/yogurt"
+            "yogurt-npm-packages/yogurt-win32-x64"
+            "yogurt-npm-packages/yogurt-linux-x64"
+            "yogurt-npm-packages/yogurt-linux-arm64"
+            "yogurt-npm-packages/yogurt-darwin-x64"
+            "yogurt-npm-packages/yogurt-darwin-arm64"
+            "yogurt-npm-packages/yogurt"
           )
           for pkg in "${packages[@]}"; do
             echo "Publishing $pkg"

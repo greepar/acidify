@@ -1,5 +1,6 @@
 package org.ntqqrev.yogurt
 
+import com.dokar.quickjs.QuickJs
 import com.github.ajalt.mordant.platform.MultiplatformSystem.exitProcess
 import com.github.ajalt.mordant.rendering.TextColors
 import com.github.ajalt.mordant.terminal.Terminal
@@ -23,6 +24,7 @@ import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readString
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.Bot
 import org.ntqqrev.acidify.common.AppInfo
 import org.ntqqrev.acidify.common.SessionStore
@@ -143,9 +145,7 @@ object YogurtApp {
         }
 
         dependencies {
-            provide { bot } cleanup {
-                runBlocking { it.offline() }
-            }
+            provide<AbstractBot> { bot } cleanup { runBlocking { it.offline() } }
             provide<SharedFlow<Event>> {
                 bot.eventFlow
                     .map(this@embeddedServer::transformAcidifyEvent)
@@ -155,7 +155,7 @@ object YogurtApp {
                         started = SharingStarted.Lazily,
                     )
             }
-            provide { qjs } cleanup { it.close() }
+            provide<QuickJs> { qjs } cleanup { it.close() }
         }
 
         routing {

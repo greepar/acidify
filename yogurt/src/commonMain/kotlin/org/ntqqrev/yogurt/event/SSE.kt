@@ -5,12 +5,12 @@ import io.ktor.server.routing.*
 import io.ktor.server.sse.*
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.milky.Event
 import org.ntqqrev.milky.milkyJsonModule
 
 fun Route.configureMilkyEventSse() = sse {
-    val bot = application.dependencies.resolve<Bot>()
+    val bot = application.dependencies.resolve<AbstractBot>()
     val flow = application.dependencies.resolve<SharedFlow<Event>>()
     val logger = bot.createLogger("SseModule")
     logger.i { "${call.request.local.remoteAddress} 通过 SSE 连接" }

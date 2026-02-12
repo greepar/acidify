@@ -9,7 +9,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.entity.BotFriend
 import org.ntqqrev.acidify.entity.BotGroup
 import org.ntqqrev.acidify.entity.BotGroupMember
@@ -102,7 +102,7 @@ private val BotGroupMember.displayString: String
 
 @Suppress("duplicatedCode")
 fun Application.configureEventLogging() = launch {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     val logger = bot.createLogger("Logging")
 
     bot.eventFlow.collect {

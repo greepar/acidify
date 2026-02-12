@@ -6,7 +6,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.json.encodeToJsonElement
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.exception.OidbException
 import org.ntqqrev.acidify.exception.ServiceException
 import org.ntqqrev.milky.ApiEndpoint
@@ -23,7 +23,7 @@ inline fun <reified T : Any, reified R : Any> ApiEndpoint<T, R>.define(
 private inline fun <reified T : Any, reified R : Any> Route.serve(
     handler: MilkyApiHandler<T, R>
 ) = post(handler.path) {
-    val bot = application.dependencies.resolve<Bot>()
+    val bot = application.dependencies.resolve<AbstractBot>()
     val context = MilkyApiContext(bot, application)
     val logger = bot.createLogger("HttpModule")
     try {

@@ -9,7 +9,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.milky.Event
 import org.ntqqrev.milky.milkyJsonModule
 import org.ntqqrev.yogurt.YogurtApp.config
@@ -21,7 +21,7 @@ val webhookClient = HttpClient {
 }
 
 fun Application.configureMilkyEventWebhook() = launch {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     val flow = dependencies.resolve<SharedFlow<Event>>()
     val logger = bot.createLogger("WebhookModule")
     flow.collect {

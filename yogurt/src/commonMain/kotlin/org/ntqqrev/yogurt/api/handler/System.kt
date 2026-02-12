@@ -27,8 +27,14 @@ val GetImplInfo = ApiEndpoint.GetImplInfo.define {
     GetImplInfoOutput(
         implName = BuildKonfig.name,
         implVersion = BuildKonfig.version,
-        qqProtocolVersion = bot.appInfo.currentVersion,
-        qqProtocolType = bot.appInfo.os.toMilkyProtocolOs(),
+        qqProtocolVersion = when (bot) {
+            is Bot -> bot.appInfo.currentVersion
+            is AndroidBot -> bot.appInfo.ptVersion
+        },
+        qqProtocolType = when (bot) {
+            is Bot -> bot.appInfo.os
+            is AndroidBot -> bot.appInfo.os // TODO: resolve Phone/Pad
+        }.toMilkyProtocolOs(),
         milkyVersion = milkyVersion,
     )
 }

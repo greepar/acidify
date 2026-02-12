@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 import kotlinx.io.buffered
 import kotlinx.io.files.SystemFileSystem
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.event.QRCodeGeneratedEvent
 import org.ntqqrev.qrmatrix.ErrorCorrectionLevel
 import org.ntqqrev.qrmatrix.generateMatrix
@@ -40,7 +40,7 @@ fun generateTerminalQRCode(data: String) = buildString {
 }
 
 fun Application.configureQRCodeDisplay() = launch {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     val logger = bot.createLogger("QRCode")
     bot.eventFlow.filterIsInstance<QRCodeGeneratedEvent>().collect {
         logger.i { "请用手机 QQ 扫描二维码：\n" + generateTerminalQRCode(it.url) }

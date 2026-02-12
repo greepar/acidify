@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.codec.*
 import org.ntqqrev.acidify.getDownloadUrl
 import org.ntqqrev.acidify.getFriend
@@ -19,7 +19,7 @@ import org.ntqqrev.yogurt.YogurtApp
 import org.ntqqrev.yogurt.util.resolveUri
 
 suspend fun Application.transformMessage(msg: BotIncomingMessage): IncomingMessage? {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     return when (msg.scene) {
         MessageScene.FRIEND -> {
             val friend = bot.getFriend(msg.peerUin) ?: return null
@@ -56,7 +56,7 @@ suspend fun Application.transformMessage(msg: BotIncomingMessage): IncomingMessa
 }
 
 suspend fun Application.transformSegment(segment: BotIncomingSegment): IncomingSegment {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     return when (segment) {
         is BotIncomingSegment.Text -> IncomingSegment.Text(
             data = IncomingSegment.Text.Data(
@@ -173,7 +173,7 @@ suspend fun Application.transformSegment(
     peerUin: Long,
     segment: OutgoingSegment,
 ): BotOutgoingSegment {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     val logger = bot.createLogger("MessageTransform")
     return when (segment) {
         is OutgoingSegment.Text -> BotOutgoingSegment.Text(
@@ -294,7 +294,7 @@ suspend fun Application.transformEssenceMessage(msg: BotEssenceMessage): GroupEs
 }
 
 suspend fun Application.transformEssenceSegment(segment: BotEssenceSegment): IncomingSegment {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     val logger = bot.createLogger("MessageTransform")
     return when (segment) {
         is BotEssenceSegment.Text -> IncomingSegment.Text(

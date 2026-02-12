@@ -2,7 +2,7 @@ package org.ntqqrev.yogurt.transform
 
 import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.event.*
 import org.ntqqrev.acidify.message.MessageScene
 import org.ntqqrev.milky.Event
@@ -12,7 +12,7 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 suspend fun Application.transformAcidifyEvent(event: AcidifyEvent): Event? {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     return when (event) {
         is BotOfflineEvent -> Event.BotOffline(
             time = Clock.System.now().epochSeconds,

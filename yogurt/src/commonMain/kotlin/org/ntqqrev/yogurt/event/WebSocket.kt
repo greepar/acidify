@@ -8,11 +8,11 @@ import io.ktor.server.websocket.webSocket
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.milky.Event
 
 fun Route.configureMilkyEventWebSocket() = webSocket {
-    val bot = application.dependencies.resolve<Bot>()
+    val bot = application.dependencies.resolve<AbstractBot>()
     val flow = application.dependencies.resolve<SharedFlow<Event>>()
     val logger = bot.createLogger("WebSocketModule")
     logger.i { "${call.request.local.remoteAddress} 通过 WebSocket 连接" }

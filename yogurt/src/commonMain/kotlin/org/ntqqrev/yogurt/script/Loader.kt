@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.io.buffered
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readString
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.milky.Event
 import org.ntqqrev.milky.milkyJsonModule
 import org.ntqqrev.yogurt.scriptsPath
 
 suspend fun Application.loadScripts() {
-    val bot = dependencies.resolve<Bot>()
+    val bot = dependencies.resolve<AbstractBot>()
     val qjs = dependencies.resolve<QuickJs>()
     val logger = bot.createLogger("ScriptLoader")
     val scripts = SystemFileSystem.list(scriptsPath)

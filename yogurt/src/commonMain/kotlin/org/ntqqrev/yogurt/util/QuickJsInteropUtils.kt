@@ -6,7 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.di.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
-import org.ntqqrev.acidify.Bot
+import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.milky.milkyJsonModule
 import org.ntqqrev.yogurt.api.MilkyApiContext
 import org.ntqqrev.yogurt.api.MilkyApiHandler
@@ -38,7 +38,7 @@ inline fun <reified T : Any, reified R : Any> Application.defineJsApi(
         require(args.size == 1)
         val payloadString = args[0] as? String
             ?: throw IllegalArgumentException("Expected argument to be a JSON string")
-        val bot = dependencies.resolve<Bot>()
+        val bot = dependencies.resolve<AbstractBot>()
         val context = MilkyApiContext(bot, this)
         val resp = handler.callHandler(context, milkyJsonModule.decodeFromString(payloadString))
         milkyJsonModule.encodeToString(resp)

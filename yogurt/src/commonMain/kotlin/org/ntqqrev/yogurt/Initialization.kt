@@ -137,9 +137,10 @@ suspend fun Application.botLogin() {
                 t.println("请打开网页用 F12 抓取 ticket 后输入，并按 Enter 提交：")
                 readln().trim()
             },
-            onRequireSmsCode = { countryCode, phone, _ ->
-                // println("Manual verify URL: $_")
-                t.println("短信已发送到 $countryCode-$phone，请输入收到的验证码，并按 Enter 提交：")
+            onRequireSmsCode = { countryCode, phone, url ->
+                t.println("短信已发送到 $countryCode-$phone，请输入收到的验证码，并按 Enter 提交。")
+                t.println("如果未收到验证码，也可以进行通过下面的 URL 进行手动验证，然后直接按 Enter 以继续登录。")
+                t.println(url)
                 readln().trim()
             },
             preloadContacts = config.preloadContacts,

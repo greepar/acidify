@@ -166,14 +166,24 @@ suspend fun AndroidBot.passwordLogin(
                 sessionStore.state.tlv104 = it
             }
             val smsCode = onRequireSmsCode(countryCode, phone, smsUrl)
-            result = client.callService(
-                WtLogin.AndroidLogin.SubmitSMSCode,
-                WtLogin.AndroidLogin.SubmitSMSCode.Req(
-                    energy = client.getEnergyFor(WtLogin.AndroidLogin.SubmitSMSCode),
-                    debugXwid = client.getDebugXwidFor(WtLogin.AndroidLogin.SubmitSMSCode),
-                    smsCode = smsCode,
+            result = if (smsCode.isNotEmpty()) {
+                client.callService(
+                    WtLogin.AndroidLogin.SubmitSMSCode,
+                    WtLogin.AndroidLogin.SubmitSMSCode.Req(
+                        energy = client.getEnergyFor(WtLogin.AndroidLogin.SubmitSMSCode),
+                        debugXwid = client.getDebugXwidFor(WtLogin.AndroidLogin.SubmitSMSCode),
+                        smsCode = smsCode,
+                    )
                 )
-            )
+            } else {
+                client.callService(
+                    WtLogin.AndroidLogin.Tgtgt,
+                    WtLogin.AndroidLogin.Tgtgt.Req(
+                        energy = client.getEnergyFor(WtLogin.AndroidLogin.Tgtgt),
+                        debugXwid = client.getDebugXwidFor(WtLogin.AndroidLogin.Tgtgt),
+                    )
+                )
+            }
         }
     }
 

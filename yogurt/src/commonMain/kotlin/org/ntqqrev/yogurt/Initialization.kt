@@ -122,7 +122,7 @@ suspend fun Application.initializeAndroid(): AndroidBot {
             guid = sessionStore.guid.toHexString(),
         )
     }
-    t.println("使用协议 ${appInfo.os} ${appInfo.currentVersion} (AppId: ${appInfo.subAppId})")
+    t.println("使用协议 ${config.protocol.os} ${appInfo.ptVersion} (AppId: ${appInfo.subAppId})")
     val androidBot = AndroidBot.create(
         appInfo = appInfo,
         sessionStore = sessionStore,

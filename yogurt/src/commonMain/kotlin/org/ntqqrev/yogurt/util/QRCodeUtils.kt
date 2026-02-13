@@ -10,6 +10,7 @@ import org.ntqqrev.acidify.AbstractBot
 import org.ntqqrev.acidify.event.QRCodeGeneratedEvent
 import org.ntqqrev.qrmatrix.ErrorCorrectionLevel
 import org.ntqqrev.qrmatrix.generateMatrix
+import org.ntqqrev.yogurt.YogurtApp.t
 import org.ntqqrev.yogurt.qrCodePath
 
 object Palette {
@@ -41,14 +42,18 @@ fun generateTerminalQRCode(data: String) = buildString {
 
 fun Application.configureQRCodeDisplay() = launch {
     val bot = dependencies.resolve<AbstractBot>()
-    val logger = bot.createLogger("QRCode")
     bot.eventFlow.filterIsInstance<QRCodeGeneratedEvent>().collect {
-        logger.i { "请用手机 QQ 扫描二维码：\n" + generateTerminalQRCode(it.url) }
-        logger.i { "或使用以下 URL 生成二维码并扫描：" }
-        logger.i { it.url }
+        t.println(
+            """
+                请用手机 QQ 扫描二维码：
+                ${generateTerminalQRCode(it.url)}
+                或使用以下 URL 生成二维码并扫描：
+                ${it.url}
+            """.trimIndent()
+        )
         SystemFileSystem.sink(qrCodePath).buffered().use { sink ->
             sink.write(it.png)
         }
-        logger.i { "二维码文件已保存至 ${SystemFileSystem.resolve(qrCodePath)}" }
+        t.println("二维码文件已保存至 ${SystemFileSystem.resolve(qrCodePath)}")
     }
 }

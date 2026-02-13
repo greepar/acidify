@@ -142,7 +142,6 @@ suspend fun Application.initializeAndroid(): AndroidBot {
                     started = SharingStarted.Lazily,
                 )
         }
-        // TODO: provide captcha and SMS code source refs
     }
     return androidBot
 }
@@ -151,11 +150,10 @@ suspend fun Application.botLogin() {
     when (val bot = dependencies.resolve<AbstractBot>()) {
         is Bot -> bot.login(preloadContacts = config.preloadContacts)
         is AndroidBot -> bot.login(
-            // TODO: use WebUI to submit captcha and SMS code
             onRequireCaptchaTicket = { captchaUrl ->
                 val queryParams = captchaUrl.split("?")[1].replace("uin=0", "uin=${bot.uin}")
-                t.println("https://captcha.lagrangecore.org/?$queryParams")
-                t.println("请打开网页用 F12 抓取 ticket 后输入，并按 Enter 提交：")
+                t.println("https://yogurt-captcha.ntqqrev.org/?$queryParams")
+                t.println("请打开网页完成验证码后输入 Ticket，并按 Enter 提交：")
                 readln().trim()
             },
             onRequireSmsCode = { countryCode, phone, url ->

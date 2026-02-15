@@ -38,7 +38,7 @@ data class AppInfo(
     fun toJson() = jsonModule.encodeToString(this)
 
     object Bundled {
-        val `Linux/39038` = AppInfo(
+        val Linux_39038 = AppInfo(
             os = "Linux",
             kernel = "Linux",
             vendorOs = "linux",
@@ -56,6 +56,6 @@ data class AppInfo(
             ntLoginType = 1
         )
 
-        val Linux = `Linux/39038`
+        val Linux = Linux_39038
     }
 }

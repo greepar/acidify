@@ -65,7 +65,7 @@ class AndroidAppInfo(
     fun toJson() = jsonModule.encodeToString(this)
 
     object Bundled {
-        val `AndroidPhone/9.1.60` = AndroidAppInfo(
+        val AndroidPhone_9_1_60 = AndroidAppInfo(
             os = "Android",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.1.60_9388_YYB_D",
@@ -89,7 +89,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPad/9.1.60` = AndroidAppInfo(
+        val AndroidPad_9_1_60 = AndroidAppInfo(
             os = "ANDROID",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.1.60_9388_YYB_D",
@@ -113,7 +113,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPhone/9.1.70` = AndroidAppInfo(
+        val AndroidPhone_9_1_70 = AndroidAppInfo(
             os = "Android",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.1.70_9898_YYB_D",
@@ -137,7 +137,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPad/9.1.70` = AndroidAppInfo(
+        val AndroidPad_9_1_70 = AndroidAppInfo(
             os = "ANDROID",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.1.70_9898_YYB_D",
@@ -161,7 +161,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPhone/9.2.0` = AndroidAppInfo(
+        val AndroidPhone_9_2_0 = AndroidAppInfo(
             os = "Android",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.2.0_10970_YYB_D",
@@ -185,7 +185,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPad/9.2.0` = AndroidAppInfo(
+        val AndroidPad_9_2_0 = AndroidAppInfo(
             os = "ANDROID",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.2.0_10970_YYB_D",
@@ -209,7 +209,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPhone/9.2.20` = AndroidAppInfo(
+        val AndroidPhone_9_2_20 = AndroidAppInfo(
             os = "Android",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.2.20_11650_YYB_D",
@@ -233,7 +233,7 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val `AndroidPad/9.2.20` = AndroidAppInfo(
+        val AndroidPad_9_2_20 = AndroidAppInfo(
             os = "ANDROID",
             vendorOs = "android",
             qua = "V1_AND_SQ_9.2.20_11650_YYB_D",
@@ -257,8 +257,8 @@ class AndroidAppInfo(
             appClientVersion = 0
         )
 
-        val AndroidPhone = `AndroidPhone/9.2.20`
+        val AndroidPhone = AndroidPhone_9_2_20
 
-        val AndroidPad = `AndroidPad/9.2.20`
+        val AndroidPad = AndroidPad_9_2_20
     }
 }

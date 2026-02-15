@@ -43,10 +43,10 @@ fun generateTerminalQRCode(data: String) = buildString {
 fun Application.configureQRCodeDisplay() = launch {
     val bot = dependencies.resolve<AbstractBot>()
     bot.eventFlow.filterIsInstance<QRCodeGeneratedEvent>().collect {
+        t.println("请用手机 QQ 扫描二维码：")
+        t.println(generateTerminalQRCode(it.url))
         t.println(
             """
-                请用手机 QQ 扫描二维码：
-                ${generateTerminalQRCode(it.url)}
                 或使用以下 URL 生成二维码并扫描：
                 ${it.url}
             """.trimIndent()

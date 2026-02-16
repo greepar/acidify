@@ -2,11 +2,13 @@ package org.ntqqrev.acidify.common.android
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlin.js.JsExport
 import kotlin.random.Random
 
 /**
  * 存储 Bot 登录会话相关信息，如密钥等
  */
+@JsExport
 @Serializable
 class AndroidSessionStore(
     var uin: Long,

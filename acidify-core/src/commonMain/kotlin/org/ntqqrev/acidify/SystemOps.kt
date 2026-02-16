@@ -18,7 +18,7 @@ import org.ntqqrev.acidify.struct.*
 suspend fun AbstractBot.online(preloadContacts: Boolean = false) {
     client.sendOnlinePacket()
     isLoggedIn = true
-    logger.i { "用户 $uin 已上线" }
+    logger.i { "发送上线包成功" }
     client.doPostOnlineLogic()
 
     eventCollectJob = launch {
@@ -49,6 +49,8 @@ suspend fun AbstractBot.online(preloadContacts: Boolean = false) {
         val groupMemberCount = groups.sumOf { it.getMembers().size }
         logger.d { "加载了 $friendCount 个好友, $groupCount 个群和 $groupMemberCount 个群成员" }
     }
+
+    logger.i { "用户 $uin 已上线" }
 }
 
 /**

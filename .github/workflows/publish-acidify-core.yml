@@ -108,10 +108,8 @@ jobs:
           tag_name: ${{ steps.release.outputs.tag }}
           name: acidify-core ${{ steps.release.outputs.version }}
           draft: true
-          generate_release_notes: true
+          generate_release_notes: false
           body: |
-            ## acidify-core ${{ steps.release.outputs.version }}
-            
             Maven Central: `org.ntqqrev:acidify-core:${{ steps.release.outputs.version }}`
             npm: `@acidify/core@${{ steps.release.outputs.version }}`
             

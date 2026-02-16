@@ -18,10 +18,9 @@ npm install @acidify/core
 
 - 在使用 Kotlin 单例对象时（如 `SimpleLogHandler`），需要通过 `getInstance()` 方法来获取实例。
 - 由于 `kotlinx-coroutines` 并没有针对 JavaScript 平台提供类型定义，因此 `@acidify/core` 提供了一个简化的 `CoroutineScope` 包装类型，接收一个 `boolean` 表示该协程作用域是否为 `SupervisorJob`，同时只暴露了一个方法 `cancel()` 用于取消协程作用域。
-- `Bot` 没有暴露 `eventFlow` 属性，而是转而通过 `onXxx` 方法来注册事件处理器，同时提供了对应的 `offXxx` 方法来注销事件处理器。
-- `@acidify/core` **暂不支持 Android 登录方式**。
+- `Bot` 和 `AndroidBot` 没有暴露 `eventFlow` 属性，而是转而通过 `onXxx` 方法来注册事件处理器，同时提供了对应的 `offXxx` 方法来注销事件处理器。
 
-以下是一个完整的 TypeScript 使用示例：
+以下是一个使用 TypeScript 代码用 PC 协议登录的示例：
 
 ```typescript
 // 从文件中加载 SessionStore，如果文件不存在则创建一个空的 SessionStore

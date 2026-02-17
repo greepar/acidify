@@ -56,7 +56,6 @@ kotlin {
                 "-Wl,-Bstatic",
                 "-lstdc++",
                 "-lgcc",
-                "-lssp",
                 "-Wl,-Bdynamic",
             )
         }

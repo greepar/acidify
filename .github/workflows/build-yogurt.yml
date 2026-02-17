@@ -309,10 +309,10 @@ jobs:
           echo "release_tag=v${version}-build.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
           echo "release_name=Yogurt v${version} (build ${{ github.run_number }})" >> "$GITHUB_OUTPUT"
 
-      - name: Create release in SaltifyDev/yogurt-release
+      - name: Create release in SaltifyDev/yogurt-releases
         uses: softprops/action-gh-release@v2
         with:
-          repository: SaltifyDev/yogurt-release
+          repository: SaltifyDev/yogurt-releases
           tag_name: ${{ steps.release_version.outputs.release_tag }}
           name: ${{ steps.release_version.outputs.release_name }}
           generate_release_notes: false

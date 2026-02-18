@@ -354,12 +354,14 @@ suspend fun AbstractBot.quitGroup(groupUin: Long) = client.callService(
  * @param groupUin 群号
  * @param sequence 消息序列号
  * @param code 表情代码
+ * @param type 表情的类型，分为 `1`（QQ 表情）和 `2`（系统 Emoji）两种
  * @param isAdd 是否添加表情回应，`false` 表示取消回应
  */
 suspend fun AbstractBot.setGroupMessageReaction(
     groupUin: Long,
     sequence: Long,
     code: String,
+    type: Int = 1,
     isAdd: Boolean = true
 ) = client.callService(
     if (isAdd) SetGroupMessageReaction.Add else SetGroupMessageReaction.Remove,
@@ -367,7 +369,7 @@ suspend fun AbstractBot.setGroupMessageReaction(
         groupUin = groupUin,
         sequence = sequence,
         code = code,
-        type = if (code in faceDetailMap) 1 else 2
+        type = type,
     )
 )
 

@@ -133,7 +133,8 @@ val QuitGroup = ApiEndpoint.QuitGroup.define {
 val SendGroupMessageReaction = ApiEndpoint.SendGroupMessageReaction.define {
     bot.getGroup(it.groupId)
         ?: throw MilkyApiException(-404, "Group not found")
-    bot.setGroupMessageReaction(it.groupId, it.messageSeq, it.reaction, it.isAdd)
+    // TODO: will be it.reactionType in Milky 1.2
+    bot.setGroupMessageReaction(it.groupId, it.messageSeq, it.reaction, 1, it.isAdd)
     SendGroupMessageReactionOutput()
 }
 

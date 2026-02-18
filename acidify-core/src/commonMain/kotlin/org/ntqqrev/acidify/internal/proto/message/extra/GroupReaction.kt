@@ -24,6 +24,7 @@ internal class GroupReaction(
             @Serializable
             internal class DataInner(
                 @ProtoNumber(1) val code: String = "",
+                @ProtoNumber(2) val reactionType: Int = 0,
                 @ProtoNumber(3) val count: Int = 0,
                 @ProtoNumber(4) val operatorUid: String = "",
                 @ProtoNumber(5) val type: Int = 0,

@@ -563,6 +563,7 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
         val operatorUid = dataInner.operatorUid
         val operatorUin = bot.getUinByUid(operatorUid)
         val faceId = dataInner.code
+        val reactionType = dataInner.reactionType
         val isAdd = dataInner.type == 1
 
         return listOf(
@@ -572,6 +573,7 @@ internal object MsgPushSignal : AbstractSignal("trpc.msg.olpush.OlPushService.Ms
                 userUid = operatorUid,
                 messageSeq = msgSeq,
                 faceId = faceId,
+                type = reactionType,
                 isAdd = isAdd
             )
         )

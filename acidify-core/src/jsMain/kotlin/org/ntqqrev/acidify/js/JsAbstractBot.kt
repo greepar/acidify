@@ -308,8 +308,14 @@ abstract class JsAbstractBot internal constructor(
 
     fun quitGroup(groupUin: Long) = promise { bot.quitGroup(groupUin) }
 
-    fun setGroupMessageReaction(groupUin: Long, sequence: Long, code: String, isAdd: Boolean = true) = promise {
-        bot.setGroupMessageReaction(groupUin, sequence, code, isAdd)
+    fun setGroupMessageReaction(
+        groupUin: Long,
+        sequence: Long,
+        code: String,
+        type: Int = 1,
+        isAdd: Boolean = true
+    ) = promise {
+        bot.setGroupMessageReaction(groupUin, sequence, code, type, isAdd)
     }
 
     fun sendGroupNudge(groupUin: Long, targetUin: Long) = promise {

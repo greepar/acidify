@@ -47,11 +47,15 @@ sealed class BotIncomingSegment {
      * 回复消息段
      * @property sequence 被回复的消息的序列号
      * @property senderUin 被回复的消息的发送者的 QQ 号
+     * @property senderName 被回复的消息的发送者的名称，视情况有可能是昵称 / 备注 / 群名片，仅在合并转发中可以获取
+     * @property timestamp 被回复的消息的 Unix 时间戳（秒）
      * @property segments 被回复的消息的内容
      */
     data class Reply internal constructor(
         val sequence: Long,
         val senderUin: Long,
+        val senderName: String?,
+        val timestamp: Long,
         val segments: List<BotIncomingSegment>,
     ) : BotIncomingSegment() {
         override fun toString(): String = "[引用消息]"

@@ -15,7 +15,7 @@ internal class SourceMsg(
     @ProtoNumber(6) val type: Int = 0,
     @ProtoNumber(7) val richMsg: ByteArray = byteArrayOf(),
     @ProtoNumber(8) val pbReserve: ByteArray = byteArrayOf(),
-    @ProtoNumber(9) val srcMsg: ByteArray = byteArrayOf(),
+    @ProtoNumber(9) val srcMsg: ByteArray? = null,
     @ProtoNumber(10) val toUin: Long = 0L,
     @ProtoNumber(11) val troopName: ByteArray = byteArrayOf(),
 ) {

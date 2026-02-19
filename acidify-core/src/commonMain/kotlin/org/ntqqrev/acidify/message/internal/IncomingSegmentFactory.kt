@@ -4,6 +4,7 @@ import dev.karmakrafts.kompress.Inflater
 import kotlinx.serialization.decodeFromString
 import org.ntqqrev.acidify.internal.json.message.IncomingForwardBody
 import org.ntqqrev.acidify.internal.json.message.LightAppPayload
+import org.ntqqrev.acidify.internal.proto.message.CommonMessage
 import org.ntqqrev.acidify.internal.proto.message.elem.SourceMsg
 import org.ntqqrev.acidify.internal.proto.message.extra.GroupFileExtra
 import org.ntqqrev.acidify.internal.proto.message.extra.QBigFaceExtra
@@ -148,6 +149,11 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
                     }
                 },
                 senderUin = reply.senderUin,
+                senderName = reply.srcMsg?.let {
+                    val commonMsg = it.pbDecode<CommonMessage>()
+                    commonMsg.routingHead.group.groupCard
+                },
+                timestamp = reply.time,
                 segments = ctx.bot.buildSegments(
                     elems = reply.elems,
                     scene = ctx.scene,

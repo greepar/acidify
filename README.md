@@ -33,6 +33,7 @@
 
 - [Milky](https://milky.ntqqrev.org/) - 基于 HTTP / WebSocket 通信的新时代 QQ 机器人应用接口标准
 - [acidify-codec](https://github.com/SaltifyDev/acidify-codec) - LagrangeCodec 的 Kotlin 绑定
+- [acidify-codec-js](https://github.com/SaltifyDev/acidify-codec-js) - LagrangeCodec 的 JavaScript 绑定
 - [Cecilia](https://github.com/Wesley-Young/Cecilia) - 实验性的基于 Compose 的即时聊天软件
 - [yogurt-captcha-solver](https://github.com/SaltifyDev/yogurt-captcha-solver) - QQ 图形验证码 Ticket 抓取辅助工具
 

@@ -29,6 +29,8 @@ Content-Type: application/json
 
 ```json
 {
+  "platform": "Linux",
+  "version": "3.2.19-39038",
   "data": {
     "sign": "0123456789abcdef",
     "token": "0123456789abcdef",
@@ -36,6 +38,12 @@ Content-Type: application/json
   }
 }
 ```
+
+其中：
+
+- `platform` 的值必须与初始化所用的 `AppInfo` 的 `Os` 相同；
+- `version` 的值必须与初始化所用的 `AppInfo` 的 `CurrentVersion` 相同；
+- `data` 中的 `sign`、`token` 和 `extra` 为签名所需字段，必须是 HEX 字符串或空字符串，下同。
 
 以上所列为响应中必须包含的字段，开发者可以根据实际情况添加其他字段，下同，不再赘述。
 
@@ -97,6 +105,8 @@ Content-Type: application/json
 
 ```json
 {
+  "code": 0,
+  "msg": "",
   "data": {
     "sign": "0123456789abcdef",
     "token": "0123456789abcdef",
@@ -104,6 +114,12 @@ Content-Type: application/json
   }
 }
 ```
+
+其中：
+
+- `code` 的值为 `0` 表示成功，非 `0` 表示失败，下同；
+- `msg` 的值为错误信息，成功时可以为空字符串，下同；
+- `data` 在 `code` 为 `0` 时必须包含；在 `code` 非 `0` 时不应包含，下同。
 
 ### POST `$BASE/energy`
 
@@ -129,9 +145,13 @@ Content-Type: application/json
 
 ```json
 {
+  "code": 0,
+  "msg": "",
   "data": "0123456789abcdef"
 }
 ```
+
+其中 `data` 必须是 HEX 字符串。
 
 ### POST `$BASE/get_tlv553`
 
@@ -156,9 +176,13 @@ Content-Type: application/json
 
 ```json
 {
+  "code": 0,
+  "msg": "",
   "data": "0123456789abcdef"
 }
 ```
+
+其中 `data` 必须是 HEX 字符串。
 
 ## Android 签名（Legacy）
 
@@ -195,6 +219,8 @@ Content-Type: application/json
 
 ```json
 {
+  "code": 0,
+  "msg": "",
   "data": {
     "sign": "0123456789abcdef",
     "token": "0123456789abcdef",
@@ -227,6 +253,8 @@ Content-Type: application/json
 
 ```json
 {
+  "code": 0,
+  "msg": "",
   "data": "0123456789abcdef"
 }
 ```

@@ -43,7 +43,7 @@ kotlin {
 
 ## 初始化 Bot
 
-Bot 可以通过 [`Bot.create`](/kdoc/acidify-core/org.ntqqrev.acidify/-bot/-companion/create.html) 方法来创建：
+Bot 可以通过构造器来创建：
 
 ```kotlin
 // 从文件中加载 SessionStore，如果文件不存在则创建一个空的 SessionStore
@@ -58,7 +58,7 @@ val signProvider = UrlSignProvider("...")
 val scope = CoroutineScope(SupervisorJob())
 
 // 创建 Bot 实例
-val bot = Bot.create(
+val bot = Bot(
     appInfo = signProvider.getAppInfo()!!,
     sessionStore = SessionStore.empty(),
     signProvider = signProvider,
@@ -313,7 +313,7 @@ val androidSessionStore = if (File("session-store-android.json").exists()) {
 val androidSignProvider = AndroidUrlSignProvider("...")
 val scope = CoroutineScope(SupervisorJob())
 
-val androidBot = AndroidBot.create(
+val androidBot = AndroidBot(
     appInfo = androidAppInfo,
     sessionStore = androidSessionStore,
     signProvider = androidSignProvider,

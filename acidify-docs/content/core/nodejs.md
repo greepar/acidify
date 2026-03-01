@@ -16,6 +16,7 @@ npm install @acidify/core
 
 `@acidify/core` 包导出的类型和 API 与 Kotlin 版本的 `acidify-core` 基本保持一致，但在其他方面有一些重要的区别：
 
+- 创建一个 `Bot` 或 `AndroidBot` 实例时，需要使用 `Bot.create()` 或 `AndroidBot.create()` 静态方法来创建实例，而不是直接调用构造函数。
 - 在使用 Kotlin 单例对象时（如 `SimpleLogHandler`），需要通过 `getInstance()` 方法来获取实例。
 - 由于 `kotlinx-coroutines` 并没有针对 JavaScript 平台提供类型定义，因此 `@acidify/core` 提供了一个简化的 `CoroutineScope` 包装类型，接收一个 `boolean` 表示该协程作用域是否为 `SupervisorJob`，同时只暴露了一个方法 `cancel()` 用于取消协程作用域。
 - `Bot` 和 `AndroidBot` 没有暴露 `eventFlow` 属性，而是转而通过 `onXxx` 方法来注册事件处理器，同时提供了对应的 `offXxx` 方法来注销事件处理器。
@@ -36,7 +37,7 @@ const scope = new CoroutineScope(true);
 const signProvider = new UrlSignProvider(scope, '...');
 
 // 创建 Bot 实例
-const bot = await Bot.create(
+const bot = Bot.create(
   await signProvider.getAppInfo()!,
   sessionStore,
   signProvider,

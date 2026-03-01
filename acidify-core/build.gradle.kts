@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "org.ntqqrev"
-version = "1.1.3"
+version = "1.1.4"
 
 kotlin {
     js(IR) {

@@ -49,11 +49,11 @@ inline fun <reified T : Any, reified R : Any> Application.defineJsApi(
                 resp = handler.callHandler(context, milkyJsonModule.decodeFromString(payloadString))
             }
             logger.i {
-                "插件调用 API ${handler.path}（成功 ${duration.toString(DurationUnit.MILLISECONDS)}）"
+                "脚本调用 API ${handler.path}（成功 ${duration.toString(DurationUnit.MILLISECONDS)}）"
             }
             milkyJsonModule.encodeToString(resp)
         } catch (e: Exception) {
-            logger.e(e) { "插件调用 API ${handler.path}（失败 ${e::class.simpleName}）" }
+            logger.e(e) { "脚本调用 API ${handler.path}（失败 ${e::class.simpleName}）" }
             throw e
         }
     }

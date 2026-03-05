@@ -9,8 +9,11 @@ val addrInUsePosixCodes = setOf(
 )
 
 actual tailrec fun Throwable.isCausedByAddrInUse(): Boolean {
+    if (this is PosixException.AddressAlreadyInUseException) {
+        return true
+    }
     if (this is PosixException.PosixErrnoException) {
-        if (errno in addrInUsePosixCodes) {
+        if (addrInUsePosixCodes.contains(this.errno)) {
             return true
         }
     }

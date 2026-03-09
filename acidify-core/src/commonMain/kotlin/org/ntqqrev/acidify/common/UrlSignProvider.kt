@@ -2,9 +2,11 @@ package org.ntqqrev.acidify.common
 
 import io.ktor.client.*
 import io.ktor.client.engine.*
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.ntqqrev.acidify.exception.UrlSignException
@@ -21,6 +23,9 @@ class UrlSignProvider(val url: String, val httpProxy: String? = null) : SignProv
     }
 
     private val client = HttpClient {
+        install(ContentNegotiation) {
+            json(jsonModule)
+        }
         engine {
             if (!httpProxy.isNullOrEmpty()) {
                 proxy = ProxyBuilder.http(httpProxy)

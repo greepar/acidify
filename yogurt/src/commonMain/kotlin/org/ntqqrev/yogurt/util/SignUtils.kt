@@ -10,13 +10,36 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
 import org.ntqqrev.acidify.common.SignResult
 import org.ntqqrev.acidify.common.android.AndroidSignProvider
 import org.ntqqrev.acidify.exception.UrlSignException
+
+data class LegacySignMetainfo(
+    val fullVersion: String,
+    val fekitVersion: String,
+)
+
+val legacyMetainfoMap = mapOf(
+    "9.1.60" to LegacySignMetainfo(
+        fullVersion = "9.1.60.24370",
+        fekitVersion = "8.400.807",
+    ),
+    "9.1.70" to LegacySignMetainfo(
+        fullVersion = "9.1.70.25645",
+        fekitVersion = "8.401.830",
+    ),
+    "9.2.0" to LegacySignMetainfo(
+        fullVersion = "9.2.0.28325",
+        fekitVersion = "8.405.873",
+    ),
+    "9.2.20" to LegacySignMetainfo(
+        fullVersion = "9.2.20.30025",
+        fekitVersion = "8.409.903",
+    ),
+)
 
 class AndroidLegacyUrlSignProvider(val url: String) : AndroidSignProvider {
     val base = Url(url)
@@ -125,11 +148,9 @@ class AndroidLegacyUrlSignProvider(val url: String) : AndroidSignProvider {
         "0A93010A9001413441393532384243323537343030303644314445303543333538313245363041454239333935424444364433323731454644454542394634304536383734313141444439393835353341364436414132413433363637373839463746424236333442443444443031443436353735323238373339393032373836443445384333313241443631444346424537413246"
             .hexToByteArray()
 
-    /**
-     * 将设备注册到签名服务。如果使用 ICQQ 风格的签名 API，可能需要这一步骤。
-     */
     suspend fun registerDevice(
-        qua: String,
+        ver: String,
+        fekitVer: String,
         uin: Long,
         qimei: String,
         guid: String,
@@ -137,20 +158,18 @@ class AndroidLegacyUrlSignProvider(val url: String) : AndroidSignProvider {
         val resp = client.post {
             url {
                 takeFrom(base)
-                appendPathSegments("sign")
+                appendPathSegments("register")
             }
             contentType(ContentType.Application.Json)
             setBody(
-                buildJsonObject {
-                    put("qua", qua)
-                    put("uin", uin)
-                    put("cmd", "trpc.login.ecdh.EcdhService.SsoKeyExchange") // arbitrary valid cmd
-                    put("seq", 28655) // arbitrary seq
-                    put("android_id", "d4573bde6663bb55")
-                    put("qimei36", qimei)
-                    put("buffer", "00aaff00aaff00aaff") // arbitrary buffer
-                    put("guid", guid)
-                }
+                AndroidUrlRegisterRequest(
+                    ver = ver,
+                    fekitVer = fekitVer,
+                    uin = uin,
+                    androidId = "d4573bde6663bb55", // hardcoded
+                    qimei36 = qimei,
+                    guid = guid,
+                )
             )
         }
         if (resp.status != HttpStatusCode.OK) {
@@ -160,7 +179,6 @@ class AndroidLegacyUrlSignProvider(val url: String) : AndroidSignProvider {
         if (respBody.code != 0) {
             throw UrlSignException(respBody.msg, respBody.code)
         }
-        // Sign successful, but we don't actually care about the returned sign value
     }
 }
 
@@ -183,6 +201,16 @@ private data class AndroidUrlEnergyRequest(
     val ver: String,
     val version: String,
     val qua: String
+)
+
+@Serializable
+private data class AndroidUrlRegisterRequest(
+    val ver: String,
+    @SerialName("fekit_ver") val fekitVer: String,
+    val uin: Long,
+    @SerialName("android_id") val androidId: String,
+    val qimei36: String,
+    val guid: String
 )
 
 @Serializable

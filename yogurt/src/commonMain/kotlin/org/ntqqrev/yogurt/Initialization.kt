@@ -134,17 +134,27 @@ suspend fun Application.initializeAndroid(): AndroidBot {
             if (e.code != 1) throw e
 
             // Manually register device info to Sign API
-            val (fullVersion, fekitVersion) = legacyMetainfoMap[config.protocol.version] ?: throw IllegalStateException(
-                "未找到 ${config.protocol.version} 适配的元信息，请检查配置的版本是否正确，或联系开发者添加适配"
-            )
             t.println("正在注册设备信息到 Sign API...")
-            signProvider.registerDevice(
-                ver = fullVersion,
-                fekitVer = fekitVersion,
-                uin = sessionStore.uin,
-                qimei = sessionStore.qimei,
-                guid = sessionStore.guid.toHexString(),
-            )
+            legacyMetainfoMap[config.protocol.version]
+                ?.let { (fullVersion, fekitVersion) ->
+                    signProvider.registerDevice(
+                        ver = fullVersion,
+                        fekitVer = fekitVersion,
+                        uin = sessionStore.uin,
+                        qimei = sessionStore.qimei,
+                        guid = sessionStore.guid.toHexString(),
+                    )
+                }
+                ?: run {
+                    t.println("未找到协议版本 ${config.protocol.version} 对应的 fullVersion 和 fekitVersion。")
+                    t.println("将直接提供协议版本、uin、qimei 和 guid 给 Sign API 进行注册，注册可能失败")
+                    signProvider.registerDeviceBySign(
+                        qua = appInfo.qua,
+                        uin = sessionStore.uin,
+                        qimei = sessionStore.qimei,
+                        guid = sessionStore.guid.toHexString(),
+                    )
+                }
         }
     }
     t.println("使用协议 ${config.protocol.os} ${appInfo.ptVersion} (AppId: ${appInfo.subAppId})")

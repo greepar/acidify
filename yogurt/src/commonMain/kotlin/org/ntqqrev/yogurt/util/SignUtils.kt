@@ -13,6 +13,9 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import org.ntqqrev.acidify.common.SignResult
 import org.ntqqrev.acidify.common.android.AndroidSignProvider
 import org.ntqqrev.acidify.exception.UrlSignException
@@ -175,10 +178,45 @@ class AndroidLegacyUrlSignProvider(val url: String) : AndroidSignProvider {
         if (resp.status != HttpStatusCode.OK) {
             throw UrlSignException(resp.status.description, resp.status.value)
         }
+        val respBody = resp.body<AndroidUrlSignResponse<JsonElement>>()
+        if (respBody.code != 0) {
+            throw UrlSignException(respBody.msg, respBody.code)
+        }
+    }
+
+    suspend fun registerDeviceBySign(
+        qua: String,
+        uin: Long,
+        qimei: String,
+        guid: String,
+    ) {
+        val resp = client.post {
+            url {
+                takeFrom(base)
+                appendPathSegments("sign")
+            }
+            contentType(ContentType.Application.Json)
+            setBody(
+                buildJsonObject {
+                    put("qua", qua)
+                    put("uin", uin)
+                    put("cmd", "trpc.login.ecdh.EcdhService.SsoKeyExchange") // arbitrary valid cmd
+                    put("seq", 28655) // arbitrary seq
+                    put("android_id", "d4573bde6663bb55")
+                    put("qimei36", qimei)
+                    put("buffer", "00aaff00aaff00aaff") // arbitrary buffer
+                    put("guid", guid)
+                }
+            )
+        }
+        if (resp.status != HttpStatusCode.OK) {
+            throw UrlSignException(resp.status.description, resp.status.value)
+        }
         val respBody = resp.body<AndroidUrlSignResponse<AndroidUrlSignValue>>()
         if (respBody.code != 0) {
             throw UrlSignException(respBody.msg, respBody.code)
         }
+        // Sign successful, but we don't actually care about the returned sign value
     }
 }
 

@@ -21,7 +21,12 @@ kotlin {
         generateTypeScriptDefinitions()
         compilerOptions {
             freeCompilerArgs.add("-Xes-long-as-bigint")
+            freeCompilerArgs.add("-Xenable-implementing-interfaces-from-typescript")
         }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
     }
 
     sourceSets {
@@ -45,9 +50,6 @@ kotlin {
             implementation(kotlin("test"))
         }
         all {
-            compilerOptions {
-                freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
-            }
             languageSettings.optIn("kotlinx.serialization.ExperimentalSerializationApi")
             languageSettings.optIn("kotlin.js.ExperimentalJsExport")
             languageSettings.optIn("kotlin.js.ExperimentalJsStatic")

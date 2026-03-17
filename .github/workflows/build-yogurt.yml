@@ -306,6 +306,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           repository: SaltifyDev/yogurt-releases
+          token: ${{ secrets.YOGURT_RELEASE_TOKEN }}
           tag_name: ${{ steps.release_version.outputs.release_tag }}
           name: ${{ steps.release_version.outputs.release_name }}
           generate_release_notes: false
@@ -313,5 +314,3 @@ jobs:
           body: |
             Yogurt build #${{ github.run_number }}
             *由 CI 自动构建并发布*
-        env:
-          GITHUB_TOKEN: ${{ secrets.YOGURT_RELEASE_TOKEN }}

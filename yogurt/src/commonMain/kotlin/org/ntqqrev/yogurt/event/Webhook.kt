@@ -25,18 +25,18 @@ fun Application.configureMilkyEventWebhook() = launch {
     val flow = dependencies.resolve<SharedFlow<Event>>()
     val logger = bot.createLogger("WebhookModule")
     flow.collect {
-        config.webhookConfig.url.forEach { webhookUrl ->
+        config.webhookConfig.forEach { webhook ->
             launch {
                 try {
-                    webhookClient.post(webhookUrl) {
-                        if (config.webhookConfig.accessToken.isNotEmpty()) {
-                            bearerAuth(config.webhookConfig.accessToken)
+                    webhookClient.post(webhook.url) {
+                        if (webhook.accessToken.isNotEmpty()) {
+                            bearerAuth(webhook.accessToken)
                         }
                         contentType(ContentType.Application.Json)
                         setBody(it)
                     }
                 } catch (e: Exception) {
-                    logger.w(e) { "发送事件到 Webhook URL $webhookUrl 失败" }
+                    logger.w(e) { "发送事件到 Webhook URL ${webhook.url} 失败" }
                 }
             }
         }

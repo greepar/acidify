@@ -25,6 +25,7 @@ import org.ntqqrev.milky.milkyVersion
 import org.ntqqrev.yogurt.api.configureMilkyApiAuth
 import org.ntqqrev.yogurt.api.configureMilkyApiHttpRoutes
 import org.ntqqrev.yogurt.api.configureMilkyApiLoginProtect
+import org.ntqqrev.yogurt.config.YogurtConfigV2
 import org.ntqqrev.yogurt.event.configureMilkyEventAuth
 import org.ntqqrev.yogurt.event.configureMilkyEventSse
 import org.ntqqrev.yogurt.event.configureMilkyEventWebSocket
@@ -34,7 +35,7 @@ import org.ntqqrev.yogurt.script.loadScripts
 import org.ntqqrev.yogurt.util.*
 
 object YogurtApp {
-    val config = YogurtConfig.loadFromFile()
+    val config = loadConfigAndUpdate()
     val t = Terminal(ansiLevel = config.logging.ansiLevel)
 
     fun createServer() = embeddedServer(
@@ -146,7 +147,7 @@ object YogurtApp {
         }
 
         monitor.subscribe(ApplicationStarted) {
-            if (config.webhookConfig.url.isNotEmpty()) {
+            if (config.webhookConfig.isNotEmpty()) {
                 configureMilkyEventWebhook()
             }
             configureQRCodeDisplay()

@@ -1,7 +1,6 @@
 package org.ntqqrev.yogurt
 
 import com.dokar.quickjs.QuickJs
-import com.github.ajalt.mordant.platform.MultiplatformSystem.exitProcess
 import com.github.ajalt.mordant.rendering.TextColors
 import com.github.ajalt.mordant.terminal.Terminal
 import io.ktor.http.*
@@ -52,7 +51,7 @@ object YogurtApp {
                     """.trimIndent()
                 )
             )
-            exitProcess(1)
+            halt(1)
         }
 
         t.println(

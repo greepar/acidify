@@ -35,6 +35,30 @@ internal class PacketContext(client: AbstractClient) : AbstractContext(client) {
     private val mapQueryMutex = Mutex()
     private var startConnectLoopJob: Job? = null
     private var heartbeatJob: Job? = null
+    private val recentPushSequenceCache = RecentPushSequenceCache(2048)
+
+    private class RecentPushSequenceCache(
+        private val capacity: Int
+    ) {
+        private val queue = ArrayDeque<Int>(capacity)
+        private val seen = mutableSetOf<Int>()
+
+        fun clear() {
+            queue.clear()
+            seen.clear()
+        }
+
+        fun isDuplicate(seq: Int): Boolean {
+            if (!seen.add(seq)) {
+                return true
+            }
+            queue.addLast(seq)
+            if (queue.size > capacity) {
+                seen.remove(queue.removeFirst())
+            }
+            return false
+        }
+    }
 
     init {
         startConnectLoopJob = client.launch {
@@ -43,6 +67,7 @@ internal class PacketContext(client: AbstractClient) : AbstractContext(client) {
     }
 
     override suspend fun postOnline() {
+        recentPushSequenceCache.clear()
         heartbeatJob = when (client) {
             is LagrangeClient -> client.launch {
                 while (isActive) {
@@ -77,6 +102,7 @@ internal class PacketContext(client: AbstractClient) : AbstractContext(client) {
     override suspend fun preOffline() {
         heartbeatJob?.cancel()
         heartbeatJob = null
+        recentPushSequenceCache.clear()
     }
 
     suspend fun startConnectLoop() {
@@ -187,6 +213,10 @@ internal class PacketContext(client: AbstractClient) : AbstractContext(client) {
                 if (it != null) {
                     it.complete(sso)
                 } else {
+                    if (recentPushSequenceCache.isDuplicate(sso.sequence)) {
+                        logger.v { "忽略重复推送包 [seq=${sso.sequence}] <- ${sso.command}" }
+                        return@also
+                    }
                     client.pushChannel.send(sso)
                 }
             }

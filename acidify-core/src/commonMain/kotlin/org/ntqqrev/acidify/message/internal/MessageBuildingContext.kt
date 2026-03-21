@@ -7,7 +7,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.ntqqrev.acidify.AbstractBot
@@ -15,7 +14,7 @@ import org.ntqqrev.acidify.getFriendHistoryMessages
 import org.ntqqrev.acidify.getGroupHistoryMessages
 import org.ntqqrev.acidify.getUidByUin
 import org.ntqqrev.acidify.internal.crypto.hash.MD5
-import org.ntqqrev.acidify.internal.json.message.OutgoingForwardPayload
+import org.ntqqrev.acidify.internal.json.message.ForwardJsonPayload
 import org.ntqqrev.acidify.internal.proto.message.*
 import org.ntqqrev.acidify.internal.proto.message.elem.*
 import org.ntqqrev.acidify.internal.proto.message.extra.QBigFaceExtra
@@ -431,7 +430,7 @@ internal class MessageBuildingContext(
             )
         )
 
-        val lightApp = OutgoingForwardPayload(
+        val lightApp = ForwardJsonPayload(
             config = buildJsonObject {
                 put("autosize", 1)
                 put("forward", 1)
@@ -439,21 +438,17 @@ internal class MessageBuildingContext(
                 put("type", "normal")
                 put("width", 300)
             },
-            meta = buildJsonObject {
-                put("detail", buildJsonObject {
-                    put("news", buildJsonArray {
-                        preview.forEach {
-                            add(buildJsonObject {
-                                put("text", it)
-                            })
-                        }
-                    })
-                    put("resid", resId)
-                    put("source", title)
-                    put("summary", summary)
-                    put("uniseq", uuid)
-                })
-            },
+            meta = ForwardJsonPayload.Meta(
+                detail = ForwardJsonPayload.Meta.Detail(
+                    news = preview.map { text ->
+                        ForwardJsonPayload.Meta.Detail.NewsItem(text)
+                    },
+                    resid = resId,
+                    source = title,
+                    summary = summary,
+                    uniseq = uuid,
+                )
+            ),
             desc = "[聊天记录]",
             extra = Json.encodeToString(buildJsonObject {
                 put("filename", uuid)

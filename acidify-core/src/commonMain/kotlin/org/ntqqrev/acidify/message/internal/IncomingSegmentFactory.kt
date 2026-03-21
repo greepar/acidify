@@ -2,8 +2,12 @@ package org.ntqqrev.acidify.message.internal
 
 import dev.karmakrafts.kompress.Inflater
 import kotlinx.serialization.decodeFromString
-import org.ntqqrev.acidify.internal.json.message.IncomingForwardBody
-import org.ntqqrev.acidify.internal.json.message.LightAppPayload
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import org.ntqqrev.acidify.internal.json.message.ForwardJsonPayload
+import org.ntqqrev.acidify.internal.json.message.ForwardXmlPayload
+import org.ntqqrev.acidify.internal.json.message.lightAppJsonModule
 import org.ntqqrev.acidify.internal.proto.message.CommonMessage
 import org.ntqqrev.acidify.internal.proto.message.elem.SourceMsg
 import org.ntqqrev.acidify.internal.proto.message.extra.GroupFileExtra
@@ -241,21 +245,48 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
 
     object Forward : IncomingSegmentFactory<BotIncomingSegment.Forward> {
         override fun tryParse(ctx: MessageParsingContext): BotIncomingSegment.Forward? {
-            val forward = ctx.tryPeekType { richMsg } ?: return null
-            ctx.consume()
-            val bytesTemplate1 = forward.bytesTemplate1
-            val xml = Inflater.inflate(
-                bytesTemplate1.sliceArray(1 until bytesTemplate1.size),
-                raw = false
-            ).decodeToString()
-            val body = IncomingForwardBody.xmlModule.decodeFromString<IncomingForwardBody>(xml)
-            val titles = body.items[0].titles
-            return BotIncomingSegment.Forward(
-                resId = body.resId,
-                title = titles[0].text,
-                preview = titles.drop(1).map { it.text },
-                summary = body.items[0].summaries[0].text,
-            )
+            ctx.tryPeekType { richMsg }?.let { forward ->
+                ctx.consume()
+                val bytesTemplate1 = forward.bytesTemplate1
+                val xml = Inflater.inflate(
+                    bytesTemplate1.sliceArray(1 until bytesTemplate1.size),
+                    raw = false
+                ).decodeToString()
+                val body = ForwardXmlPayload.xmlModule.decodeFromString<ForwardXmlPayload>(xml)
+                val titles = body.items[0].titles
+                return BotIncomingSegment.Forward(
+                    resId = body.resId,
+                    title = titles[0].text,
+                    preview = titles.drop(1).map { it.text },
+                    summary = body.items[0].summaries[0].text,
+                )
+            }
+
+            ctx.tryPeekType { lightAppElem }?.let { elem ->
+                val compressed = elem.bytesData
+                val json = Inflater.inflate(
+                    compressed.sliceArray(1 until compressed.size),
+                    raw = false
+                ).decodeToString()
+                val appName = Json.parseToJsonElement(json)
+                    .jsonObject["app"]
+                    ?.jsonPrimitive
+                    ?.content
+                    ?: return null
+                if (appName != "com.tencent.multimsg") return null
+                ctx.consume()
+
+                val forwardPayload = lightAppJsonModule.decodeFromString<ForwardJsonPayload>(json)
+                val detail = forwardPayload.meta.detail
+                return BotIncomingSegment.Forward(
+                    resId = detail.resid,
+                    title = detail.source,
+                    preview = detail.news.map { it.text },
+                    summary = detail.summary,
+                )
+            }
+
+            return null
         }
     }
 
@@ -289,7 +320,11 @@ internal interface IncomingSegmentFactory<T : BotIncomingSegment> {
                 compressed.sliceArray(1 until compressed.size),
                 raw = false
             ).decodeToString()
-            val appName = LightAppPayload.jsonModule.decodeFromString<LightAppPayload>(json).app
+            val appName = Json.parseToJsonElement(json)
+                .jsonObject["app"]
+                ?.jsonPrimitive
+                ?.content
+                ?: return null
             return BotIncomingSegment.LightApp(
                 appName = appName,
                 jsonPayload = json,

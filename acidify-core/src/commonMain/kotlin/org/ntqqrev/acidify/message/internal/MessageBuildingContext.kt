@@ -15,6 +15,7 @@ import org.ntqqrev.acidify.getGroupHistoryMessages
 import org.ntqqrev.acidify.getUidByUin
 import org.ntqqrev.acidify.internal.crypto.hash.MD5
 import org.ntqqrev.acidify.internal.json.message.ForwardJsonPayload
+import org.ntqqrev.acidify.internal.json.message.lightAppJsonModule
 import org.ntqqrev.acidify.internal.proto.message.*
 import org.ntqqrev.acidify.internal.proto.message.elem.*
 import org.ntqqrev.acidify.internal.proto.message.extra.QBigFaceExtra
@@ -458,7 +459,7 @@ internal class MessageBuildingContext(
             ver = "0.0.0.5",
             view = "contact"
         )
-        val str = Json.encodeToString(lightApp)
+        val str = lightAppJsonModule.encodeToString(lightApp)
         val buffer = Buffer()
         buffer.writeByte(0x01)
         buffer.write(Deflater.deflate(str.encodeToByteArray(), raw = false))

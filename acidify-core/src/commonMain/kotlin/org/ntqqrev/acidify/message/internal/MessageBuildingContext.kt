@@ -7,6 +7,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.ntqqrev.acidify.AbstractBot
@@ -451,10 +452,14 @@ internal class MessageBuildingContext(
                 )
             ),
             desc = "[聊天记录]",
-            extra = Json.encodeToString(buildJsonObject {
-                put("filename", uuid)
-                put("tsum", nodes.size)
-            }),
+            extra = JsonPrimitive(
+                Json.encodeToString(
+                    buildJsonObject {
+                        put("filename", uuid)
+                        put("tsum", nodes.size)
+                    }
+                )
+            ),
             prompt = prompt,
             ver = "0.0.0.5",
             view = "contact"

@@ -1,6 +1,7 @@
 package org.ntqqrev.acidify.internal.json.message
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
@@ -9,7 +10,7 @@ internal class ForwardJsonPayload(
     val config: JsonObject,
     val meta: Meta,
     val desc: String,
-    val extra: String,
+    val extra: JsonElement,
     val prompt: String,
     val ver: String,
     val view: String,

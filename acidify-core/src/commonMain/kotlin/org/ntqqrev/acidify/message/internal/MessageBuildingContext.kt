@@ -70,9 +70,9 @@ internal class MessageBuildingContext(
 
     fun BotOutgoingSegment.Face.build() = addAsync {
         val faceDetail = bot.faceDetailMap[faceId.toString()]
-            ?: throw NoSuchElementException("要发送的表情 ID 不存在: $faceId")
 
         if (isLarge) {
+            requireNotNull(faceDetail) { "要发送的表情 ID 不存在: $faceId" }
             Elem(
                 commonElem = CommonElem(
                     serviceType = 37,
@@ -92,6 +92,7 @@ internal class MessageBuildingContext(
         }
 
         if (faceId >= 260) {
+            requireNotNull(faceDetail) { "要发送的表情 ID 不存在: $faceId" }
             Elem(
                 commonElem = CommonElem(
                     serviceType = 33,

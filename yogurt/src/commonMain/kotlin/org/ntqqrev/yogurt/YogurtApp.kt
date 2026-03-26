@@ -142,6 +142,9 @@ object YogurtApp {
                 configureMilkyEventWebSocket()
                 configureMilkyEventSse()
             }
+            route("$prefix/debug") {
+
+            }
         }
 
         if (!SystemFileSystem.exists(scriptsPath)) {

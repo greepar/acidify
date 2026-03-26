@@ -32,6 +32,7 @@ import org.ntqqrev.yogurt.event.configureMilkyEventWebhook
 import org.ntqqrev.yogurt.script.createScriptEnvironment
 import org.ntqqrev.yogurt.script.loadScripts
 import org.ntqqrev.yogurt.util.*
+import kotlin.time.Duration.Companion.milliseconds
 
 object YogurtApp {
     val config = loadConfigAndUpdate()
@@ -92,7 +93,7 @@ object YogurtApp {
                     """.trimIndent()
                 )
             )
-            delay(10_000)
+            delay(10_000.milliseconds)
         }
 
         when {

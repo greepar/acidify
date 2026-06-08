@@ -47,7 +47,7 @@ suspend fun AbstractBot.setGroupAvatar(
     groupUin: Long,
     imageSource: MediaSource
 ) {
-    val metadata = MediaSourceMetadata.from(imageSource)
+    val metadata = MediaSourceMetadata.basic(imageSource)
     client.highwayContext.uploadGroupAvatar(groupUin, imageSource, metadata.md5)
 }
 

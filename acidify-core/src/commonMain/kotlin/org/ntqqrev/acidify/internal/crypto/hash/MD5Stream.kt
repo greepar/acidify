@@ -4,6 +4,7 @@ internal class MD5Stream {
     private val state = IntArray(4)
     private val count = IntArray(2)
     private val buffer = ByteArray(Md5BlockSize)
+    private val blockWords = IntArray(16)
 
     companion object {
         const val Md5BlockSize = 64
@@ -44,6 +45,7 @@ internal class MD5Stream {
             4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
             6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
         )
+
     }
 
     init {
@@ -125,7 +127,7 @@ internal class MD5Stream {
     }
 
     private fun transform(block: ByteArray, offset: Int) {
-        val m = IntArray(16)
+        val m = blockWords
 
         for (i in 0 until 16) {
             val idx = offset + i * 4
@@ -141,11 +143,25 @@ internal class MD5Stream {
         var d = state[3]
 
         for (i in 0 until 64) {
-            val (f, g) = when {
-                i < 16 -> ((b and c) or (b.inv() and d)) to i
-                i < 32 -> ((d and b) or (d.inv() and c)) to ((5 * i + 1) % 16)
-                i < 48 -> (b xor c xor d) to ((3 * i + 5) % 16)
-                else -> (c xor (b or d.inv())) to ((7 * i) % 16)
+            val f: Int
+            val g: Int
+            when {
+                i < 16 -> {
+                    f = (b and c) or (b.inv() and d)
+                    g = i
+                }
+                i < 32 -> {
+                    f = (d and b) or (d.inv() and c)
+                    g = (5 * i + 1) % 16
+                }
+                i < 48 -> {
+                    f = b xor c xor d
+                    g = (3 * i + 5) % 16
+                }
+                else -> {
+                    f = c xor (b or d.inv())
+                    g = (7 * i) % 16
+                }
             }
 
             val temp = d

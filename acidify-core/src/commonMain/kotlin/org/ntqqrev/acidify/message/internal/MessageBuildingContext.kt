@@ -159,7 +159,7 @@ internal class MessageBuildingContext(
     }
 
     fun BotOutgoingSegment.Image.build() = addMultipleAsync {
-        val metadata = MediaSourceMetadata.from(raw)
+        val metadata = MediaSourceMetadata.basic(raw)
         val imageMd5 = metadata.md5.toHexString()
         val imageSha1 = metadata.sha1.toHexString()
 
@@ -252,7 +252,7 @@ internal class MessageBuildingContext(
     }
 
     fun BotOutgoingSegment.Record.build() = addAsync {
-        val metadata = MediaSourceMetadata.from(rawSilk)
+        val metadata = MediaSourceMetadata.basic(rawSilk)
         val recordMd5 = metadata.md5.toHexString()
         val recordSha1 = metadata.sha1.toHexString()
 
@@ -315,8 +315,8 @@ internal class MessageBuildingContext(
     }
 
     fun BotOutgoingSegment.Video.build() = addAsync {
-        val videoMetadata = MediaSourceMetadata.from(raw)
-        val thumbMetadata = MediaSourceMetadata.from(thumb)
+        val videoMetadata = bot.client.flashTransferContext.prepareUpload(raw)
+        val thumbMetadata = MediaSourceMetadata.basic(thumb)
         val videoMd5 = videoMetadata.md5.toHexString()
         val videoSha1 = videoMetadata.sha1.toHexString()
 
@@ -373,6 +373,7 @@ internal class MessageBuildingContext(
                 appId = if (scene == MessageScene.FRIEND) 1413 else 1415,
                 source = raw,
                 size = videoMetadata.size,
+                sha1StateList = videoMetadata.sha1StateList,
             )
             if (!success) {
                 throw IllegalStateException("视频文件上传失败")

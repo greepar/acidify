@@ -19,13 +19,23 @@ internal class MediaSourceMetadata(
     val md510M: ByteArray,
 ) {
     companion object {
-        internal fun from(source: MediaSource): MediaSourceMetadata {
+        internal fun basic(source: MediaSource): MediaSourceMetadata {
+            return from(source, computeTriSha1 = false, computeMd510M = false)
+        }
+
+        internal fun from(
+            source: MediaSource,
+            computeTriSha1: Boolean = true,
+            computeMd510M: Boolean = true,
+        ): MediaSourceMetadata {
             val md5Stream = MD5Stream()
             val sha1Stream = SHA1Stream()
-            val md510MStream = MD5Stream()
+            val md510MStream = if (computeMd510M) MD5Stream() else null
 
             val size = source.size
-            val triSample = if (size <= TRI_SHA1_SAMPLE_SIZE.toLong()) {
+            val triSample = if (!computeTriSha1) {
+                ByteArray(0)
+            } else if (size <= TRI_SHA1_SAMPLE_SIZE.toLong()) {
                 ByteArray(size.toInt())
             } else {
                 ByteArray(TRI_SHA1_SAMPLE_SIZE)
@@ -55,13 +65,17 @@ internal class MediaSourceMetadata(
                     md5Stream.update(buffer, chunkSize)
                     sha1Stream.update(buffer, chunkSize)
 
-                    val remainingMd510MBytes = MD510M_SIZE.toLong() - offset
-                    if (remainingMd510MBytes > 0L) {
-                        val md510MChunkSize = minOf(chunkSize.toLong(), remainingMd510MBytes).toInt()
-                        md510MStream.update(buffer, 0, md510MChunkSize)
+                    md510MStream?.let { stream ->
+                        val remainingMd510MBytes = MD510M_SIZE.toLong() - offset
+                        if (remainingMd510MBytes > 0L) {
+                            val md510MChunkSize = minOf(chunkSize.toLong(), remainingMd510MBytes).toInt()
+                            stream.update(buffer, 0, md510MChunkSize)
+                        }
                     }
 
-                    if (size <= TRI_SHA1_SAMPLE_SIZE.toLong()) {
+                    if (!computeTriSha1) {
+                        // Skip TriSHA1 sampling when only rich-media hashes are needed.
+                    } else if (size <= TRI_SHA1_SAMPLE_SIZE.toLong()) {
                         buffer.copyInto(triSample, offset.toInt(), 0, chunkSize)
                     } else {
                         copyIntersection(
@@ -105,20 +119,26 @@ internal class MediaSourceMetadata(
             val sha1 = ByteArray(SHA1Stream.Sha1DigestSize)
             sha1Stream.final(sha1)
 
-            val md510M = ByteArray(MD5Stream.Md5DigestSize)
-            md510MStream.final(md510M)
+            val md510M = md510MStream?.let { stream ->
+                ByteArray(MD5Stream.Md5DigestSize).also { stream.final(it) }
+            } ?: ByteArray(0)
 
-            val payload = ByteArray(triSample.size + 8)
-            triSample.copyInto(payload, 0, 0, triSample.size)
-            for (i in 0 until 8) {
-                payload[triSample.size + i] = ((size shr (i * 8)) and 0xFF).toByte()
+            val triSha1 = if (computeTriSha1) {
+                val payload = ByteArray(triSample.size + 8)
+                triSample.copyInto(payload, 0, 0, triSample.size)
+                for (i in 0 until 8) {
+                    payload[triSample.size + i] = ((size shr (i * 8)) and 0xFF).toByte()
+                }
+                payload.sha1()
+            } else {
+                ByteArray(0)
             }
 
             return MediaSourceMetadata(
                 size = size,
                 md5 = md5,
                 sha1 = sha1,
-                triSha1 = payload.sha1(),
+                triSha1 = triSha1,
                 md510M = md510M,
             )
         }

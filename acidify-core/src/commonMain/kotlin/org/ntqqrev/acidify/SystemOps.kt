@@ -245,7 +245,7 @@ suspend fun AbstractBot.setGroupPin(groupUin: Long, isPinned: Boolean) =
  * @param imageSource 头像数据源
  */
 suspend fun AbstractBot.setAvatar(imageSource: MediaSource) {
-    val metadata = MediaSourceMetadata.from(imageSource)
+    val metadata = MediaSourceMetadata.basic(imageSource)
     client.highwayContext.uploadAvatar(imageSource, metadata.md5)
 }
 

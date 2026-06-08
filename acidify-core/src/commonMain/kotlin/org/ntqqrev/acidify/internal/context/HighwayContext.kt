@@ -4,7 +4,13 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.atomicfu.atomic
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withTimeout
 import kotlinx.io.buffered
 import kotlinx.io.readTo
@@ -27,6 +33,7 @@ internal class HighwayContext(client: AbstractClient) : AbstractContext(client) 
 
     companion object {
         const val MAX_BLOCK_SIZE = 1024 * 1024 // 1MB
+        const val MAX_CONCURRENT_UPLOADS = 4
     }
 
     override suspend fun postOnline() {
@@ -322,18 +329,39 @@ internal class HighwayContext(client: AbstractClient) : AbstractContext(client) 
     ) {
         private val logger = client.loggerFactory.invoke(this)
 
-        suspend fun upload() {
+        private val uploadedBytes = atomic(0L)
+
+        suspend fun upload() = coroutineScope {
             val bufferedSource = source.openRawSource().buffered()
+            val uploadLimiter = Semaphore(MAX_CONCURRENT_UPLOADS)
+            val uploadTasks = mutableListOf<Deferred<Unit>>()
             var offset = 0L
             try {
                 while (offset < dataSize) {
                     val blockSize = minOf(MAX_BLOCK_SIZE.toLong(), dataSize - offset).toInt()
                     val block = ByteArray(blockSize)
                     bufferedSource.readTo(block)
-                    uploadBlock(block, offset)
-                    val progress = (offset + blockSize.toLong()) * 100L / dataSize
-                    logger.d { "Highway 上传进度: $progress%" }
+
+                    val blockOffset = offset
                     offset += blockSize
+                    if (offset == dataSize) {
+                        // 最后一片可能触发服务端合并，必须等前面的分片全部上传成功后再发。
+                        uploadTasks.awaitAll()
+                        uploadBlock(block, blockOffset)
+                        val progress = uploadedBytes.addAndGet(blockSize.toLong()) * 100L / dataSize
+                        logger.d { "Highway 上传进度: $progress%" }
+                    } else {
+                        uploadLimiter.acquire()
+                        uploadTasks += async {
+                            try {
+                                uploadBlock(block, blockOffset)
+                                val progress = uploadedBytes.addAndGet(blockSize.toLong()) * 100L / dataSize
+                                logger.d { "Highway 上传进度: $progress%" }
+                            } finally {
+                                uploadLimiter.release()
+                            }
+                        }
+                    }
                 }
             } finally {
                 bufferedSource.close()

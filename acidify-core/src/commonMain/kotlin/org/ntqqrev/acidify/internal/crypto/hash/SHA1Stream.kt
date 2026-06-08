@@ -4,6 +4,7 @@ internal class SHA1Stream {
     private val state = IntArray(5)
     private val count = IntArray(2)
     private val buffer = ByteArray(Sha1BlockSize)
+    private val schedule = IntArray(80)
 
     companion object {
         const val Sha1BlockSize = 64
@@ -36,7 +37,7 @@ internal class SHA1Stream {
     }
 
     private fun transform(block: ByteArray, offset: Int) {
-        val w = IntArray(80)
+        val w = schedule
 
         // 1. 16 × 32-bit words
         for (i in 0 until 16) {

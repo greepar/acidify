@@ -24,6 +24,7 @@ build-konfig = "0.22.0"
 maven-publish = "0.37.0"
 dokka = "2.2.0"
 shadow = "9.5.1"
+graalvm-native = "0.11.1"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -88,3 +89,4 @@ build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfi
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }

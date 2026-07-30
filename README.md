@@ -21,6 +21,23 @@
 - `yogurt` - 基于 `acidify-core` 的 QQ 协议端 [![GitHub Release](https://img.shields.io/github/v/release/SaltifyDev/yogurt-releases?label=GitHub%20release)](https://github.com/SaltifyDev/yogurt-releases)
   - `@acidify/yogurt` - Yogurt 的预编译二进制包 [![npm](https://img.shields.io/npm/v/%40acidify%2Fyogurt)](https://www.npmjs.com/package/@acidify/yogurt)
   - `yogurt-jvm` - Yogurt 的 JVM 平台适配 (Workaround for Ktor plugin's incompatibility issue)
+  - 可使用 GraalVM Native Image 构建原生可执行文件
+
+### GraalVM Native Image
+
+`yogurt-jvm` 提供了 Native Image 构建任务。需要使用包含 Native Image 的 GraalVM JDK：
+
+```bash
+./gradlew :yogurt-jvm:nativeCompile
+```
+
+生成的可执行文件位于 `yogurt-jvm/build/native/nativeCompile/yogurt`。也可以直接运行：
+
+```bash
+./gradlew :yogurt-jvm:nativeRun
+```
+
+如果 Gradle 没有自动检测到 GraalVM，请将 `JAVA_HOME` 指向 GraalVM JDK 后重试。现有的 `run`、`shadowJar` 和 JVM 分发任务不受影响。
 
 ## 支持平台
 

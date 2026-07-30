@@ -110,6 +110,30 @@ jobs:
           name: yogurt-jvm
           path: yogurt-jvm/build/libs/yogurt-jvm-all.jar
 
+  build-graalvm-native-windows:
+    if: contains(github.event.head_commit.message, '[skip build]') == false
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          distribution: graalvm
+          java-version: '25'
+          components: native-image
+
+      - name: Build Windows x64 Native Image
+        run: ./gradlew.bat :yogurt-jvm:nativeCompile --no-daemon
+
+      - name: Upload Windows x64 Native Image
+        uses: actions/upload-artifact@v7
+        with:
+          name: yogurt-windows-x64-graalvm
+          path: yogurt-jvm/build/native/nativeCompile/yogurt.exe
+
   publish-npm:
     if: contains(github.event.head_commit.message, '[skip build]') == false
     needs:
@@ -245,6 +269,7 @@ jobs:
     needs:
       - build-native
       - build-jvm
+      - build-graalvm-native-windows
     runs-on: ubuntu-latest
 
     steps:

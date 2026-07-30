@@ -15,6 +15,7 @@ graalvmNative {
             imageName.set("yogurt")
             buildArgs.add("--no-fallback")
             buildArgs.add("--enable-url-protocols=http,https")
+            buildArgs.add("-H:IncludeResources=jni/windows_x64/libquickjs\\.dll")
         }
     }
 }

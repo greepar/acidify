@@ -24,7 +24,7 @@ build-konfig = "0.22.0"
 maven-publish = "0.37.0"
 dokka = "2.2.0"
 shadow = "9.5.1"
-graalvm-native = "0.11.1"
+graalvm-native = "1.1.6"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
